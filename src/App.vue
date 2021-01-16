@@ -1,21 +1,23 @@
 <template>
-  <app-header />
-  <div class="flex container mx-auto mt-32">
-    <div class="w-80 mr-12">
-      <sidebar>
-        <template #switch>
-          <sidebar-item :isActivate="true">站点信息</sidebar-item>
-          <sidebar-item>文章目录</sidebar-item>
-        </template>
-        <template #content>
-          <div class="flex flex-col items-center pt-4">
-            <img src="./assets/img/ava.jpg" alt="logo" class="rounded-full w-32 h-32 shadow hover:shadow-lg cursor-pointer transition eaase-in-out duration-200">
-            <p class="text-lg font-bold mt-1">BianDan</p>
-          </div>
-        </template>
-      </sidebar>
+  <div>
+    <app-header />
+    <div class="flex container mx-auto mt-32">
+      <aside class="w-80 mr-12">
+        <sidebar class="sticky top-32 left-0">
+          <template #switch>
+            <sidebar-item :isActivate="true">站点信息</sidebar-item>
+            <sidebar-item>文章目录</sidebar-item>
+          </template>
+          <template #content>
+            <div class="flex flex-col items-center pt-4">
+              <img src="./assets/img/ava.jpg" alt="logo" class="rounded-full w-32 h-32 shadow hover:shadow-lg cursor-pointer transition eaase-in-out duration-200">
+              <p class="text-lg font-bold mt-1">BianDan</p>
+            </div>
+          </template>
+        </sidebar>
+      </aside>
+      <router-view class="flex-1" />
     </div>
-    <router-view class="flex-1" />
   </div>
 </template>
 

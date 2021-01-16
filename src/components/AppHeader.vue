@@ -1,5 +1,5 @@
 <template>
-  <header class="shadow-md fixed top-0 left-0 w-full bg-white z-100 h-18">
+  <header class="shadow-md fixed top-0 left-0 w-full bg-white z-50 h-18">
     <menu class="flex container mx-auto my-0 h-full items-center justify-between">
       <router-link to="/" class="font-bold">我是笨蛋小扁担</router-link>
       <nav>
