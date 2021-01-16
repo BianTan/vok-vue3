@@ -1,8 +1,8 @@
 <template>
   <header class="shadow-md fixed top-0 left-0 w-full bg-white z-50 h-18">
-    <menu class="flex container mx-auto my-0 h-full items-center justify-between">
+    <menu class="flex container mx-auto my-0 px-8 h-full items-center justify-between">
       <router-link to="/" class="font-bold">我是笨蛋小扁担</router-link>
-      <nav>
+      <nav class="hidden lg:inline-block">
         <router-link :to="item.url" v-for="item in menuList" :key="item.id" class="mx-3">{{item.title}}</router-link>
       </nav>
       <i class="iconfont icon-search text-2xl cursor-pointer" />
