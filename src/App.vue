@@ -16,7 +16,7 @@
           </template>
         </sidebar>
       </aside>
-      <router-view class="flex-1" />
+      <router-view class="flex-1" :key="$route.fullPath" />
     </div>
     <sidebar-menu/>
   </div>

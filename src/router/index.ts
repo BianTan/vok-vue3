@@ -1,16 +1,32 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
+import Single from '../views/Single.vue'
 import Post from '../views/Post.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Single
   },
   {
-    path: '/post',
-    redirect: { name: 'Home' }
+    path: '/tag/:id',
+    name: 'Tag',
+    component: Single
+  },
+  {
+    path: '/category/:id',
+    name: 'Category',
+    component: Single
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Single
+  },
+  {
+    path: '/page/:id',
+    name: 'Page',
+    component: Single
   },
   {
     path: '/post/:id',

@@ -1,17 +1,20 @@
 <template>
   <article-list
+    v-if="testData"
     :total="testData.total"
     :pageSize="testData.pageSize"
     :currentPage="testData.currentPage"
     @currentChange="currentChange"
     @prevClick="prevClick"
     @nextClick="nextClick">
+    <div v-if="infoShow" class="bg-white text-4xl mb-12 py-18 text-center shadow rounded">{{name}}</div>
     <article-item v-for="item in testData.list" :key="item.id" :postData="item" />
   </article-list>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, toRefs, reactive, computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { PageEventsProps, PostListProps } from '../types'
 import ArticleList from '../components/article/ArticleList.vue'
 import ArticleItem from '../components/article/ArticleItem.vue'
@@ -91,14 +94,14 @@ const testData: PostListProps = {
     }
   ]
 }
-
 export default defineComponent({
-  name: 'Home',
+  name: 'Single',
   components: {
     ArticleList,
     ArticleItem
   },
   setup() {
+    const route = useRoute()
     const pageEvents: PageEventsProps = reactive({
       prevClick: () => {
         console.log('上一页')
@@ -110,9 +113,35 @@ export default defineComponent({
         console.log('当前点击页数：', val)
       }
     })
+    const name = computed(() => route.name)
+    const infoShow = ref(false)
+    if (name.value === 'Home' || name.value === 'Page') {
+      infoShow.value = false
+    } else {
+      infoShow.value = true
+    }
+    switch(name.value) {
+      case 'Home':
+        console.log('Home')
+        break
+      case 'Page':
+        console.log('Page')
+        break
+      case 'Tag':
+        console.log('Tag')
+        break
+      case 'Category':
+        console.log('Category')
+        break
+      case 'Search':
+        console.log('Search')
+        break
+    }
     return {
       ...toRefs(pageEvents),
-      testData
+      testData,
+      infoShow,
+      name
     }
   }
 })
