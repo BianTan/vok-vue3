@@ -18,6 +18,7 @@
       </aside>
       <router-view class="flex-1" />
     </div>
+    <sidebar-menu/>
   </div>
 </template>
 
@@ -26,12 +27,14 @@ import { defineComponent } from 'vue'
 import AppHeader from './components/AppHeader.vue'
 import Sidebar from './components/sidebar/Sidebar.vue'
 import SidebarItem from './components/sidebar/SidebarItem.vue'
+import SidebarMenu from './components/SidebarMenu.vue'
 
 export default defineComponent({
   components: {
     AppHeader,
     Sidebar,
-    SidebarItem
+    SidebarItem,
+    SidebarMenu
   }
 })
 </script>
