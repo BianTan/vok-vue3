@@ -11,7 +11,7 @@ export interface PostListProps {
   list: PostDataProps[];
 }
 export interface AuthorProps {
-  _id: string;
+  id: string;
   name: string;
   description: string;
   avatar_url: string;
@@ -19,6 +19,7 @@ export interface AuthorProps {
 export interface PostDataProps {
   id: number;
   type: number;
+  comment_count: number;
   post_url: string;
   tag: string[];
   category: string;

@@ -5,5 +5,6 @@ import store from './store'
 
 import './assets/css/iconfont.css'
 import './assets/css/index.css'
+import './router/permission'
 
 createApp(App).use(store).use(router).mount('#app')
