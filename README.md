@@ -1,24 +1,18 @@
 # vok-vue3
 
-## Project setup
-```
-npm install
-```
+## 项目描述
+这是一个基于 Vue3 + TypeScript + TailwindCSS 制作的个人博客前端项目
+鸽了好久了～～ 慢慢摸出来
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Q：为什么叫 Vok ？
+A：瞎写的 嘻嘻
+（我直接 好家伙！）
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## TODO
+- [x] 还算有趣的UI
+- [x] 首页
+- [ ] 文章页面
+- [ ] 分类页面
+- [ ] 搜索页面
+- [ ] 夜间模式
+- [ ] 待续...
