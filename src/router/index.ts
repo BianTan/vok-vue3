@@ -1,37 +1,69 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Single from '../views/Single.vue'
-import Post from '../views/Post.vue'
+import Index from '@/views/index/Index.vue'
+import AdminIndex from '@/views/admin/AdminIndex.vue'
+import AccountIndex from '@/views/account/AccountIndex.vue'
+
+import Single from '@/views/index/Single.vue'
+import Post from '@/views/index/Post.vue'
+import notFound from '@/views/404.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: Single
+    component: Index,
+    children: [
+      {
+        path: '/',
+        name: 'Home',
+        component: Single
+      },
+      {
+        path: '/tag/:id',
+        name: 'Tag',
+        component: Single
+      },
+      {
+        path: '/category/:id',
+        name: 'Category',
+        component: Single
+      },
+      {
+        path: '/search',
+        name: 'Search',
+        component: Single
+      },
+      {
+        path: '/page/:id',
+        name: 'Page',
+        component: Single
+      },
+      {
+        path: '/post/:id',
+        name: 'Post',
+        component: Post
+      }
+    ]
   },
   {
-    path: '/tag/:id',
-    name: 'Tag',
-    component: Single
+    path: '/vok-admin',
+    component: AdminIndex,
+    children: [
+
+    ]
   },
   {
-    path: '/category/:id',
-    name: 'Category',
-    component: Single
+    path: '/login',
+    name: 'AccountIndex',
+    component: AccountIndex
   },
   {
-    path: '/search',
-    name: 'Search',
-    component: Single
+    path: '/404',
+    name: 'notFound',
+    component: notFound
   },
   {
-    path: '/page/:id',
-    name: 'Page',
-    component: Single
-  },
-  {
-    path: '/post/:id',
-    name: 'Post',
-    component: Post
+    path: '/*', 
+    redirect: '/404'
   }
 ]
 

@@ -15,9 +15,9 @@
 <script lang="ts">
 import { defineComponent, toRefs, reactive, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { PageEventsProps, PostListProps } from '../types'
-import ArticleList from '../components/article/ArticleList.vue'
-import ArticleItem from '../components/article/ArticleItem.vue'
+import { PageEventsProps, PostListProps } from '@/types'
+import ArticleList from '@/components/article/ArticleList.vue'
+import ArticleItem from '@/components/article/ArticleItem.vue'
 
 const testData: PostListProps = {
   'total': 4,

@@ -32,7 +32,7 @@ function getAsyncRoutes(routes: RouteProps[]) {
   return res
 }
 router.beforeEach(async (to, from, next) => {
-  if (router.getRoutes().length <= 6) {
+  if (router.getRoutes().length <= 8) {
     const routes = getAsyncRoutes(routeList)
     for(const res of routes) {
       router.addRoute(res)

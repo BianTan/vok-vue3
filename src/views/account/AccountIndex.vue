@@ -1,5 +1,5 @@
 <template>
-  <router-view />
+  <div>AccountIndex</div>
 </template>
 
 <script lang="ts">

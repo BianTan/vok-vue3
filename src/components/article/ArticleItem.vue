@@ -1,12 +1,12 @@
 <template>
   <article v-if="postData.type === 0" class="bg-white rounded overflow-hidden shadow mb-8 pb-6" :class="[{'pt-6': postData.post_url.length === 0}]">
-    <router-link to="/" class="h-60 w-full inline-block" v-if="postData.post_url.length !== 0">
+    <router-link :to="`/post/${postData.id}.html`" class="h-60 w-full inline-block" v-if="postData.post_url.length !== 0">
       <img :src="postData.post_url" alt="title" class="w-full h-full object-cover">
     </router-link>
     <tag-box class="px-8 mt-2">
       <tag-item v-for="(tag, index) in postData.tag" :key="index" :url="tag">{{tag}}</tag-item>
     </tag-box>
-    <router-link class="px-8 my-4 font-bold text-xl inline-block" to="/">{{postData.title}}</router-link>
+    <router-link class="px-8 my-4 font-bold text-xl inline-block" :to="`/post/${postData.id}.html`">{{postData.title}}</router-link>
     <p class="px-8 text-sm text-gray-400 text-justify">{{postData.description}}</p>
   </article>
   <article v-else-if="postData.type === 1" class="flex my-14">
@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { PostDataProps } from '../../types'
+import { PostDataProps } from '@/types'
 import TagBox from '../tag/TagBox.vue'
 import TagItem from '../tag/TagItem.vue'
 

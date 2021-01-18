@@ -1,5 +1,5 @@
 <template>
-  <router-view />
+  <div>AdminIndex</div>
 </template>
 
 <script lang="ts">
