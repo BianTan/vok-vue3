@@ -1,5 +1,5 @@
 <template>
-  <li :class="classList" class="flex-1 cursor-pointer text-center px-6 py-3 transition ease-in-out duration-300 hover:bg-gray-100 hover:text-blue-800"><slot/></li>
+  <li id="sidebar-item" :class="classList" class="flex-1 cursor-pointer text-center px-6 py-3 transition ease-in-out duration-300 hover:bg-gray-100 hover:text-blue-800"><slot/></li>
 </template>
 
 <script lang="ts">

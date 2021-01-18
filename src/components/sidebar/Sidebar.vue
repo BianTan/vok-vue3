@@ -7,22 +7,50 @@
       <span>星期四</span>
     </div>
     <div v-if="isPost" class="flex text-sm list-none mt-4 overflow-hidden rounded-t border-b border-gray-100">
-      <slot name="switch"></slot>
+      <sidebar-item v-for="(item, index) in switchItem" :key="index" @click="switchClick(index)" :isActivate="index === currentIndex">{{item}}</sidebar-item>
     </div>
-    <div class="m-3">
+    <div class="m-3" :class="[{'border-t border-gray-100 mt-6 pt-3': !isPost}]">
       <slot name="content"></slot>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
+import SidebarItem from './SidebarItem.vue'
 
 export default defineComponent({
   props: {
-    'isPost': {
+    isPost: {
       type: Boolean,
       default: false
+    },
+    switchItem: {
+      type: Array,
+      required: true
+    }
+  },
+  emits: ['clickItemIndex'],
+  components: {
+    SidebarItem
+  },
+  setup(props, { emit }) {
+    const currentIndex = ref(1)
+    watch(() => props.isPost, (e: boolean) => {
+      if (e) {
+        currentIndex.value = 1
+      } else {
+        currentIndex.value = 0
+      }
+      emit('clickItemIndex', currentIndex.value)
+    })
+    const switchClick = (index: number) => {
+      currentIndex.value = index
+      emit('clickItemIndex', currentIndex.value)
+    }
+    return {
+      currentIndex,
+      switchClick
     }
   }
 })
