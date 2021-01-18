@@ -6,7 +6,7 @@
       <span class="mx-5">农历八月初八</span>
       <span>星期四</span>
     </div>
-    <div class="flex text-sm list-none mt-4 overflow-hidden rounded-t border-b border-gray-100">
+    <div v-if="isPost" class="flex text-sm list-none mt-4 overflow-hidden rounded-t border-b border-gray-100">
       <slot name="switch"></slot>
     </div>
     <div class="m-3">
@@ -19,6 +19,11 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-
+  props: {
+    'isPost': {
+      type: Boolean,
+      default: false
+    }
+  }
 })
 </script>

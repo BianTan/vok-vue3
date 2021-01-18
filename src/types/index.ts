@@ -28,3 +28,16 @@ export interface PostDataProps {
   content: string;
   author: AuthorProps;
 }
+
+export interface RouteProps {
+  path: string;
+  name: string;
+  component: string;
+}
+export interface RouteListProps {
+  parentName?: string;
+  list?: RouteProps[];
+  path?: string;
+  name?: string;
+  component?: string;
+}

@@ -20,22 +20,22 @@ const menuList = [
   },
   {
     id: 1,
-    url: '/',
+    url: '/about',
     title: 'About'
   },
   {
     id: 2,
-    url: '/',
+    url: '/themes',
     title: 'Themes'
   },
   {
     id: 3,
-    url: '/',
+    url: '/guestbook',
     title: 'GuestBook'
   },
   {
     id: 4,
-    url: '/',
+    url: '/myfriends',
     title: 'MyFriends'
   }
 ]

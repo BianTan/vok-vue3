@@ -1,42 +1,54 @@
 import router from './index'
-import { RouteRecordRaw } from 'vue-router'
+import { RouteListProps } from '@/types'
 
-interface RouteProps {
-  path: string;
-  component: string;
-  name: string;
-}
-const routeList: RouteProps[] = [
+const routeList: RouteListProps[] = [
   {
-    "path": "/themes",
-    "name": "Themes",
-    "component": "Page"
-  },
-  {
-    "path": "/my-friends",
-    "name": "MyFriends",
-    "component": "Page"
+    parentName: 'Index',
+    list: [
+      {
+        path: '/about',
+        name: 'about',
+        component: 'index/Page'
+      },
+      {
+        path: '/themes',
+        name: 'themes',
+        component: 'index/Page'
+      },
+      {
+        path: '/guestbook',
+        name: 'guestbook',
+        component: 'index/Page'
+      },
+      {
+        path: '/myfriends',
+        name: 'myfriends',
+        component: 'index/Page'
+      }
+    ]
   }
 ]
 
-function getAsyncRoutes(routes: RouteProps[]) {
-  const res: RouteRecordRaw[] = []
-  // 遍历路由数组去重组可用的路由
-  routes.forEach((item: RouteProps) => {
-    const newItem: RouteRecordRaw = { path: '', redirect: '' }
-    newItem.component = require(`../views/${item.component}.vue`).default
-    newItem.path = item.path
-    newItem.name = item.name
-    res.push(newItem)
-  })
-  return res
-}
-router.beforeEach(async (to, from, next) => {
-  if (router.getRoutes().length <= 8) {
-    const routes = getAsyncRoutes(routeList)
-    for(const res of routes) {
-      router.addRoute(res)
+function addRoutes(routes: RouteListProps[]) {
+  routes.forEach((item: any) => {
+    if(item.list && item.parentName) {
+      item.list.forEach((val: any) => {
+        val.component = require(`@/views/${val.component}.vue`).default
+        router.addRoute(item.parentName, val)
+      })
+    } else {
+      item.component = require(`@/views/${item.component}.vue`).default
+      router.addRoute(item)
     }
+  })
+}
+
+let isLoaded = false
+
+router.beforeEach((to, from, next) => {
+  if(!isLoaded) {
+    addRoutes(routeList)
+    isLoaded = true
     next({ ...to, replace: true })
   } else {
     next()

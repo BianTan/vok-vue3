@@ -3,7 +3,7 @@
     <app-header />
     <div class="flex flex-col container mx-auto mt-32 px-6 lg:flex-row sm:px-0">
       <aside class="w-full mb-10 lg:mr-12 lg:w-80 lg:mb-0">
-        <sidebar class="sticky top-32 left-0">
+        <sidebar class="sticky top-32 left-0" :is-post="$route.meta.isPost">
           <template #switch>
             <sidebar-item :isActivate="true">站点信息</sidebar-item>
             <sidebar-item>文章目录</sidebar-item>
