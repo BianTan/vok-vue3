@@ -64,7 +64,7 @@ export default defineComponent({
     const outsideIsClick = useClickOutside(mobileMenuRef)
     watch(outsideIsClick, () => {
       if (outsideIsClick && mobileMenu.isShow) {
-        mobileMenu.isShow = false
+        mobileMenu.isShow = outsideIsClick.value = false
       }
     })
     return {
