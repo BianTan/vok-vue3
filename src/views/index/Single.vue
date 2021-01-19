@@ -27,7 +27,7 @@ const testData: PostListProps = {
     {
       'id': 1,
       'type': 0,
-      'comment_count': 0,
+      'comment_count': 12,
       'post_url': 'https://biandan-me-static.smartgslb.com/wp-content/uploads/2020/01/04c23d406ccfcf7789ddebc9f5a4f57c.jpg',
       'tag': ['测试1', '测试2'],
       'category': '默认分类',
@@ -39,7 +39,9 @@ const testData: PostListProps = {
         'name': 'BianDan',
         'description': '这个人太懒了，什么都没有说',
         'avatar_url': ''
-      }
+      },
+      'createdAt': '2020-01-17T15:22:22.983Z',
+      'updatedAt': '2020-01-17T15:22:22.983Z'
     },
     {
       'id': 2,
@@ -56,12 +58,14 @@ const testData: PostListProps = {
         'name': 'BianDan',
         'description': '这个人太懒了，什么都没有说',
         'avatar_url': 'http://60.205.248.2/images/ava.jpg'
-      }
+      },
+      'createdAt': '2020-01-17T15:22:22.983Z',
+      'updatedAt': '2020-01-17T15:22:22.983Z'
     },
     {
       'id': 3,
       'type': 0,
-      'comment_count': 0,
+      'comment_count': 11,
       'post_url': '',
       'tag': ['测试1', '测试2'],
       'category': '默认分类',
@@ -73,12 +77,14 @@ const testData: PostListProps = {
         'name': 'BianDan',
         'description': '这个人太懒了，什么都没有说',
         'avatar_url': ''
-      }
+      },
+      'createdAt': '2020-01-17T15:22:22.983Z',
+      'updatedAt': '2020-01-17T15:22:22.983Z'
     },
     {
       'id': 4,
       'type': 0,
-      'comment_count': 0,
+      'comment_count': 8,
       'post_url': 'https://biandan-me-static.smartgslb.com/wp-content/uploads/2018/08/bilibili.png',
       'tag': ['测试1', '测试2'],
       'category': '默认分类',
@@ -90,7 +96,9 @@ const testData: PostListProps = {
         'name': 'BianDan',
         'description': '这个人太懒了，什么都没有说',
         'avatar_url': ''
-      }
+      },
+      'createdAt': '2020-01-17T15:22:22.983Z',
+      'updatedAt': '2020-01-17T15:22:22.983Z'
     }
   ]
 }

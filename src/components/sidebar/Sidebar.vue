@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white shadow overflow-hidden rounded py-10 px-6">
-    <div class="text-lg tracking-wider">{{now.format('YY年 M月DD日')}}</div>
+    <div class="text-lg">{{now.format('YYYY 年 MM 月 DD 日')}}</div>
     <div class="flex mt-2 text-sm text-gray-400 space-x-5">
       <span>{{now.format('MMM.DD').toUpperCase()}}</span>
       <span>{{now.format('今天是星期 d 哟')}}</span>

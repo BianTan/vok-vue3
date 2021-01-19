@@ -27,6 +27,8 @@ export interface PostDataProps {
   description: string;
   content: string;
   author: AuthorProps;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface RouteProps {

@@ -1,13 +1,18 @@
 <template>
   <article v-if="postData.type === 0" class="bg-white rounded overflow-hidden shadow pb-6" :class="[{'pt-6': postData.post_url.length === 0}]">
-    <router-link :to="`/post/${postData.id}.html`" class="h-60 w-full inline-block" v-if="postData.post_url.length !== 0">
+    <router-link :to="`/post/${postData.id}.html`" class="h-60 w-full inline-block mb-3" v-if="postData.post_url.length !== 0">
       <img :src="postData.post_url" alt="title" class="w-full h-full object-cover">
     </router-link>
-    <tag-box class="px-8 mt-2">
-      <tag-item v-for="(tag, index) in postData.tag" :key="index" :url="tag">{{tag}}</tag-item>
-    </tag-box>
-    <router-link class="px-8 my-4 font-bold text-2xl inline-block" :to="`/post/${postData.id}.html`">{{postData.title}}</router-link>
-    <p class="px-8 text-sm text-gray-400 text-justify">{{postData.description}}</p>
+    <router-link class="px-8 mt-1 mb-3 font-bold text-2xl inline-block" :to="`/post/${postData.id}.html`">{{postData.title}}</router-link>
+    <p class="px-8 text-sm text-gray-500 text-justify">{{postData.description}}</p>
+    <info-list class="select-none">
+      <info-item iconName="date">{{createdDate}}</info-item>
+      <info-item iconName="comment">{{commentCount}}</info-item>
+      <info-item iconName="category"><router-link :to="`/category/${postData.category}`">{{postData.category}}</router-link></info-item>
+      <info-item iconName="tags">
+        <router-link v-for="(tag, index) in postData.tag" :key="index" :to="`/tag/${tag}`" class="text-sm">{{tag}}</router-link>
+      </info-item>
+    </info-list>
   </article>
   <article v-else-if="postData.type === 1" class="flex">
     <img :src="postData.author.avatar_url" :alt="postData.author.name" class="h-16 w-16 object-cover shadow rounded-full">
@@ -19,10 +24,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, computed } from 'vue'
 import { PostDataProps } from '@/types'
-import TagBox from '../tag/TagBox.vue'
-import TagItem from '../tag/TagItem.vue'
+import dayjs from 'dayjs'
+import InfoList from './info/InfoList.vue'
+import InfoItem from './info/InfoItem.vue'
 
 export default defineComponent({
   props: {
@@ -32,8 +38,25 @@ export default defineComponent({
     }
   },
   components: {
-    TagBox,
-    TagItem
+    InfoList,
+    InfoItem
+  },
+  setup(props) {
+    const commentCount = computed(() => {
+      const count = props.postData.comment_count
+      if(count === 0) {
+        return '暂无评论'
+      } else {
+        return `${count} 条评论`
+      }
+    })
+    const createdDate = computed(() => {
+      return dayjs(props.postData.createdAt).format('YYYY 年 MM 月 DD 日')
+    })
+    return {
+      commentCount,
+      createdDate
+    }
   }
 })
 </script>
