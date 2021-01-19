@@ -1,10 +1,9 @@
 <template>
   <div class="bg-white shadow overflow-hidden rounded py-10 px-6">
-    <div class="text-lg">9月24日</div>
-    <div class="flex mt-2 text-sm text-gray-400">
-      <span>SEP.24</span>
-      <span class="mx-5">农历八月初八</span>
-      <span>星期四</span>
+    <div class="text-lg tracking-wider">{{now.format('YY年 M月DD日')}}</div>
+    <div class="flex mt-2 text-sm text-gray-400 space-x-5">
+      <span>{{now.format('MMM.DD').toUpperCase()}}</span>
+      <span>{{now.format('今天是星期 d 哟')}}</span>
     </div>
     <div v-if="isPost" class="flex text-sm list-none mt-4 overflow-hidden rounded-t border-b border-gray-100">
       <sidebar-item v-for="(item, index) in switchItem" :key="index" @click="switchClick(index)" :isActivate="index === currentIndex">{{item}}</sidebar-item>
@@ -17,6 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
+import dayjs from 'dayjs'
 import SidebarItem from './SidebarItem.vue'
 
 export default defineComponent({
@@ -35,6 +35,7 @@ export default defineComponent({
     SidebarItem
   },
   setup(props, { emit }) {
+    const now = dayjs()
     const currentIndex = ref(1)
     watch(() => props.isPost, (e: boolean) => {
       if (e) {
@@ -50,7 +51,8 @@ export default defineComponent({
     }
     return {
       currentIndex,
-      switchClick
+      switchClick,
+      now
     }
   }
 })
