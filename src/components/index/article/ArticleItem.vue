@@ -5,7 +5,7 @@
     </router-link>
     <router-link class="px-8 mt-1 mb-3 text-xl sm:text-2xl inline-block" :to="`/post/${postData.id}.html`">{{postData.title}}</router-link>
     <p class="px-8 text-sm text-gray-500 text-justify">{{postData.description}}</p>
-    <info-list class="select-none">
+    <info-list class="px-8 mt-2">
       <info-item iconName="date">{{createdDate}}</info-item>
       <info-item iconName="comment">{{commentCount}}</info-item>
       <info-item iconName="category"><router-link :to="`/category/${postData.category}`">{{postData.category}}</router-link></info-item>
@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { PostDataProps } from '@/types'
-import dayjs from 'dayjs'
-import InfoList from './info/InfoList.vue'
-import InfoItem from './info/InfoItem.vue'
-import Card from '../Card.vue'
+import { useCommentCount, useDayjs } from '@/utlis/useDayjs'
+import InfoList from '../info/InfoList.vue'
+import InfoItem from '../info/InfoItem.vue'
+import Card from '@/components/Card.vue'
 
 export default defineComponent({
   props: {
@@ -44,17 +44,8 @@ export default defineComponent({
     Card
   },
   setup(props) {
-    const commentCount = computed(() => {
-      const count = props.postData.comment_count
-      if(count === 0) {
-        return '暂无评论'
-      } else {
-        return `${count} 条评论`
-      }
-    })
-    const createdDate = computed(() => {
-      return dayjs(props.postData.createdAt).format('YYYY 年 MM 月 DD 日')
-    })
+    const commentCount = useCommentCount(props.postData.comment_count)
+    const createdDate = useDayjs(props.postData.createdAt, 'YYYY 年 MM 月 DD 日')
     return {
       commentCount,
       createdDate

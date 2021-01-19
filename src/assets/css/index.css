@@ -6,3 +6,31 @@ body {
   background: #F5F6F7;
   font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
 }
+
+#post_content p {
+  @apply leading-7 text-sm sm:text-base;
+}
+#post_content img {
+  @apply max-w-full rounded;
+}
+#post_content a {
+  @apply text-blue-600 hover:text-blue-400 transition duration-200 ease-in-out;
+}
+#post_content h1 {
+  @apply text-5xl;
+}
+#post_content h2 {
+  @apply text-4xl;
+}
+#post_content h3 {
+  @apply text-3xl;
+}
+#post_content h4 {
+  @apply text-2xl;
+}
+#post_content h5 {
+  @apply text-xl;
+}
+#post_content h6 {
+  @apply text-lg;
+}

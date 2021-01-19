@@ -18,7 +18,7 @@
 import { defineComponent, ref, watch } from 'vue'
 import dayjs from 'dayjs'
 import SidebarItem from './SidebarItem.vue'
-import Card from '../Card.vue'
+import Card from '@/components/Card.vue'
 
 export default defineComponent({
   props: {

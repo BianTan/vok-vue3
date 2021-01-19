@@ -1,6 +1,6 @@
 <template>
   <teleport to='#sidebar-menu'>
-    <div v-show="topBtnShow" @click="handleBackTopClick" class="fixed cursor-pointer transition ease-in-out duration-200 right-8 bottom-18 w-11 h-11 leading-11 text-center rounded shadow hover:shadow-lg bg-white text-gray-400">
+    <div v-show="topBtnShow" @click="handleBackTopClick" class="fixed cursor-pointer transition ease-in-out duration-200 right-8 bottom-18 w-11 h-11 leading-11 text-center rounded shadow-md hover:shadow-lg bg-white text-gray-400">
       <i class="iconfont icon-top"/>
     </div>
   </teleport>

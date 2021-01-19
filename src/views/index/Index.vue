@@ -1,9 +1,9 @@
 <template>
   <div>
     <app-header />
-    <div class="flex flex-col container mx-auto mt-32 px-6 lg:flex-row sm:px-0">
+    <div class="flex flex-col container mx-auto mt-28 sm:mt-32 px-3 lg:flex-row sm:px-0">
       <aside class="hidden sm:block w-full mb-10 lg:mr-12 lg:w-80 lg:mb-0">
-        <sidebar class="sticky top-24 left-0"
+        <sidebar class="relative sm:sticky top-24 left-0"
           :isPost="isPost"
           :switch-item="switchItem"
           @clickItemIndex="clickItemIndex">
@@ -28,7 +28,7 @@
 import { computed, defineComponent, onMounted, reactive, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
-import Sidebar from '@/components/sidebar/Sidebar.vue'
+import Sidebar from '@/components/index/sidebar/Sidebar.vue'
 import SidebarMenu from '@/components/SidebarMenu.vue'
 
 export default defineComponent({

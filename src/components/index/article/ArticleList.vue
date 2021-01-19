@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, computed } from 'vue'
-import { PageEventsProps } from '../../types'
+import { PageEventsProps } from '@/types'
 import ArticleButton from './ArticleButton.vue'
 
 export default defineComponent({

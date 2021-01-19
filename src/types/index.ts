@@ -4,6 +4,9 @@ export interface PageEventsProps {
   currentChange: (value: Number) => void;
 }
 
+/**
+ * 文章
+*/
 export interface PostListProps {
   total: number;
   pageSize: number;
@@ -31,6 +34,9 @@ export interface PostDataProps {
   updatedAt: string;
 }
 
+/**
+ * 路由
+*/
 export interface RouteProps {
   path: string;
   name: string;
