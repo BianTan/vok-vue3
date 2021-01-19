@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-wrap items-center">
-    <i class="iconfont icon-tags text-blue-800 text-base mr-2"></i>
+  <div class="flex flex-wrap items-center space-x-3">
+    <i class="iconfont icon-tags text-blue-800 text-base"></i>
     <slot/>
   </div>
 </template>

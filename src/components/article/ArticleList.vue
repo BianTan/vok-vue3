@@ -1,14 +1,14 @@
 <template>
-  <div id="article-list">
+  <div class="space-y-12">
     <slot/>
-    <div class="my-14 flex items-center justify-center select-none">
+    <div class="my-14 flex items-center justify-center select-none space-x-4">
       <article-button @click.prevent="prevClick">&lt;</article-button>
-      <ul class="mx-2 flex">
+      <ul class="flex">
         <li v-for="item in pageComputed"
           :key="item"
           @click="currentChange(item)"
           :class="isActivate(item)"
-          class="mx-2 text-center leading-10 h-10 w-10 text-base font-medium rounded border transition ease-in-out duration-200">
+          class="text-center leading-10 h-10 w-10 text-base font-medium rounded border transition ease-in-out duration-200">
           {{item}}
         </li>
       </ul>
