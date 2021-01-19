@@ -10,7 +10,6 @@ import AccountIndex from '@/views/account/AccountIndex.vue'
 import Account from '@/views/account/Account.vue'
 import Login from '@/views/account/Login.vue'
 
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -20,33 +19,49 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/',
         name: 'Home',
-        component: Single
+        component: Single,
+        meta: {
+          title: '我是笨蛋小扁担 - 扁担长 板凳宽 | BianTanW | BianDan'
+        }
       },
       {
         path: '/tag/:id',
         name: 'Tag',
-        component: Single
+        component: Single,
+        meta: {
+          title: 'Tag'
+        }
       },
       {
         path: '/category/:id',
         name: 'Category',
-        component: Single
+        component: Single,
+        meta: {
+          title: 'Category'
+        }
       },
       {
         path: '/search',
         name: 'Search',
-        component: Single
+        component: Single,
+        meta: {
+          title: 'Search'
+        }
       },
       {
         path: '/page/:id',
         name: 'Page',
-        component: Single
+        component: Single,
+        meta: {
+          title: 'Page'
+        }
       },
       {
         path: '/post/:id',
         name: 'Post',
         component: Post,
         meta: {
+          title: 'Post',
           isPost: true
         }
       }
@@ -68,12 +83,18 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/account/:id',
         name: 'Account',
-        component: Account
+        component: Account,
+        meta: {
+          title: '个人信息'
+        }
       },
       {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: Login,
+        meta: {
+          title: '登录'
+        }
       }
     ]
   },

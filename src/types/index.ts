@@ -33,6 +33,10 @@ export interface RouteProps {
   path: string;
   name: string;
   component: string;
+  meta: RouteMetaProps;
+}
+export interface RouteMetaProps {
+  title: String;
 }
 export interface RouteListProps {
   parentName?: string;
@@ -40,4 +44,5 @@ export interface RouteListProps {
   path?: string;
   name?: string;
   component?: string;
+  meta?: RouteMetaProps;
 }
