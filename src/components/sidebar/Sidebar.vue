@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow overflow-hidden rounded py-10 px-6">
+  <card class="py-10 px-6">
     <div class="text-lg">{{now.format('YYYY 年 MM 月 DD 日')}}</div>
     <div class="flex mt-2 text-sm text-gray-400 space-x-5">
       <span>{{now.format('MMM.DD').toUpperCase()}}</span>
@@ -11,13 +11,14 @@
     <div class="m-3" :class="[{'border-t border-gray-100 mt-6 pt-3': !isPost}]">
       <slot name="content"></slot>
     </div>
-  </div>
+  </card>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
 import dayjs from 'dayjs'
 import SidebarItem from './SidebarItem.vue'
+import Card from '../Card.vue'
 
 export default defineComponent({
   props: {
@@ -32,7 +33,8 @@ export default defineComponent({
   },
   emits: ['clickItemIndex'],
   components: {
-    SidebarItem
+    SidebarItem,
+    Card
   },
   setup(props, { emit }) {
     const now = dayjs()

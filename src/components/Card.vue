@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-4" v-if="isShow">
+  <div class="shadow bg-white rounded">
     <slot/>
   </div>
 </template>
@@ -8,11 +8,6 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  props: {
-    isShow: {
-      type: Boolean,
-      default: false
-    }
-  }
+
 })
 </script>

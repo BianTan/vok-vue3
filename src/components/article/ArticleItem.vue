@@ -3,7 +3,7 @@
     <router-link :to="`/post/${postData.id}.html`" class="h-60 w-full inline-block mb-3" v-if="postData.post_url.length !== 0">
       <img :src="postData.post_url" alt="title" class="w-full h-full object-cover">
     </router-link>
-    <router-link class="px-8 mt-1 mb-3 font-bold text-2xl inline-block" :to="`/post/${postData.id}.html`">{{postData.title}}</router-link>
+    <router-link class="px-8 mt-1 mb-3 text-xl sm:text-2xl inline-block" :to="`/post/${postData.id}.html`">{{postData.title}}</router-link>
     <p class="px-8 text-sm text-gray-500 text-justify">{{postData.description}}</p>
     <info-list class="select-none">
       <info-item iconName="date">{{createdDate}}</info-item>
@@ -16,10 +16,10 @@
   </article>
   <article v-else-if="postData.type === 1" class="flex">
     <img :src="postData.author.avatar_url" :alt="postData.author.name" class="h-16 w-16 object-cover shadow rounded-full">
-    <div class="flex-1 rounded shadow relative ml-10 px-7 py-5 bg-white">
+    <card class="flex-1 relative ml-10 px-7 py-5">
       <i class="iconfont icon-quote text-white bg-blue-800 w-8 h-8 rounded-full flex items-center justify-center absolute -top-3 -left-4"></i>
       <p class="text-gray-700">{{postData.content}}</p>
-    </div>
+    </card>
   </article>
 </template>
 
@@ -29,6 +29,7 @@ import { PostDataProps } from '@/types'
 import dayjs from 'dayjs'
 import InfoList from './info/InfoList.vue'
 import InfoItem from './info/InfoItem.vue'
+import Card from '../Card.vue'
 
 export default defineComponent({
   props: {
@@ -39,7 +40,8 @@ export default defineComponent({
   },
   components: {
     InfoList,
-    InfoItem
+    InfoItem,
+    Card
   },
   setup(props) {
     const commentCount = computed(() => {
