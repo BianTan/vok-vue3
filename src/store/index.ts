@@ -6,25 +6,31 @@ import { get } from '@/network'
 export default createStore<StateProps>({
   state: {
     routes: null,
-    currentPost: { data: {} }
+    currentPost: { loadedPost:[], data: {} }
   },
   mutations: {
-    setCurrentPost({ currentPost }, res) {
+    setCurrentPost({ currentPost }, { res, id }) {
       currentPost.data = { ...currentPost.data, ...res }
+      currentPost.loadedPost.push(id)
     }
   },
   actions: {
-    async getCurrentPost({ commit }) {
-      const res = await get('http://localhost')
-      commit('setCurrentPost', arrToObj(res.data))
+    async getCurrentPost({ state, commit }, id) {
+      const index = state.currentPost.loadedPost.indexOf(id)
+      if(index < 0) { // 如果当前文章未请求过数据才 get
+        const res = await get(`http://localhost?id=${id}`)
+        commit('setCurrentPost', { res: arrToObj(res.data), id })
+      }
     }
   },
   getters: {
     getRoutes: (state) => {
       return state.routes
     },
-    getCurrentPost: (state) => {
-      return state.currentPost
+    getCurrentPost: (state) => (id: string) => {
+      console.log(id)
+      console.log(state.currentPost.data)
+      return state.currentPost.data[id]
     }
   },
   modules: {

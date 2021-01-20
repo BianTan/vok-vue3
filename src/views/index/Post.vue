@@ -62,11 +62,11 @@ export default defineComponent({
     }).use(emoji)
 
     const id = route.params.id[0]
-    const currentPost = computed<PostDataProps>(() => store.getters.getCurrentPost.data[id])
+    store.dispatch('getCurrentPost', id)
+    const currentPost = computed<PostDataProps>(() => store.getters.getCurrentPost(id))
     const commentCount = computed(() => useCommentCount(currentPost.value.comment_count))
     const createdDate = computed(() => useDayjs(currentPost.value.createdAt, 'YYYY 年 MM 月 DD 日'))
-    if(!currentPost.value) store.dispatch('getCurrentPost') // 如果当前文章未请求过数据才 get
-
+    
     const currentHTML = computed(() => {
       if(currentPost.value && currentPost.value.content) {
         return md.render(currentPost.value.content)

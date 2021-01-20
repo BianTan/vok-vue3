@@ -20,7 +20,7 @@ export interface AuthorProps {
   avatar_url: string;
 }
 export interface PostDataProps {
-  id: number;
+  id: string;
   type: number;
   comment_count: number;
   post_url: string;
@@ -37,6 +37,7 @@ export interface PostDataProps {
 export interface StateProps {
   routes: null;
   currentPost: {
+    loadedPost: number[];
     data: ListProps<PostDataProps>;
   };
 }
