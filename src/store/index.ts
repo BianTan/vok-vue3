@@ -28,8 +28,6 @@ export default createStore<StateProps>({
       return state.routes
     },
     getCurrentPost: (state) => (id: string) => {
-      console.log(id)
-      console.log(state.currentPost.data)
       return state.currentPost.data[id]
     }
   },

@@ -20,7 +20,7 @@
       <div id="post_content" class="text-gray-700" v-html="currentHTML"></div>
     </card>
     <skeleton-post v-else />
-    <comment-list>
+    <comment-list id="comment-list">
       Hello
     </comment-list>
   </div>
