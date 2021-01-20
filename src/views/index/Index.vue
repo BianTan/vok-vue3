@@ -40,24 +40,23 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const indexData = reactive({
-      currentIndex: 0,
-      isPost: computed(() => {
+      currentIndex: 0,  // 控制当前显示哪个侧边栏选项卡 （站点信息？文章目录？）
+      isPost: computed(() => {  // 返回当前是否是文章页面
         return route.meta.isPost
       } ),
-      switchItem: ['站点信息', '文章目录']
+      switchItem: ['站点信息', '文章目录'],  // 选项卡标题 ...
+      clickItemIndex: (index: number) => {  // 获取当前点击的选项卡的 index
+        indexData.currentIndex = index
+      }
     })
-    const clickItemIndex = (index: number) => {
-      indexData.currentIndex = index
-    }
     onMounted(() => {
-      if(indexData.isPost) {
-        indexData.currentIndex = 1
-      } else {
-        indexData.currentIndex = 0
+      if(indexData.isPost) {  // 如果当前是文章页面
+        indexData.currentIndex = 1  // 显示 文章目录 选项卡
+      } else {  // 否则
+        indexData.currentIndex = 0  // 显示 站点信息 选项卡
       }
     })
     return {
-      clickItemIndex,
       ...toRefs(indexData)
     }
   }

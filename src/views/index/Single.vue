@@ -25,7 +25,7 @@ const testData: PostListProps = {
   'currentPage': 1,
   'list': [
     {
-      'id': 1,
+      'id': '1',
       'type': 0,
       'comment_count': 12,
       'post_url': 'https://biandan-me-static.smartgslb.com/wp-content/uploads/2020/01/04c23d406ccfcf7789ddebc9f5a4f57c.jpg',
@@ -44,7 +44,7 @@ const testData: PostListProps = {
       'updatedAt': '2020-01-17T15:22:22.983Z'
     },
     {
-      'id': 2,
+      'id': '2',
       'type': 1,
       'comment_count': 0,
       'post_url': '',
@@ -63,7 +63,7 @@ const testData: PostListProps = {
       'updatedAt': '2020-01-17T15:22:22.983Z'
     },
     {
-      'id': 3,
+      'id': '3',
       'type': 0,
       'comment_count': 11,
       'post_url': '',
@@ -82,7 +82,7 @@ const testData: PostListProps = {
       'updatedAt': '2020-01-17T15:22:22.983Z'
     },
     {
-      'id': 4,
+      'id': '4',
       'type': 0,
       'comment_count': 8,
       'post_url': 'https://biandan-me-static.smartgslb.com/wp-content/uploads/2018/08/bilibili.png',

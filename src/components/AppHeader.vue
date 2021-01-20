@@ -55,16 +55,16 @@ export default defineComponent({
   },
   setup() {
     const mobileMenu = reactive({
-      isShow: false,
-      handleMenuClick: () => {
+      isShow: false,  // 控制手机版面的 Menu 是否显示
+      handleMenuClick: () => {  // 切换显示状态
         mobileMenu.isShow = !mobileMenu.isShow
       }
     })
-    const mobileMenuRef = ref<null | HTMLElement>(null)
-    const outsideIsClick = useClickOutside(mobileMenuRef)
-    watch(outsideIsClick, () => {
-      if (outsideIsClick && mobileMenu.isShow) {
-        mobileMenu.isShow = outsideIsClick.value = false
+    const mobileMenuRef = ref<null | HTMLElement>(null) // 获取手机版面 Menu 的 DOM
+    const outsideIsClick = useClickOutside(mobileMenuRef) // 是否点击了手机版面 Menu 的外面
+    watch(outsideIsClick, () => { // 状态发生改变
+      if (outsideIsClick && mobileMenu.isShow) {  // 如果点击了外面并且 Menu 打开了
+        mobileMenu.isShow = outsideIsClick.value = false  // 关闭手机 Menu
       }
     })
     return {

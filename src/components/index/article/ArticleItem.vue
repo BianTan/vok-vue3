@@ -24,9 +24,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, computed } from 'vue'
 import { PostDataProps } from '@/types'
-import { useCommentCount, useDayjs } from '@/utlis/useDayjs'
+import { useCommentCount, useDayjs } from '@/utlis'
 import InfoList from '../info/InfoList.vue'
 import InfoItem from '../info/InfoItem.vue'
 import Card from '@/components/Card.vue'
@@ -44,8 +44,8 @@ export default defineComponent({
     Card
   },
   setup(props) {
-    const commentCount = useCommentCount(props.postData.comment_count)
-    const createdDate = useDayjs(props.postData.createdAt, 'YYYY 年 MM 月 DD 日')
+    const commentCount = computed(() => useCommentCount(props.postData.comment_count))
+    const createdDate = computed(() => useDayjs('YYYY 年 MM 月 DD 日', props.postData.createdAt))
     return {
       commentCount,
       createdDate
