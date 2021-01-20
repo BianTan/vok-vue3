@@ -27,9 +27,9 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
-import AppHeader from '@/components/AppHeader.vue'
+import AppHeader from '@/components/index/AppHeader.vue'
 import Sidebar from '@/components/index/sidebar/Sidebar.vue'
-import SidebarMenu from '@/components/SidebarMenu.vue'
+import SidebarMenu from '@/components/index/SidebarMenu.vue'
 
 export default defineComponent({
   components: {

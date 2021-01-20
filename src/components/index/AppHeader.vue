@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent, toRefs, watch, reactive, ref } from 'vue'
 import useClickOutside from '@/utlis/useClickOutside'
-import TransitionDefault from './transition/TransitionDefault.vue'
+import TransitionDefault from '../transition/TransitionDefault.vue'
 const menuList = [
   {
     id: 0,
