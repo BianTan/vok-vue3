@@ -2,7 +2,7 @@
   <header class="shadow-md fixed top-0 left-0 w-full bg-white z-40 h-18" ref="mobileMenuRef">
     <menu class="flex container mx-auto my-0 px-8 h-full items-center justify-between">
       <router-link to="/" class="font-bold">我是笨蛋小扁担</router-link>
-      <nav class="hidden lg:block space-x-3">
+      <nav class="hidden lg:block space-x-6">
         <router-link :to="item.url" v-for="item in menuList" :key="item.id">{{item.title}}</router-link>
       </nav>
       <i class="iconfont icon-search text-2xl cursor-pointer" @click="handleMenuClick" />

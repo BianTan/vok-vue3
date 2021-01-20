@@ -34,6 +34,16 @@ export interface PostDataProps {
   updatedAt: string;
 }
 
+export interface StateProps {
+  routes: null;
+  currentPost: {
+    data: ListProps<PostDataProps>;
+  };
+}
+export interface ListProps<P> {
+  [id: string]: P;
+}
+
 /**
  * 路由
 */

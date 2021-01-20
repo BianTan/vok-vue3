@@ -1,7 +1,7 @@
 import router from './index'
 import { RouteListProps } from '@/types'
+import { titleSuffix } from '@/utlis/config'
 
-const title = ' - 我是笨蛋小扁担'
 const routeList: RouteListProps[] = [
   {
     parentName: 'Index',
@@ -59,7 +59,7 @@ function addRoutes(routes: RouteListProps[]) {
 let isLoaded = false
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title + title
+  document.title = to.meta.title + titleSuffix
   if(!isLoaded) {
     addRoutes(routeList)
     isLoaded = true
