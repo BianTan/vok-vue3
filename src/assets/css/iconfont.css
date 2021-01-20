@@ -64,39 +64,39 @@
 }
 
 /** 后台 **/
-icon-small::before {
-  ontent: '\e616';
+.icon-small::before {
+  content: '\e616';
 }
-icon-big::before {
-  ontent: '\eb8f';
+.icon-big::before {
+  content: '\eb8f';
 }
-icon-check::before {
-  ontent: '\e606';
+.icon-check::before {
+  content: '\e606';
 }
-icon-down::before {
-  ontent: '\e6b9';
+.icon-down::before {
+  content: '\e6b9';
 }
-icon-setting::before {
-  ontent: '\e659';
+.icon-setting::before {
+  content: '\e659';
 }
-icon-post::before {
-  ontent: '\e607';
+.icon-post::before {
+  content: '\e608';
 }
-icon-page::before {
-  ontent: '\e772';
+.icon-page::before {
+  content: '\e772';
 }
-icon-home::before {
-  ontent: '\e63d';
+.icon-home::before {
+  content: '\e63d';
 }
-icon-edit::before {
-  ontent: '\e622';
+.icon-edit::before {
+  content: '\e622';
 }
-icon-off::before {
-  ontent: '\e7ea';
+.icon-off::before {
+  content: '\e7ea';
 }
-icon-user::before {
-  ontent: '\e640';
+.icon-user::before {
+  content: '\e640';
 }
-icon-comment-admin::before {
-  ontent: '\e609';
+.icon-comment-admin::before {
+  content: '\e609';
 }

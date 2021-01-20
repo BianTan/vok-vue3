@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import Card from '@/components/Card.vue'
+import Card from '@/components/index/Card.vue'
 
 export default defineComponent({
   components: { Card },

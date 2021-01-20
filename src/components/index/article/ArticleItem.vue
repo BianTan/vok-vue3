@@ -29,7 +29,7 @@ import { PostDataProps } from '@/types'
 import { useCommentCount, useDayjs } from '@/utlis'
 import InfoList from '../info/InfoList.vue'
 import InfoItem from '../info/InfoItem.vue'
-import Card from '@/components/Card.vue'
+import Card from '@/components/index/Card.vue'
 
 export default defineComponent({
   props: {

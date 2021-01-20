@@ -71,6 +71,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/vok-admin',
     name: 'AdminIndex',
     component: AdminIndex,
+    meta: {
+      title: '仪表盘'
+    },
     children: [
 
     ]
