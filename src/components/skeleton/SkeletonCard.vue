@@ -1,3 +1,3 @@
 <template>
-  <div class="bg-blue-400 rounded h-4"></div>
+  <div class="bg-blue-300 rounded h-4"></div>
 </template>
