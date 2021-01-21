@@ -22,6 +22,9 @@ module.exports = {
           '800': '#31677a', 
           '900': '#285464'
         }
+      },
+      boxShadow: {
+        'admin': '0 4px 6px rgba(10,45,80,0.05)'
       }
     },
     screens: {

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex" :class="switchSmall">
     <sidebar>
       <sidebar-item
         v-for="item in menuList"
@@ -10,7 +10,7 @@
         {{item.name}}
       </sidebar-item>
     </sidebar>
-    <div class="flex-1">
+    <div class="flex-1 px-14 py-8">
       <app-header />
       <router-view />
     </div>
@@ -18,7 +18,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
 import { menuList } from '@/utlis/config'
 import Sidebar from '@/components/admin/sidebar/Sidebar.vue'
 import SidebarItem from '@/components/admin/sidebar/SidebarItem.vue'
@@ -31,8 +32,15 @@ export default defineComponent({
     SidebarItem
   },
   setup() {
+    const store = useStore()
+    const adminScreenSmall = computed(() => store.state.adminScreenSmall)
+    const switchSmall = computed(() => {
+      if(adminScreenSmall.value) return 'container mx-auto'
+      return ''
+    })
     return {
-      menuList
+      menuList,
+      switchSmall
     }
   }
 })

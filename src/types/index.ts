@@ -36,6 +36,7 @@ export interface PostDataProps {
 
 export interface StateProps {
   routes: null;
+  adminScreenSmall: boolean;
   currentPost: {
     loadedPost: number[];
     data: ListProps<PostDataProps>;

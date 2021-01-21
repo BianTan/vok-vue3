@@ -7,6 +7,7 @@ body {
   font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
 }
 
+/** 文章 **/
 #post_content p {
   @apply leading-7 text-sm sm:text-base;
 }
@@ -33,4 +34,9 @@ body {
 }
 #post_content h6 {
   @apply text-lg;
+}
+
+/** 后台 header **/
+#admin-header span:not(:first-child) {
+  @apply border-l border-gray-200 pl-6;
 }

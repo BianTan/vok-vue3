@@ -6,12 +6,16 @@ import { get } from '@/network'
 export default createStore<StateProps>({
   state: {
     routes: null,
+    adminScreenSmall: !!Number(localStorage.getItem('adminScreenSmall')),
     currentPost: { loadedPost:[], data: {} }
   },
   mutations: {
     setCurrentPost({ currentPost }, { res, id }) {
       currentPost.data = { ...currentPost.data, ...res }
       currentPost.loadedPost.push(id)
+    },
+    setAdminScreenSmall(state, payload) {
+      state.adminScreenSmall = payload
     }
   },
   actions: {
