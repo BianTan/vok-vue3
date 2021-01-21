@@ -38,5 +38,5 @@ body {
 
 /** 后台 header **/
 #admin-header span:not(:first-child) {
-  @apply border-l border-gray-200 pl-6;
+  @apply md:border-l md:border-gray-200 md:pl-6;
 }

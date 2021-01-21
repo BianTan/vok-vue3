@@ -1,6 +1,6 @@
 <template>
   <div class="flex" :class="switchSmall">
-    <sidebar>
+    <sidebar class="top-0 left-0 transform fixed lg:translate-x-0 lg:relative" :class="[{'-translate-x-full ': !isMenuShow}]">
       <sidebar-item
         v-for="item in menuList"
         :key="item.id"
@@ -10,37 +10,47 @@
         {{item.name}}
       </sidebar-item>
     </sidebar>
-    <div class="flex-1 px-14 py-8">
-      <app-header />
+    <div class="flex-1 px-0 md:px-14 py-0 md:py-8">
+      <app-header @menuIconClick="handleMenuClick" />
       <router-view />
     </div>
+    <mask-shadow class="block lg:hidden" @maskClick="handleMaskClick" :isShow="isMenuShow"/>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { menuList } from '@/utlis/config'
 import Sidebar from '@/components/admin/sidebar/Sidebar.vue'
 import SidebarItem from '@/components/admin/sidebar/SidebarItem.vue'
 import AppHeader from '@/components/admin/AppHeader.vue'
+import MaskShadow from '@/components/Mask.vue'
 
 export default defineComponent({
   components: {
     Sidebar,
     AppHeader,
-    SidebarItem
+    SidebarItem,
+    MaskShadow
   },
   setup() {
     const store = useStore()
     const adminScreenSmall = computed(() => store.state.adminScreenSmall)
     const switchSmall = computed(() => {
-      if(adminScreenSmall.value) return 'container mx-auto'
-      return ''
+      if(adminScreenSmall.value) return 'lg:container lg:mx-auto'
+      return 'mx-auto'
     })
+
+    const isMenuShow = ref(false)
+    const handleMenuClick = () => isMenuShow.value = !isMenuShow.value
+    const handleMaskClick = () => isMenuShow.value = false
     return {
       menuList,
-      switchSmall
+      switchSmall,
+      isMenuShow,
+      handleMenuClick,
+      handleMaskClick
     }
   }
 })
