@@ -60,7 +60,7 @@ export default defineComponent({
         mobileMenu.isShow = !mobileMenu.isShow
       }
     })
-    const mobileMenuRef = ref<null | HTMLElement>(null) // 获取手机版面 Menu 的 DOM
+    const mobileMenuRef = ref<null | HTMLElement>(null) // 手机版面 Menu 的 refs
     const outsideIsClick = useClickOutside(mobileMenuRef) // 是否点击了手机版面 Menu 的外面
     watch(outsideIsClick, () => { // 状态发生改变
       if (outsideIsClick && mobileMenu.isShow) {  // 如果点击了外面并且 Menu 打开了
