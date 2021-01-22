@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white text-gray-700 h-18 md:rounded-md shadow-admin flex items-center justify-end px-8 space-x-6 select-none" id="admin-header">
+  <div class="bg-white text-gray-700 h-18 md:rounded-md shadow-admin flex items-center justify-end px-8 space-x-6 select-none w-full" id="admin-header">
     <span class="hidden md:block">{{now}}</span>
     <span class="flex items-center"><i class="iconfont icon-user text-2xl mr-4"/>您好，BianDan</span>
     <span class="hidden lg:block"><i :class="[{'icon-small': !adminScreenSmall}, {'icon-big': adminScreenSmall}]" class="iconfont text-2xl cursor-pointer" @click="switchClick"/></span>

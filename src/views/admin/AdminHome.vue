@@ -1,22 +1,20 @@
 <template>
-  <div class="px-3 md:px-0">
-    <card class="w-full mt-8 p-8 md:pb-14">
-      <h1 class="text-2xl">欢迎使用 VokBlog</h1>
-      <div class="flex flex-col md:flex-row mt-3 md:mt-6 space-y-6 md:space-y-0">
-        <home-item title="开始使用">
-          <router-link class="text-white bg-admin-blue-500 inline-block py-4 px-8 rounded-md" to="/vok-admin">设置你的站点</router-link>
-        </home-item>
-        <home-item title="接下来" class="space-y-1">
-          <admin-link class="block">编辑文章</admin-link>
-          <admin-link class="block">添加页面</admin-link>
-        </home-item>
-        <home-item title="更多操作" class="space-y-1">
-          <admin-link class="block">编辑菜单</admin-link>
-          <admin-link class="block">打开/关闭评论</admin-link>
-        </home-item>
-      </div>
-    </card>
-  </div>
+  <card class="w-full mt-8 p-8 md:pb-14">
+    <h1 class="text-2xl">欢迎使用 VokBlog</h1>
+    <div class="flex flex-col md:flex-row mt-3 md:mt-6 space-y-6 md:space-y-0">
+      <home-item title="开始使用">
+        <router-link class="text-white bg-admin-blue-500 inline-block py-4 px-8 rounded-md" to="/vok-admin">设置你的站点</router-link>
+      </home-item>
+      <home-item title="接下来" class="space-y-1">
+        <admin-link class="block">编辑文章</admin-link>
+        <admin-link class="block">添加页面</admin-link>
+      </home-item>
+      <home-item title="更多操作" class="space-y-1">
+        <admin-link class="block">编辑菜单</admin-link>
+        <admin-link class="block">打开/关闭评论</admin-link>
+      </home-item>
+    </div>
+  </card>
   <div class="flex flex-col flex-wrap md:flex-row mt-6 md:mt-10 md:-mx-3">
     <home-card title="概览">
       <li v-for="item in info" :key="item.iconName" class="flex items-center">
@@ -32,14 +30,14 @@
     </home-card>
     <home-card title="最近评论" class="space-y-2">
       <li class="flex items-center" v-for="item in commentInfo" :key="item._id">
-        <img :src="item.author.avatar_url" :alt="item.author.name" class="h-10 w-10 rounded-full mr-4 border">
-        <div class="flex-1 truncate">
-          <p>
+        <img :src="item.author.avatar_url" :alt="item.author.name" class="h-10 w-10 rounded-full border">
+        <div class="flex-1 pl-4 overflow-hidden">
+          <p class="truncate">
             {{`${item.author.name} 在《`}}
             <admin-link :to="item.commentPost.url">{{item.commentPost.title}}</admin-link>
             {{`》中回复：`}}
           </p>
-          <p>{{item.commentPost.content}}</p>
+          <p class="truncate">{{item.commentPost.content}}</p>
         </div>
       </li>
     </home-card>
@@ -55,7 +53,12 @@ import AdminLink from '@/components/admin/AdminLink.vue'
 import HomeCard from '@/components/admin/home/HomeCard.vue'
 
 export default defineComponent({
-  components: { Card, HomeItem, AdminLink, HomeCard },
+  components: {
+    Card,
+    HomeItem,
+    AdminLink,
+    HomeCard
+  },
   setup() {
     const info = [
       {

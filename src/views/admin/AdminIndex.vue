@@ -6,13 +6,14 @@
         :key="item.id"
         :id="item.id"
         :url="item.url"
-        :iconName="item.iconName">
+        :iconName="item.iconName"
+        @click="handleItemClick">
         {{item.name}}
       </sidebar-item>
     </sidebar>
-    <div class="flex-1 px-0 md:px-14 py-0 md:py-8">
+    <div class="flex-1 w-full px-0 md:px-14 py-0 md:py-8">
       <app-header @menuIconClick="handleMenuClick" />
-      <div class="mb-12">
+      <div class="mb-12 mx-3 md:mx-0">
         <router-view/>
       </div>
     </div>
@@ -47,12 +48,14 @@ export default defineComponent({
     const isMenuShow = ref(false)
     const handleMenuClick = () => isMenuShow.value = !isMenuShow.value
     const handleMaskClick = () => isMenuShow.value = false
+    const handleItemClick = () => setTimeout(() => isMenuShow.value = false, 300)
     return {
       menuList,
       switchSmall,
       isMenuShow,
       handleMenuClick,
-      handleMaskClick
+      handleMaskClick,
+      handleItemClick
     }
   }
 })
