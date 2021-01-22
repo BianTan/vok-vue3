@@ -71,6 +71,7 @@ export default defineComponent({
       if(currentPost.value && currentPost.value.content) {
         return md.render(currentPost.value.content)
       }
+      return ''
     })
     if(currentPost.value && currentPost.value.title) document.title = currentPost.value.title + titleSuffix
     return {
