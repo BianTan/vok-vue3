@@ -12,7 +12,7 @@
     </sidebar>
     <div class="flex-1 px-0 md:px-14 py-0 md:py-8">
       <app-header @menuIconClick="handleMenuClick" />
-      <div class="px-4 md:px-0 mb-12">
+      <div class="mb-12">
         <router-view/>
       </div>
     </div>
