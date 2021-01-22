@@ -65,9 +65,8 @@ export default defineComponent({
       }
     })
     watch(outsideIsClick, () => { // 状态发生改变
-      if (outsideIsClick.value) {  // 如果点击了外面
-        // outsideIsClick.value = false
-        if(mobileMenu.isShow) mobileMenu.isShow = false  // 如果 Menu 打开了，就关闭 Menu
+      if (outsideIsClick.value && mobileMenu.isShow) {  // 如果点击了外面
+        mobileMenu.isShow = false  // 如果 Menu 打开了，就关闭 Menu
       }
     })
     return {

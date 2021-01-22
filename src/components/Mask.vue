@@ -1,11 +1,10 @@
 <template>
   <transition
-      enter-active-class="transition ease-out duration-300"
-      enter-class="transform opacity-0"
-      enter-to-class="transform opacity-100"
-      leave-active-class="transition ease-in duration-300"
-      leave-class="transform opacity-100"
-      leave-to-class="transform opacity-0"
+      enter-active-class="transform transition ease-out duration-300 opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transform transition ease-in duration-300"
+      leave-class="opacity-100"
+      leave-to-class="opacity-0"
     >
     <div class="fixed inset-0 w-screen h-screen bg-gray-600 bg-opacity-50 z-30 cursor-pointer" @click="handleMaskClick" v-show="isShow"></div>
   </transition>
