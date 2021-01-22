@@ -5,6 +5,8 @@
 body {
   color: #333;
   background: #F5F6F7;
+  overflow-y: scroll;
+  overflow-x: hidden;
   font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
 }
 li {
