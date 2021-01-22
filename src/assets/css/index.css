@@ -3,8 +3,17 @@
 @tailwind utilities;
 
 body {
+  color: #333;
   background: #F5F6F7;
   font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+}
+li {
+  @apply list-none;
+}
+@media (min-width: 1920) {
+  #home-card {
+    @apply w-1/4;
+  }
 }
 
 /** 文章 **/

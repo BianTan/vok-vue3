@@ -5,7 +5,7 @@ import Post from '@/views/index/Post.vue'
 import notFound from '@/views/404.vue'
 
 import AdminIndex from '@/views/admin/AdminIndex.vue'
-
+import AdminHome from '@/views/admin/AdminHome.vue'
 import AccountIndex from '@/views/account/AccountIndex.vue'
 import Account from '@/views/account/Account.vue'
 import Login from '@/views/account/Login.vue'
@@ -69,13 +69,17 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/vok-admin',
-    name: 'AdminIndex',
+    name: 'adminIndex',
     component: AdminIndex,
     meta: {
       title: '仪表盘'
     },
     children: [
-
+      {
+        path: '/vok-admin',
+        name: 'adminHome',
+        component: AdminHome
+      }
     ]
   },
   {

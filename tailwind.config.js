@@ -25,6 +25,9 @@ module.exports = {
       },
       boxShadow: {
         'admin': '0 4px 6px rgba(10,45,80,0.05)'
+      },
+      minWidth: {
+        '72': '18rem'
       }
     },
     screens: {

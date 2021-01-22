@@ -1,5 +1,5 @@
 <template>
-  <div class="flex" :class="switchSmall">
+  <div class="flex mx-auto" :class="switchSmall">
     <sidebar class="top-0 left-0 transform fixed lg:translate-x-0 lg:relative" :class="[{'-translate-x-full ': !isMenuShow}]">
       <sidebar-item
         v-for="item in menuList"
@@ -12,7 +12,9 @@
     </sidebar>
     <div class="flex-1 px-0 md:px-14 py-0 md:py-8">
       <app-header @menuIconClick="handleMenuClick" />
-      <router-view />
+      <div class="px-4 md:px-0 mb-12">
+        <router-view/>
+      </div>
     </div>
     <mask-shadow class="block lg:hidden" @maskClick="handleMaskClick" :isShow="isMenuShow"/>
   </div>
@@ -38,8 +40,8 @@ export default defineComponent({
     const store = useStore()
     const adminScreenSmall = computed(() => store.state.adminScreenSmall)
     const switchSmall = computed(() => {
-      if(adminScreenSmall.value) return 'lg:container lg:mx-auto'
-      return 'mx-auto'
+      if(adminScreenSmall.value) return 'xl:container'
+      return ''
     })
 
     const isMenuShow = ref(false)

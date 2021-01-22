@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white h-screen w-2/3 lg:w-72 shadow-lg z-40 transition ease-in-out duration-300">
-    <ul class="mt-36 space-y-3 relative">
+  <div class="bg-white h-screen w-2/3 md:w-72 shadow-lg z-40 transition ease-in-out duration-300">
+    <ul class="mt-20 lg:mt-36 space-y-3 relative">
       <span class="w-1 h-10 bg-admin-blue-500 absolute right-0 z-10 top-2 transition ease-in-out duration-300" ref="spanRef"/>
       <slot/>
     </ul>
