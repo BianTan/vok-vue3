@@ -25,7 +25,7 @@
     <home-card title="最近发布">
       <li v-for="item in postInfo" :key="item.createdAt" class="flex items-center justify-between">
         <admin-link :to="item.url" class="inline-block flex-1 truncate">{{item.title}}</admin-link>
-        <p class="ml-4 truncate">{{useDayjs('MM月DD日 Ahh:mm', item.createdAt)}}</p>
+        <p class="ml-4 truncate">{{useDayzh('MM月DD日 a hh:mm', item.createdAt)}}</p>
       </li>
     </home-card>
     <home-card title="最近评论" class="space-y-2">
@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useDayjs } from '@/utlis'
+import { useDayzh } from '@/utlis'
 import Card from '@/components/admin/Card.vue'
 import HomeItem from '@/components/admin/home/HomeItem.vue'
 import AdminLink from '@/components/admin/AdminLink.vue'
@@ -145,7 +145,7 @@ export default defineComponent({
       info,
       postInfo,
       commentInfo,
-      useDayjs
+      useDayzh
     }
   }
 })

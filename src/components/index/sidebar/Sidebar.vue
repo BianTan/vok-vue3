@@ -1,9 +1,9 @@
 <template>
   <card class="py-10 px-6">
-    <div class="text-lg">{{useDayjs('YYYY 年 MM 月 DD 日')}}</div>
+    <div class="text-lg">{{useDay('YYYY 年 MM 月 DD 日')}}</div>
     <div class="flex mt-2 text-sm text-gray-400 space-x-5">
-      <span>{{useDayjs('MMM.DD').toUpperCase()}}</span>
-      <span>{{useDayjs('今天是星期 d 哟')}}</span>
+      <span>{{useDay('MMM DD').toUpperCase()}}</span>
+      <span>{{useDayzh('今天是dddd哟')}}</span>
     </div>
     <div v-if="isPost" class="flex text-sm list-none mt-4 overflow-hidden rounded-t border-b border-gray-100">
       <sidebar-item v-for="(item, index) in switchItem" :key="index" @click="switchClick(index)" :isActivate="index === currentIndex">{{item}}</sidebar-item>
@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
-import { useDayjs } from '@/utlis'
+import { useDay, useDayzh } from '@/utlis'
 import SidebarItem from './SidebarItem.vue'
 import Card from '@/components/index/Card.vue'
 
@@ -53,7 +53,8 @@ export default defineComponent({
     return {
       currentIndex,
       switchClick,
-      useDayjs
+      useDay,
+      useDayzh
     }
   }
 })

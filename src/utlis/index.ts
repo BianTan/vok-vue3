@@ -1,3 +1,4 @@
+require('dayjs/locale/zh-cn')
 import dayjs from 'dayjs'
 
 /**
@@ -30,10 +31,16 @@ export const useCommentCount = (count: number | undefined) => {
     return `${count} 条评论`
   }
 }
+
 /**
  * 时间格式转换
 */
-export const useDayjs = (format?: string | undefined, date?: string | number | Date | dayjs.Dayjs | undefined) => {
+export const useDay = (format?: string, date?: string | number | Date | dayjs.Dayjs) => {
   return dayjs(date).format(format)
 }
-
+/**
+ * 时间格式转换 中文
+*/
+export const useDayzh = (format?: string, date?: string | number | Date | dayjs.Dayjs) => {
+  return dayjs(date).locale('zh-cn').format(format)
+}

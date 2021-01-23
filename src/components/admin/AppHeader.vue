@@ -11,13 +11,13 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useDayjs } from '@/utlis'
+import { useDayzh } from '@/utlis'
 
 export default defineComponent({
   emits: ['menuIconClick'],
   setup(props, { emit }) {
     const store = useStore()
-    const now = computed(() => useDayjs('YYYY年M月DD日 星期d'))
+    const now = computed(() => useDayzh('YYYY年M月DD日 dddd'))
 
     const adminScreenSmall = computed(() => store.state.adminScreenSmall) // 获取状态
     const switchClick = () => { // 点击切换状态

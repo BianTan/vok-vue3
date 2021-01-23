@@ -23,16 +23,16 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
+    "autoprefixer": "^9",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
-    "postcss": "^8.2.4",
+    "markdown-it": "^12.0.4",
+    "markdown-it-emoji": "^2.0.0",
+    "mitt": "^2.1.0",
     "tailwindcss": "^2.0.2",
     "typescript": "~3.9.3",
-    "mitt": "^2.1.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0",
-    "markdown-it": "^12.0.4",
-    "markdown-it-emoji": "^2.0.0"
+    "vuex": "^4.0.0-0"
   }
 }

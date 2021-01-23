@@ -31,7 +31,7 @@ import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { PostDataProps } from '@/types'
-import { useCommentCount, useDayjs } from '@/utlis'
+import { useCommentCount, useDay } from '@/utlis'
 import { titleSuffix } from '@/utlis/config'
 import MarkDownIt from 'markdown-it'
 import emoji from 'markdown-it-emoji'
@@ -65,7 +65,7 @@ export default defineComponent({
     store.dispatch('getCurrentPost', id)
     const currentPost = computed<PostDataProps>(() => store.getters.getCurrentPost(id))
     const commentCount = computed(() => useCommentCount(currentPost.value.comment_count))
-    const createdDate = computed(() => useDayjs('YYYY 年 MM 月 DD 日', currentPost.value.createdAt))
+    const createdDate = computed(() => useDay('YYYY 年 MM 月 DD 日', currentPost.value.createdAt))
     
     const currentHTML = computed(() => {
       if(currentPost.value && currentPost.value.content) {

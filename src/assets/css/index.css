@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* purgecss start ignore */
+
 body {
   color: #333;
   background: #F5F6F7;
@@ -51,3 +53,5 @@ li {
 #admin-header span:not(:first-child) {
   @apply md:border-l md:border-gray-200 md:pl-6;
 }
+
+/* purgecss end ignore */
