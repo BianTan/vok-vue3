@@ -7,7 +7,33 @@ export default createStore<StateProps>({
   state: {
     routes: null,
     adminScreenSmall: !!Number(localStorage.getItem('adminScreenSmall')),
-    currentPost: { loadedPost:[], data: {} }
+    currentPost: { loadedPost:[], data: {} },
+    currentTableList: [
+      {
+        id: '1',
+        title: 'Vue.js 学习笔记',
+        tag: ['Vue', '前端'],
+        category: '学习笔记',
+        createdAt: '2020-01-17T15:22:22.983Z',
+        comment_count: 12
+      },
+      {
+        id: '2',
+        title: 'Vue.js 学习笔记',
+        tag: ['Vue', '前端'],
+        category: '学习笔记',
+        createdAt: '2020-01-17T15:22:22.983Z',
+        comment_count: 12
+      },
+      {
+        id: '3',
+        title: 'Vue.js 学习笔记',
+        tag: ['Vue', '前端'],
+        category: '学习笔记',
+        createdAt: '2020-01-17T15:22:22.983Z',
+        comment_count: 12
+      }
+    ]
   },
   mutations: {
     setCurrentPost({ currentPost }, { res, id }) {

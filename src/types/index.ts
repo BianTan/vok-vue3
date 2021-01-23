@@ -33,6 +33,14 @@ export interface PostDataProps {
   createdAt: string;
   updatedAt: string;
 }
+export interface TableListProps {
+  id: string;
+  title: string;
+  tag: string[];
+  category: string;
+  createdAt: string;
+  comment_count: number;
+}
 
 export interface StateProps {
   routes: null;
@@ -41,6 +49,7 @@ export interface StateProps {
     loadedPost: number[];
     data: ListProps<PostDataProps>;
   };
+  currentTableList: TableListProps[];
 }
 export interface ListProps<P> {
   [id: string]: P;

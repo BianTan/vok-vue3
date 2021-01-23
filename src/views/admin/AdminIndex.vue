@@ -6,15 +6,15 @@
         :key="item.id"
         :id="item.id"
         :url="item.url"
-        :iconName="item.iconName"
         @click="handleItemClick">
+        <i :class="`text-3xl iconfont icon-${item.iconName} mr-4`"/>
         {{item.name}}
       </sidebar-item>
     </sidebar>
     <div class="flex-1 w-full px-0 md:px-14 py-0 md:py-8">
       <app-header @menuIconClick="handleMenuClick" class="mb-8" />
       <div class="mb-12 mx-3 md:mx-0">
-        <router-view/>
+        <router-view :key="$route.fullPath"/>
       </div>
     </div>
     <mask-shadow class="block lg:hidden" @maskClick="handleMaskClick" :isShow="isMenuShow"/>

@@ -8,7 +8,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   props: {
     to: {
-      type: String || Object,
+      type: [String, Object],
       default: '/vok-admin'
     }
   }

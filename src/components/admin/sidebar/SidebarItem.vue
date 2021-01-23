@@ -2,7 +2,9 @@
   <li class="relative h-14 items-center transition ease-in-out duration-300 hover:bg-admin-blue-50 hover:text-admin-blue-500"
     :class="itemClass"
     @click="itemClick">
-    <router-link :to="url" class="flex text-xl pl-14 items-center h-full"><i :class="`text-3xl iconfont icon-${iconName} mr-4`"/><slot/></router-link>
+    <router-link :to="url" class="flex text-xl pl-14 items-center h-full">
+      <slot/>
+    </router-link>
   </li>
 </template>
 
@@ -18,10 +20,6 @@ export default defineComponent({
     },
     id: {
       type: Number,
-      required: true
-    },
-    iconName: {
-      type: String,
       required: true
     }
   },
