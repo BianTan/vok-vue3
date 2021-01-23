@@ -12,7 +12,7 @@
       </sidebar-item>
     </sidebar>
     <div class="flex-1 w-full px-0 md:px-14 py-0 md:py-8">
-      <app-header @menuIconClick="handleMenuClick" />
+      <app-header @menuIconClick="handleMenuClick" class="mb-8" />
       <div class="mb-12 mx-3 md:mx-0">
         <router-view/>
       </div>
@@ -39,16 +39,16 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const adminScreenSmall = computed(() => store.state.adminScreenSmall)
-    const switchSmall = computed(() => {
-      if(adminScreenSmall.value) return 'xl:container'
+    const adminScreenSmall = computed(() => store.state.adminScreenSmall) // 窗口状态
+    const switchSmall = computed(() => {  // 窗口状态的 class
+      if(adminScreenSmall.value) return 'xl:container'  // 如果是缩小窗口，就添加 container
       return ''
     })
 
-    const isMenuShow = ref(false)
-    const handleMenuClick = () => isMenuShow.value = !isMenuShow.value
-    const handleMaskClick = () => isMenuShow.value = false
-    const handleItemClick = () => setTimeout(() => isMenuShow.value = false, 300)
+    const isMenuShow = ref(false) // 是否展示菜单
+    const handleMenuClick = () => isMenuShow.value = !isMenuShow.value  // 菜单按钮点击
+    const handleMaskClick = () => isMenuShow.value = false  // 点击 mask
+    const handleItemClick = () => setTimeout(() => isMenuShow.value = false, 300) // 点击侧边栏菜单延迟 300 毫秒关闭
     return {
       menuList,
       switchSmall,

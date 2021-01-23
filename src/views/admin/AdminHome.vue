@@ -1,5 +1,5 @@
 <template>
-  <card class="w-full mt-8 p-8 md:pb-14">
+  <card class="w-full p-8 md:pb-14">
     <h1 class="text-2xl">欢迎使用 VokBlog</h1>
     <div class="flex flex-col md:flex-row mt-3 md:mt-6 space-y-6 md:space-y-0">
       <home-item title="开始使用">
