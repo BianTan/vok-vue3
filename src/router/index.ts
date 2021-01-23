@@ -6,6 +6,10 @@ import notFound from '@/views/404.vue'
 
 import AdminIndex from '@/views/admin/AdminIndex.vue'
 import AdminHome from '@/views/admin/AdminHome.vue'
+import Edit from '@/views/admin/Edit.vue'
+import Comments from '@/views/admin/Comments.vue'
+import Options from '@/views/admin/Options.vue'
+
 import AccountIndex from '@/views/account/AccountIndex.vue'
 import Account from '@/views/account/Account.vue'
 import Login from '@/views/account/Login.vue'
@@ -79,6 +83,21 @@ const routes: Array<RouteRecordRaw> = [
         path: '/vok-admin',
         name: 'adminHome',
         component: AdminHome
+      },
+      {
+        path: '/vok-admin/edit',
+        name: 'adminEdit',
+        component: Edit
+      },
+      {
+        path: '/vok-admin/comments',
+        name: 'adminComments',
+        component: Comments
+      },
+      {
+        path: '/vok-admin/options',
+        name: 'options',
+        component: Options
       }
     ]
   },
