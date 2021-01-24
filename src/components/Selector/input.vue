@@ -20,21 +20,22 @@ export default defineComponent({
   props: {
     value: {
       type: String,
-      default: '1'
+      required: true
     }
   },
   emits: ['input', 'focus', 'blur'],
   setup(props, { emit }) {
     const isShow = ref(true)
+
     const input = (e: any) => {
-      emit('input', e.target.value)
+      emit('input', e.target.value) // 触发 input，把 value 发送给粑粑👨
     }
     const focus = () => {
-      isShow.value = false
-      emit('focus')
+      isShow.value = false  // 控制鼠标 icon 的，看上面 class
+      emit('focus', props.value)
     }
     const blur = () => {
-      isShow.value = true
+      isShow.value = true // 同上
       emit('blur')
     }
     return {
