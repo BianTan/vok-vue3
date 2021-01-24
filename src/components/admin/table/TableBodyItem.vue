@@ -1,7 +1,7 @@
 <template>
   <tr class="text-sm hover:bg-gray-100 hover:bg-opacity-60 transition ease-in-out duration-200 select-none">
     <td class="text-center px-4 py-3 relative">
-      <table-checkbox/>
+      <table-checkbox @change="change" :checked="currentValue"/>
     </td>
     <td class="px-4 py-3 font-bold">
       <admin-link to="/">{{itemData.title}}</admin-link>
@@ -33,7 +33,21 @@ export default defineComponent({
     TableCheckbox
   },
   props: {
-    itemData: Object as PropType<TableListProps>
+    itemData: Object as PropType<TableListProps>,
+    currentId: Number,
+    currentValue: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['change'],
+  setup(props, { emit }) {
+    const change = (e: any) => {
+      emit('change', [props.currentId, e.target.checked])
+    }
+    return {
+      change
+    }
   }
 })
 </script>
