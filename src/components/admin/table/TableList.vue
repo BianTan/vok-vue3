@@ -1,6 +1,6 @@
 <template>
-  <table class="w-full border-collapse table-fixed">
-    <thead class="h-11 bg-admin-blue-100">
+  <table class="w-full border-collapse table-fixed rounded-md overflow-hidden">
+    <thead class="bg-admin-blue-100">
       <tr>
         <table-th class="w-12 text-center relative">
           <table-checkbox :checked="isAllChecked" @change="allCheckboxChange" />
@@ -44,7 +44,7 @@ export default defineComponent({
 
     const currentTableList = computed(() => store.state.currentTableList) // 文章管理列表
     const change = (result: any) => {  // checkbox 改变
-      checkedList.value[result[0]] = result[1]  // value：[index, isChecked]
+      checkedList.value[result[0]] = result[1]  // result：[index, isChecked]
       if(currentTableList.value.length !== checkedList.value.length) return
       const res = checkedList.value.every((value: boolean) => {
         return value === true
