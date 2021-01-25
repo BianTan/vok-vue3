@@ -5,11 +5,11 @@
         <table-th class="w-12 text-center relative">
           <table-checkbox :checked="isAllChecked" @change="allCheckboxChange" />
         </table-th>
-        <table-th class="w-5/12">标题</table-th>
-        <table-th class="w-2/12">标签</table-th>
-        <table-th class="w-2/12">分类</table-th>
-        <table-th class="w-2/12">日期</table-th>
-        <table-th class="w-1/12">评论</table-th>
+        <table-th class="w-full md:w-4/12">标题</table-th>
+        <table-th class="w-2/12 hidden md:table-cell">标签</table-th>
+        <table-th class="w-2/12 hidden md:table-cell">分类</table-th>
+        <table-th class="w-2/12 hidden md:table-cell">日期</table-th>
+        <table-th class="w-1/12 hidden md:table-cell">评论</table-th>
       </tr>
     </thead>
     <tbody>

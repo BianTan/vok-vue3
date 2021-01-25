@@ -9,11 +9,13 @@
       </ul>
     </card>
   </div>
-  <card class="mt-8">
+  <card class="mt-8 py-4 px-2 hidden md:block">
     <selector :data="optionsOne"/>
-    <selector :data="optionsTwo"/>
+    <div class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer">应用</div>
+    <selector :data="optionsTwo" class="ml-4"/>
+    <div class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer">筛选</div>
   </card>
-  <card class="mt-8 px-4 py-4">
+  <card class="mt-8 px-0 py-0 md:px-4 md:py-4">
     <table-list/>
   </card>
 </template>
