@@ -51,14 +51,14 @@ export default defineComponent({
       }, 50)
     }
     const handleItemClick = (res: any) => { // menu 的 li 点击啦！！！ res：[value, text]
-      state.inputValue = res[1] // 设置 input 框的 value 为：上面👆点击 li 获取的 text
+      setTimeout(() => {
+        state.inputValue = res[1] // 设置 input 框的 value 为：上面👆点击 li 获取的 text
+      }, 75); // 加入延时是因为 menu 延迟时间会有延时。这里不添加延时会造成 menu 搜索抖动的问题
       state.isItemClick = true  // 告诉楼上你点击啦！
       emit('menuClick', res)  // 把点击 menu 的获取的大宝贝给发出去
     }
     onMounted(() => {
-      if(props.data) {
-        state.inputValue = props.data[0].text // 设置输入框的 value 为：传来的 menu 数组的第一个 text
-      }
+      if(props.data) state.inputValue = props.data[0].text // 设置输入框的 value 为：传来的 menu 数组的第一个 text
     })
     return {
       ...toRefs(state),
