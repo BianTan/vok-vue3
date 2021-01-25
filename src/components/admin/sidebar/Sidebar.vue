@@ -17,12 +17,14 @@ export default defineComponent({
     const spanRef = ref<HTMLElement | null>(null) // 滑块的 refs
     const activeIndex = ref(1)  // 设置好 activeIndex
     provide('activeIndex', activeIndex) // 提供 activeIndex
-    emitter.on('adminMenuItemClick', id => {  // 接受当前 menuItem 的点击事件
-      if(id) activeIndex.value = id // 把 activeIndex 设置为当前点击的 menuItemId
+
+    const setCurrentId = (id: number) => {
+      if(id) activeIndex.value = id // 把 activeIndex 设置为传入的 menuItemId
       if(spanRef.value) {
         spanRef.value.style.transform = `translateY(${(id - 1) * 68}px)`  // 设置滑块位置
       }
-    })
+    }
+    emitter.on('adminMenuChange', id => setCurrentId(id))  // 接受当前 menuItem 的点击事件
     return {
       spanRef
     }

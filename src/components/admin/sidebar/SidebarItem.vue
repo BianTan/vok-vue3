@@ -9,7 +9,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, computed } from 'vue'
+import { defineComponent, inject, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { emitter } from './Sidebar.vue'
 
 export default defineComponent({
@@ -24,7 +25,9 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const route = useRoute()
     const activeIndex: any = inject('activeIndex') // 获取当前 activeIndex
+
     const active = computed(() => { // 判断是否 active
       return props.id === activeIndex.value // 当前 Item 的 Id 与获取的 activeIndex 是否相同
     })
@@ -33,8 +36,12 @@ export default defineComponent({
       return 'text-gray-700'
     })
     const itemClick = () => { // Item 点击事件
-      emitter.emit('adminMenuItemClick', props.id)  // 把当前点击的 menuItemId 发到 Sidebar.vue
+      emitter.emit('adminMenuChange', props.id)  // 把当前点击的 menuItemId 发到 Sidebar.vue
     }
+
+    onMounted(() => {
+      if(route.path == props.url) emitter.emit('adminMenuChange', props.id)
+    })
     return {
       itemClass,
       itemClick
