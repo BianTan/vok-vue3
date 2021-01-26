@@ -1,9 +1,9 @@
 <template>
-  <div class="space-y-12">
+  <div class="space-y-12" v-if="pageComputed">
     <slot/>
     <div class="my-14 flex items-center justify-center select-none space-x-4">
       <article-button @click.prevent="prevClick">&lt;</article-button>
-      <ul class="flex">
+      <ul class="flex space-x-4">
         <li v-for="item in pageComputed"
           :key="item"
           @click="currentChange(item)"

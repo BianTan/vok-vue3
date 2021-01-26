@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-// const IS_DEV = process.env.NODE_ENV !== 'production'
-// axios.defaults.baseURL = IS_DEV ? '/api' : ''
-// axios.defaults.withCredentials = true
+const IS_DEV = process.env.NODE_ENV !== 'production'
+axios.defaults.baseURL = IS_DEV ? '/api' : ''
+axios.defaults.withCredentials = true
 
 // 请求超时
 axios.defaults.timeout = 5000

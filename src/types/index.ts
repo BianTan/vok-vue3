@@ -7,6 +7,10 @@ export interface PageEventsProps {
 /**
  * 文章
 */
+export interface TagsProps {
+  id: string;
+  name: string;
+}
 export interface PostListProps {
   total: number;
   pageSize: number;
@@ -24,19 +28,28 @@ export interface PostDataProps {
   type: number;
   comment_count: number;
   post_url: string;
-  tag: string[];
-  category: string;
+  tags: TagsProps[];
+  category: {
+    id: string;
+    name: string;
+  };
   title: string;
-  description: string;
-  content: string;
+  description?: string;
+  content?: string;
   author: AuthorProps;
   createdAt: string;
   updatedAt: string;
 }
+export interface PostPageProps {
+  total: number;
+  currentPage: number;
+  pageSize: number;
+  list: ListProps<PostDataProps>;
+}
 export interface TableListProps {
   id: string;
   title: string;
-  tag: string[];
+  tags: TagsProps[];
   category: string;
   createdAt: string;
   comment_count: number;
@@ -45,6 +58,10 @@ export interface TableListProps {
 export interface StateProps {
   routes: null;
   adminScreenSmall: boolean;
+  postList: {
+    loadedPage: number[];
+    data: ListProps<PostPageProps>;
+  };
   currentPost: {
     loadedPost: number[];
     data: ListProps<PostDataProps>;

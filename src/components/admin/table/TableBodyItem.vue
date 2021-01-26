@@ -12,7 +12,7 @@
       </div>
     </td>
     <td class="px-4 py-3 space-x-1 truncate align-top">
-      <admin-link to="/" v-for="item in itemData.tag" :key="item">#{{item}}</admin-link>
+      <admin-link to="/" v-for="item in itemData.tags" :key="item">#{{item.name}}</admin-link>
     </td>
     <td class="px-4 py-3 truncate align-top">
       <admin-link to="/">{{itemData.category}}</admin-link>
