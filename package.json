@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.2.0",
     "axios": "^0.21.1",
     "dayjs": "^1.10.3"
   },

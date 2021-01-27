@@ -1,11 +1,11 @@
 <template>
   <article v-if="postData.type === 0" class="bg-white rounded overflow-hidden shadow pb-6" :class="[{'pt-6': postData.post_url.length === 0}]">
-    <router-link :to="`/post/${postData.id}.html`" class="h-60 w-full inline-block mb-3" v-if="postData.post_url.length !== 0">
+    <router-link :to="`/post/${postData.id}.html`" class="aspect-w-12 aspect-h-6 sm:aspect-h-5 lg:aspect-h-4 md:aspect-h-3 block mb-3" v-if="postData.post_url.length !== 0">
       <img :src="postData.post_url" alt="title" class="w-full h-full object-cover">
     </router-link>
     <router-link class="px-8 mt-1 mb-3 text-xl sm:text-2xl inline-block" :to="`/post/${postData.id}.html`">{{postData.title}}</router-link>
     <p class="px-8 text-sm text-gray-500 text-justify">{{postData.description}}</p>
-    <info-list class="px-8 mt-2">
+    <info-list class="mx-8 mt-2 pb-2">
       <info-item iconName="date">{{createdDate}}</info-item>
       <info-item iconName="comment">{{commentCount}}</info-item>
       <info-item iconName="category"><router-link :to="`/category/${postData.category.id}`">{{postData.category.name}}</router-link></info-item>
@@ -14,10 +14,10 @@
       </info-item>
     </info-list>
   </article>
-  <article v-else-if="postData.type === 1" class="flex">
-    <img :src="postData.author.avatar_url ? postData.author.avatar_url : require('@/assets/img/ava.jpg')" :alt="postData.author.name" class="h-16 w-16 object-cover shadow rounded-full">
-    <card class="flex-1 relative ml-10 px-7 py-5">
-      <i class="iconfont icon-quote text-white bg-blue-800 w-8 h-8 rounded-full flex items-center justify-center absolute -top-3 -left-4"></i>
+  <article v-else-if="postData.type === 1" class="sm:flex">
+    <img :src="postData.author.avatar_url ? postData.author.avatar_url : require('@/assets/img/ava.jpg')" :alt="postData.author.name" class="h-16 w-16 object-cover shadow rounded-full hidden sm:block">
+    <card class="flex-1 relative sm:ml-10 px-7 py-5">
+      <i class="iconfont icon-quote text-white bg-blue-800 w-8 h-8 rounded-full flex items-center justify-center absolute -top-4 left-2 sm:-top-3 sm:-left-4"></i>
       <p class="text-gray-700">{{postData.description}}</p>
     </card>
   </article>
