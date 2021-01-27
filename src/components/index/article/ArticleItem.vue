@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
-import { PostDataProps } from '@/types'
+import { PostListProps } from '@/types'
 import { useCommentCount, useDay } from '@/utlis'
 import InfoList from '../info/InfoList.vue'
 import InfoItem from '../info/InfoItem.vue'
@@ -34,7 +34,7 @@ import Card from '@/components/index/Card.vue'
 export default defineComponent({
   props: {
     postData: {
-      type: Object as PropType<PostDataProps>,
+      type: Object as PropType<PostListProps>,
       required: true
     }
   },

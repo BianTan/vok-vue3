@@ -1,38 +1,58 @@
+/**
+ * 前台页面 vuex 的全局 Props
+*/
+export interface StateProps {
+  routes: null;
+  adminScreenSmall: boolean;
+  posts: {
+    loadedPage: number[];
+    data: ListProps<PostsProps>;
+  };
+  currentPost: {
+    loadedPost: number[];
+    data: ListProps<PostListProps>;
+  };
+  currentTableList: TableListProps[];
+}
+export interface ListProps<P> {
+  [id: string]: P;
+}
+/**
+ * 页面分页栏的事件
+*/
 export interface PageEventsProps {
   prevClick: () => void;
   nextClick: () => void;
   currentChange: (value: Number) => void;
 }
 
+// 文章
 /**
- * 文章
+ * 分类 & 标签
 */
-export interface TagsProps {
+export interface TermProps {
   id: string;
   name: string;
 }
-export interface PostListProps {
-  total: number;
-  pageSize: number;
-  currentPage: number;
-  list: PostDataProps[];
-}
+/**
+ * 作者
+*/
 export interface AuthorProps {
   id: string;
   name: string;
   description: string;
   avatar_url: string;
 }
-export interface PostDataProps {
+/**
+ * vuex 里保存的已加载文章数据： posts 里的 list
+*/
+export interface PostListProps {
   id: string;
   type: number;
   comment_count: number;
   post_url: string;
-  tags: TagsProps[];
-  category: {
-    id: string;
-    name: string;
-  };
+  tags: TermProps[];
+  category: TermProps;
   title: string;
   description?: string;
   content?: string;
@@ -40,36 +60,23 @@ export interface PostDataProps {
   createdAt: string;
   updatedAt: string;
 }
-export interface PostPageProps {
+/**
+ * vuex 里保存的已加载文章数据 post
+*/
+export interface PostsProps {
+  info?: TermProps;
   total: number;
   currentPage: number;
   pageSize: number;
-  list: ListProps<PostDataProps>;
+  list: ListProps<PostListProps>;
 }
 export interface TableListProps {
   id: string;
   title: string;
-  tags: TagsProps[];
+  tags: TermProps[];
   category: string;
   createdAt: string;
   comment_count: number;
-}
-
-export interface StateProps {
-  routes: null;
-  adminScreenSmall: boolean;
-  postList: {
-    loadedPage: number[];
-    data: ListProps<PostPageProps>;
-  };
-  currentPost: {
-    loadedPost: number[];
-    data: ListProps<PostDataProps>;
-  };
-  currentTableList: TableListProps[];
-}
-export interface ListProps<P> {
-  [id: string]: P;
 }
 
 /**
@@ -81,9 +88,15 @@ export interface RouteProps {
   component: string;
   meta: RouteMetaProps;
 }
+/**
+ * 路由 meta
+*/
 export interface RouteMetaProps {
   title: String;
 }
+/**
+ * 后端传来的动态路由列表
+*/
 export interface RouteListProps {
   parentName?: string;
   list?: RouteProps[];

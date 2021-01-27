@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Index from '@/views/index/Index.vue'
 import Single from '@/views/index/Single.vue'
+import Term from '@/views/index/Term.vue'
 import Post from '@/views/index/Post.vue'
 import notFound from '@/views/404.vue'
 
@@ -31,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/tag/:id',
         name: 'Tag',
-        component: Single,
+        component: Term,
         meta: {
           title: 'Tag'
         }
@@ -39,17 +40,9 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/category/:id',
         name: 'Category',
-        component: Single,
+        component: Term,
         meta: {
           title: 'Category'
-        }
-      },
-      {
-        path: '/search',
-        name: 'Search',
-        component: Single,
-        meta: {
-          title: 'Search'
         }
       },
       {

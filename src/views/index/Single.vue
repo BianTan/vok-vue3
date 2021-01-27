@@ -1,14 +1,14 @@
 <template>
   <article-list
-    v-if="postList"
-    :total="postList.total"
-    :pageSize="postList.pageSize"
-    :currentPage="postList.currentPage"
+    v-if="posts"
+    :total="posts.total"
+    :pageSize="posts.pageSize"
+    :currentPage="posts.currentPage"
     @currentChange="currentChange"
     @prevClick="prevClick"
     @nextClick="nextClick">
-    <div v-if="infoShow" class="bg-white text-4xl mb-12 py-18 text-center shadow rounded">{{name}}</div>
-    <article-item v-for="item in postList.list" :key="item.id" :postData="item" />
+    <div v-if="false" class="bg-white text-4xl mb-12 py-18 text-center shadow rounded">{{name}}</div>
+    <article-item v-for="item in posts.list" :key="item.id" :postData="item" />
   </article-list>
 </template>
 
@@ -30,20 +30,15 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
+
     const name = computed(() => route.name)
     const infoShow = ref(false)
-    const page = ref('1')
+    const page = ref(1)
     
-    if (name.value === 'Home' || name.value === 'Page') {
-      infoShow.value = false
-    } else {
-      infoShow.value = true
+    if(name.value === 'Page') {
+      page.value = Number(route.params.id)
     }
-    
-    if(name.value !== 'Home') {
-      page.value = route.params.id + ''
-    }
-    const postList = computed(() => store.getters.getPostList(page.value))
+    const posts = computed(() => store.getters.getPosts(page.value))
 
     onMounted(() => {
       store.dispatch('getPosts', { pageSize: 6, currentPage: page.value })
@@ -51,22 +46,18 @@ export default defineComponent({
 
     const pageEvents: PageEventsProps = reactive({
       prevClick: () => {
-        console.log('上一页')
+        router.push({ path: `/page/${page.value - 1}` })
       },
       nextClick: () => {
-        console.log('下一页')
+        router.push({ path: `/page/${page.value + 1}` })
       },
       currentChange: (val: Number) => {
-        if(name.value == 'Home') {
-          router.push({ path: `/page/${val}` })
-          return
-        }
-        router.push({ path: `/${String(name.value).toLocaleLowerCase()}/${val}` })
+        router.push({ path: `/page/${val}` })
       }
     })
     return {
       ...toRefs(pageEvents),
-      postList,
+      posts,
       infoShow,
       name
     }

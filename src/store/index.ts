@@ -7,7 +7,7 @@ export default createStore<StateProps>({
   state: {
     routes: null,
     adminScreenSmall: !!Number(localStorage.getItem('adminScreenSmall')),
-    postList: { loadedPage: [], data: {} },
+    posts: { loadedPage: [], data: {} },
     currentPost: { loadedPost:[], data: {} },
     currentTableList: [
       {
@@ -64,36 +64,37 @@ export default createStore<StateProps>({
     ]
   },
   mutations: {
-    setCurrentPost({ currentPost }, { res, id }) {
-      currentPost.data = { ...currentPost.data, ...res }
-      currentPost.loadedPost.push(id)
-    },
-    setPostList({ postList }, { total, pageSize, currentPage, list }) {
-      postList.data = { ...postList.data, [currentPage]: {
+    setPosts({ posts }, res) {
+      const { total, pageSize, currentPage, list } = res
+      posts.data = { ...posts.data, [currentPage]: {
         total,
         pageSize,
         currentPage,
         list: arrToObj(list)
       } }
-      postList.loadedPage.push(currentPage)
+      posts.loadedPage.push(currentPage)
+    },
+    setCurrentPost({ currentPost }, { res, id }) {
+      currentPost.data = { ...currentPost.data, ...res }
+      currentPost.loadedPost.push(id)
     },
     setAdminScreenSmall(state, payload) {
       state.adminScreenSmall = payload
     }
   },
   actions: {
+    async getPosts({ state, commit }, { pageSize = 6, currentPage = 1 }) {
+      const index = state.posts.loadedPage.indexOf(currentPage)
+      if(index < 0) {
+        const res = await get(`/post?pageSize=${pageSize}&currentPage=${currentPage}&fields=description`)
+        commit('setPosts', res.data)
+      }
+    },
     async getCurrentPost({ state, commit }, id) {
       const index = state.currentPost.loadedPost.indexOf(id)
       if(index < 0) { // 如果当前文章未请求过数据才 get
         const res = await get(`/post/${id}`)
         commit('setCurrentPost', { res: arrToObj(res.data), id })
-      }
-    },
-    async getPosts({ state, commit }, { pageSize = 6, currentPage = 1 }) {
-      const index = state.postList.loadedPage.indexOf(currentPage)
-      if(index < 0) {
-        const res = await get(`/post?pageSize=${pageSize}&currentPage=${currentPage}&fields=description`)
-        commit('setPostList', res.data)
       }
     }
   },
@@ -101,8 +102,8 @@ export default createStore<StateProps>({
     getRoutes: (state) => {
       return state.routes
     },
-    getPostList: (state) => (currentPage: number) => {
-      return state.postList.data[currentPage]
+    getPosts: (state) => (currentPage: number) => {
+      return state.posts.data[currentPage]
     },
     getCurrentPost: (state) => (id: string) => {
       return state.currentPost.data[id]
