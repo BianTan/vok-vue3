@@ -86,7 +86,7 @@ export default createStore<StateProps>({
     async getPosts({ state, commit }, { pageSize = 6, currentPage = 1 }) {
       const index = state.posts.loadedPage.indexOf(currentPage)
       if(index < 0) {
-        const res = await get(`/post?pageSize=${pageSize}&currentPage=${currentPage}&fields=description`)
+        const res = await get(`/post?pageSize=${pageSize}&currentPage=${currentPage}`)
         commit('setPosts', res.data)
       }
     },

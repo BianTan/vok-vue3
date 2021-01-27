@@ -16,13 +16,14 @@
     <div class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer">筛选</div>
   </card>
   <card class="mt-8 px-0 py-0 md:px-4 md:py-4">
-    <table-list/>
+    <table-list :list="posts" :pageSize="pageSize" />
   </card>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue'
+import { defineComponent, computed, onMounted ,ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import Card from '@/components/admin/Card.vue'
 import AdminLink from '@/components/admin/AdminLink.vue'
 import TableList from '@/components/admin/table/TableList.vue'
@@ -37,7 +38,10 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
+    const store = useStore()
     const post_type = computed(() => route.query.post_type)
+    const pageSize = ref(12)
+    const currentPage = ref(1)
 
     const optionsOne = [
       {
@@ -84,17 +88,20 @@ export default defineComponent({
       }
     ]
 
+    const posts = computed(() => store.getters.getPosts(1))
     onMounted(() => {
       if(!post_type.value || post_type.value === 'post') {
-        console.log('post')
+        store.dispatch('getPosts', { pageSize: pageSize.value, currentPage: currentPage.value })
       } else if(post_type.value === 'page') {
         console.log('page')
       }
     })
     return {
       post_type,
+      pageSize,
       optionsOne,
-      optionsTwo
+      optionsTwo,
+      posts
     }
   }
 })

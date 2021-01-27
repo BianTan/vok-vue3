@@ -70,14 +70,6 @@ export interface PostsProps {
   pageSize: number;
   list: ListProps<PostListProps>;
 }
-export interface TableListProps {
-  id: string;
-  title: string;
-  tags: TermProps[];
-  category: string;
-  createdAt: string;
-  comment_count: number;
-}
 
 /**
  * 路由

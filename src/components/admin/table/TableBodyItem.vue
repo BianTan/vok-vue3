@@ -12,15 +12,15 @@
       </div>
     </td>
     <td class="px-4 py-3 space-x-1 truncate align-top">
-      <admin-link to="/" v-for="item in itemData.tags" :key="item">#{{item.name}}</admin-link>
+      <admin-link to="/" v-for="tag in itemData.tags" :key="tag.id">#{{tag.name}}</admin-link>
     </td>
     <td class="px-4 py-3 truncate align-top">
-      <admin-link to="/">{{itemData.category}}</admin-link>
+      <admin-link to="/">{{itemData.category.name}}</admin-link>
     </td>
     <td class="px-4 py-3 truncate align-top">
-      <span>{{useDayzh('YYYY年 MM月 DD日', itemData.createdAt)}}</span>
+      <span>{{useDayzh('YYYY年MM月DD日', itemData.createdAt)}}</span>
     </td>
-    <td class="px-4 py-3 truncate align-top">
+    <td class="px-4 py-3 truncate align-top text-center">
       <admin-link to="/">{{itemData.comment_count}}</admin-link>
     </td>
   </tr>
@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { TableListProps } from '@/types'
+import { PostListProps } from '@/types'
 import { useDayzh } from '@/utlis'
 import AdminLink from '@/components/admin/AdminLink.vue'
 import TableCheckbox from './TableCheckbox.vue'
@@ -39,8 +39,15 @@ export default defineComponent({
     TableCheckbox
   },
   props: {
-    itemData: Object as PropType<TableListProps>,
-    currentId: Number,
+    itemData: {
+      type: Object as PropType<PostListProps>,
+      default: {},
+      required: true
+    },
+    index: {
+      type: Number,
+      required: true
+    },
     currentValue: {
       type: Boolean,
       default: false
@@ -49,7 +56,7 @@ export default defineComponent({
   emits: ['change'],
   setup(props, { emit }) {
     const change = (e: any) => {  // checkbox 改变
-      emit('change', [props.currentId, (e.target.checked)]) // 提交 [index, isChecked]
+      emit('change', [props.index, (e.target.checked)]) // 提交 [index, isChecked]
     }
     return {
       change,
