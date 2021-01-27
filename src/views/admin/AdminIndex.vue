@@ -1,6 +1,6 @@
 <template>
   <div class="flex mx-auto" :class="switchSmall">
-    <sidebar class="top-0 left-0 transform fixed lg:translate-x-0 lg:relative" :class="[{'-translate-x-full ': !isMenuShow}]">
+    <sidebar class="transform lg:translate-x-0 top-0 left-0 fixed md:sticky" :class="[{'-translate-x-full ': !isMenuShow}]">
       <sidebar-item
         v-for="item in menuList"
         :key="item.id"
