@@ -10,6 +10,9 @@
     <div v-if="false" class="bg-white text-4xl mb-12 py-18 text-center shadow rounded">{{name}}</div>
     <article-item v-for="item in posts.list" :key="item.id" :postData="item" />
   </article-list>
+  <div class="space-y-12" v-else>
+    <skeleton-posts />
+  </div>
 </template>
 
 <script lang="ts">
@@ -19,12 +22,14 @@ import { useStore } from 'vuex'
 import { PageEventsProps } from '@/types'
 import ArticleList from '@/components/index/article/ArticleList.vue'
 import ArticleItem from '@/components/index/article/ArticleItem.vue'
+import SkeletonPosts from '@/components/skeleton/SkeletonPosts.vue'
 
 export default defineComponent({
   name: 'Single',
   components: {
     ArticleList,
-    ArticleItem
+    ArticleItem,
+    SkeletonPosts
   },
   setup() {
     const route = useRoute()
