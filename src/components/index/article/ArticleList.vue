@@ -2,7 +2,7 @@
   <div class="space-y-12" v-if="pageComputed">
     <slot/>
     <div class="my-14 flex items-center justify-center select-none space-x-4">
-      <article-button @click.prevent="prevClick">&lt;</article-button>
+      <article-button @click.prevent="prevClick" class="transform -rotate-90" :disabled="currentPage <= 1"><i class="iconfont icon-top"/></article-button>
       <ul class="flex space-x-4">
         <li v-for="item in pageComputed"
           :key="item"
@@ -12,7 +12,7 @@
           {{item}}
         </li>
       </ul>
-      <article-button @click.prevent="nextClick">&gt;</article-button>
+      <article-button @click.prevent="nextClick" class="transform rotate-90" :disabled="currentPage === pageComputed"><i class="iconfont icon-top"/></article-button>
     </div>
   </div>
 </template>
