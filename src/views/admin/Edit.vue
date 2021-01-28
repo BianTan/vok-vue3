@@ -2,10 +2,10 @@
   <div class="inline-block">
     <card class="py-4">
       <ul class="flex space-x-3">
-        <admin-link :to="{name: 'adminEdit', query: { post_type }}">全部文章（14）</admin-link>
-        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'publish' }}">已发布（12）</admin-link>
-        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'draft' }}">草稿箱（2）</admin-link>
-        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'trash' }}">回收站（0）</admin-link>
+        <admin-link :to="{name: 'adminEdit', query: { post_type }}" class="text-center">全部文章（14）</admin-link>
+        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'publish' }}" class="text-center">已发布（12）</admin-link>
+        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'draft' }}" class="text-center">草稿箱（2）</admin-link>
+        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'trash' }}" class="text-center">回收站（0）</admin-link>
       </ul>
     </card>
   </div>
@@ -42,10 +42,8 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
 
-    const post_type = computed(() => route.query.post_type)
     const pageSize = ref(12)
     const currentPage = ref(1)
-    const posts = computed(() => store.getters['admin/getTableList'])
     const optionsOne = [
       {
         id: 0,
@@ -63,6 +61,9 @@ export default defineComponent({
         text: '删除文章'
       }
     ]
+
+    const post_type = computed(() => route.query.post_type)
+    const posts = computed(() => store.getters['admin/getTableList'])
     const categoryOptions = computed(() => {
       const base = {
         id: 0,
