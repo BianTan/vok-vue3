@@ -12,12 +12,14 @@
   <card class="mt-8 py-4 px-2 hidden md:block">
     <selector :data="optionsOne"/>
     <div class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer">应用</div>
-    <selector :data="optionsTwo" class="ml-4"/>
+    <selector :data="categoryOptions" class="ml-4"/>
+    <selector :data="tagOptions" class="pl-0"/>
     <div class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer">筛选</div>
   </card>
   <card class="mt-8 px-0 py-0 md:px-4 md:py-4">
-    <table-list :list="posts" :pageSize="pageSize" />
+    <table-list v-if="posts" :list="posts.list" :pageSize="pageSize" />
   </card>
+  <card class="mt-8"></card>
 </template>
 
 <script lang="ts">
@@ -39,10 +41,11 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const store = useStore()
+
     const post_type = computed(() => route.query.post_type)
     const pageSize = ref(12)
     const currentPage = ref(1)
-
+    const posts = computed(() => store.getters['admin/getTableList'])
     const optionsOne = [
       {
         id: 0,
@@ -60,38 +63,33 @@ export default defineComponent({
         text: '删除文章'
       }
     ]
-    const optionsTwo = [
-      {
+    const categoryOptions = computed(() => {
+      const base = {
         id: 0,
         value: '0',
         text: '所有分类'
-      },
-      {
-        id: 1,
-        value: 'Web',
-        text: 'Web'
-      },
-      {
-        id: 2,
-        value: '学习笔记',
-        text: '学习笔记'
-      },
-      {
-        id: 3,
-        value: '日常',
-        text: '日常'
-      },
-      {
-        id: 4,
-        value: '折腾',
-        text: '折腾'
       }
-    ]
-
-    const posts = computed(() => store.getters['index/getPosts'](1))
+      const get = store.getters['admin/getCategoryList']
+      return [ base, ...get ]
+    })
+    const tagOptions = computed(() => {
+      const base = {
+        id: 0,
+        value: '0',
+        text: '所有标签'
+      }
+      const get = store.getters['admin/getTagList']
+      return [ base, ...get ]
+    })
+      
     onMounted(() => {
+      store.dispatch('admin/getCategoryList')
+      store.dispatch('admin/getTagList')
       if(!post_type.value || post_type.value === 'post') {
-        store.dispatch('index/getPosts', { pageSize: pageSize.value, currentPage: currentPage.value })
+        store.dispatch('admin/getTableList', { pageSize: pageSize.value, currentPage: currentPage.value })
+        setTimeout(() => {
+          console.log(posts.value)
+        }, 3000)
       } else if(post_type.value === 'page') {
         console.log('page')
       }
@@ -100,7 +98,8 @@ export default defineComponent({
       post_type,
       pageSize,
       optionsOne,
-      optionsTwo,
+      categoryOptions,
+      tagOptions,
       posts
     }
   }

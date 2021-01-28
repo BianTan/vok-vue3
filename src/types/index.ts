@@ -17,7 +17,13 @@ export interface IndexStateProps {
 export interface AdminStateProps {
   routes: null;
   screenSmall: boolean;
+  tableList: PostsProps;
+  categoryList: TermProps[];
+  tagList: TermProps[];
 }
+/**
+ * 列表
+*/
 export interface ListProps<P> {
   [id: string]: P;
 }
@@ -37,6 +43,14 @@ export interface PageEventsProps {
 export interface TermProps {
   id: string;
   name: string;
+}
+/**
+ * 后台下拉 options
+*/
+export interface OptionsProps {
+  id: number;
+  value: string;
+  text: string;
 }
 /**
  * 作者

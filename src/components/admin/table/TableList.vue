@@ -50,7 +50,7 @@ export default defineComponent({
   setup(props) {
     const isAllChecked = ref(false) // 是否全部选中
     const checkedList = ref<any>([])  // checked 选中状态列表
-    const globalResult = computed(() => props.list.list)
+    const globalResult = computed(() => props.list)
 
     const change = (result: any) => {  // checkbox 改变
       checkedList.value[result[0]] = result[1]  // result：[index, isChecked]

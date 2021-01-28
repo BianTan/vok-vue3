@@ -1,4 +1,5 @@
 require('dayjs/locale/zh-cn')
+import { TermProps, OptionsProps } from '@/types'
 import dayjs from 'dayjs'
 
 /**
@@ -18,6 +19,19 @@ export const arrToObj = <T extends { id?: string | number }>(arr: Array<T>) => {
 export const objToArr = <T>(obj: {[key: string]: T}) => {
   return Object.keys(obj).map(key => {
     return obj[key]
+  })
+}
+/**
+ * Term 转格式
+*/
+export const termTo = (arr: Array<TermProps>): OptionsProps[] => {
+  return arr.map((item: TermProps) => {
+    const { id, name } = item
+    return {
+      id: Number(id),
+      value: id,
+      text: name
+    }
   })
 }
 

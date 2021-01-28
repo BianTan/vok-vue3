@@ -1,4 +1,7 @@
 export default {
   routes: null,
-  screenSmall: !!Number(localStorage.getItem('screenSmall'))
+  screenSmall: !!Number(localStorage.getItem('screenSmall')),
+  tableList: {},
+  categoryList: [],
+  tagList: []
 }
