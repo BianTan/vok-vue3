@@ -1,9 +1,7 @@
 /**
- * 前台页面 vuex 的全局 Props
+ * 前台页面
 */
-export interface StateProps {
-  routes: null;
-  adminScreenSmall: boolean;
+export interface IndexStateProps {
   posts: {
     loadedPage: number[];
     data: ListProps<PostsProps>;
@@ -12,7 +10,13 @@ export interface StateProps {
     loadedPost: number[];
     data: ListProps<PostListProps>;
   };
-  currentTableList: TableListProps[];
+}
+/**
+ * 后台管理页
+*/
+export interface AdminStateProps {
+  routes: null;
+  screenSmall: boolean;
 }
 export interface ListProps<P> {
   [id: string]: P;
@@ -23,7 +27,7 @@ export interface ListProps<P> {
 export interface PageEventsProps {
   prevClick: () => void;
   nextClick: () => void;
-  currentChange: (value: Number) => void;
+  currentChange: (value: number) => void;
 }
 
 // 文章
@@ -44,6 +48,15 @@ export interface AuthorProps {
   avatar_url: string;
 }
 /**
+ * vuex 里保存的已加载文章数据 post
+*/
+export interface PostsProps {
+  total: number;
+  currentPage: number;
+  pageSize: number;
+  list: ListProps<PostListProps>;
+}
+/**
  * vuex 里保存的已加载文章数据： posts 里的 list
 */
 export interface PostListProps {
@@ -59,16 +72,6 @@ export interface PostListProps {
   author: AuthorProps;
   createdAt: string;
   updatedAt: string;
-}
-/**
- * vuex 里保存的已加载文章数据 post
-*/
-export interface PostsProps {
-  info?: TermProps;
-  total: number;
-  currentPage: number;
-  pageSize: number;
-  list: ListProps<PostListProps>;
 }
 
 /**

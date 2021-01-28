@@ -23,9 +23,9 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const adminScreenSmall = computed(() => store.state.adminScreenSmall)
+    const screenSmall = computed(() => store.getters['admin/getScreenSmall'])
     const baseClass = computed(() => {
-      if(adminScreenSmall.value) return ''
+      if(screenSmall.value) return ''
       return '2xl:w-1/3'
     })
     return {

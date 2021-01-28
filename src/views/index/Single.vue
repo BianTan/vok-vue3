@@ -43,10 +43,10 @@ export default defineComponent({
     if(name.value === 'Page') {
       page.value = Number(route.params.id)
     }
-    const posts = computed(() => store.getters.getPosts(page.value))
+    const posts = computed(() => store.getters['index/getPosts'](page.value))
 
     onMounted(() => {
-      store.dispatch('getPosts', { pageSize: 6, currentPage: page.value })
+      store.dispatch('index/getPosts', { pageSize: 6, currentPage: page.value })
     })
 
     const pageEvents: PageEventsProps = reactive({

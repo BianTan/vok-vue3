@@ -88,10 +88,10 @@ export default defineComponent({
       }
     ]
 
-    const posts = computed(() => store.getters.getPosts(1))
+    const posts = computed(() => store.getters['index/getPosts'](1))
     onMounted(() => {
       if(!post_type.value || post_type.value === 'post') {
-        store.dispatch('getPosts', { pageSize: pageSize.value, currentPage: currentPage.value })
+        store.dispatch('index/getPosts', { pageSize: pageSize.value, currentPage: currentPage.value })
       } else if(post_type.value === 'page') {
         console.log('page')
       }

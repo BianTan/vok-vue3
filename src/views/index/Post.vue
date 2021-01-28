@@ -68,8 +68,8 @@ export default defineComponent({
       if(res) id.value = res[1]
     }
 
-    store.dispatch('getCurrentPost', id.value)
-    const currentPost = computed<PostListProps>(() => store.getters.getCurrentPost(id.value))
+    store.dispatch('index/getCurrentPost', id.value)
+    const currentPost = computed<PostListProps>(() => store.getters['index/getCurrentPost'](id.value))
     const commentCount = computed(() => useCommentCount(currentPost.value.comment_count))
     const createdDate = computed(() => useDay('YYYY 年 MM 月 DD 日', currentPost.value.createdAt))
     

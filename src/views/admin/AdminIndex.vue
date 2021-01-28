@@ -1,6 +1,6 @@
 <template>
   <div class="flex mx-auto" :class="switchSmall">
-    <sidebar class="transform lg:translate-x-0 top-0 left-0 fixed md:sticky" :class="[{'-translate-x-full ': !isMenuShow}]">
+    <sidebar class="transform lg:translate-x-0 top-0 left-0 fixed lg:sticky" :class="[{'-translate-x-full ': !isMenuShow}]">
       <sidebar-item
         v-for="item in menuList"
         :key="item.id"
@@ -39,9 +39,9 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const adminScreenSmall = computed(() => store.state.adminScreenSmall) // 窗口状态
+    const screenSmall = computed(() => store.getters['admin/getScreenSmall']) // 窗口状态
     const switchSmall = computed(() => {  // 窗口状态的 class
-      if(adminScreenSmall.value) return 'xl:container'  // 如果是缩小窗口，就添加 container
+      if(screenSmall.value) return 'xl:container'  // 如果是缩小窗口，就添加 container
       return ''
     })
 

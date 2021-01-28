@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 /**
  * 数组转换对象 key 为 id
 */
-export const arrToObj = <T extends { id?: string }>(arr: Array<T>) => {
+export const arrToObj = <T extends { id?: string | number }>(arr: Array<T>) => {
   return arr.reduce((prev, current) => {
     if (current.id) {
       prev[current.id] = current
