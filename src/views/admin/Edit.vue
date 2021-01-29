@@ -87,7 +87,7 @@ export default defineComponent({
       store.dispatch('admin/getCategoryList')
       store.dispatch('admin/getTagList')
       if(!post_type.value || post_type.value === 'post') {
-        store.dispatch('admin/getTableList', { pageSize: pageSize.value, currentPage: currentPage.value })
+        store.dispatch('admin/getTableList', { currentPage: currentPage.value })
         setTimeout(() => {
           console.log(posts.value)
         }, 3000)

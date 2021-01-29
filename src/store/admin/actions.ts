@@ -8,8 +8,8 @@ interface Ictx {
 }
 export default {
   async getTableList({ commit }: Ictx, payload: any) {
-    const { pageSize, currentPage } = payload
-    const res = await get(`/post?pageSize=${pageSize}&currentPage=${currentPage}`)
+    const { currentPage = 1 } = payload
+    const res = await get(`/post&currentPage=${currentPage}`)
     commit('setTableList', res.data)
   },
   async getCategoryList({ commit }: Ictx) {
