@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-12" v-if="pageComputed">
     <slot/>
-    <div class="my-14 flex items-center justify-center select-none space-x-4">
+    <div class="my-14 flex items-center justify-center select-none space-x-4" v-if="pageComputed !== 1">
       <article-button @click.prevent="prevClick" class="transform -rotate-90" :disabled="currentPage <= 1"><i class="iconfont icon-top"/></article-button>
       <ul class="flex space-x-4">
         <li v-for="item in pageComputed"

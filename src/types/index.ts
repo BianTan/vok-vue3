@@ -65,6 +65,7 @@ export interface AuthorProps {
  * vuex 里保存的已加载文章数据 post
 */
 export interface PostsProps {
+  info?: TermProps;
   total: number;
   currentPage: number;
   pageSize: number;
