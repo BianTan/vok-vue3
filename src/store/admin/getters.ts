@@ -12,7 +12,6 @@ export default {
     return state.tableList
   },
   getCategoryList: (state: AdminStateProps) => {
-    console.log(termTo(state.categoryList))
     return termTo(state.categoryList)
   },
   getTagList: (state: AdminStateProps) => {

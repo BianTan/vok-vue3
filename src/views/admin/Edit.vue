@@ -17,7 +17,15 @@
     <div class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer">筛选</div>
   </card>
   <card class="mt-8 px-0 py-0 md:px-4 md:py-4">
-    <table-list v-if="posts" :list="posts.list" :pageSize="pageSize" />
+    <table-list v-if="posts" :list="posts.list" @isChange="tableItemIsChange">
+      <template #default>
+        <table-th class="w-full md:w-4/12">标题</table-th>
+        <table-th class="w-2/12 hidden md:table-cell">标签</table-th>
+        <table-th class="w-2/12 hidden md:table-cell">分类</table-th>
+        <table-th class="w-2/12 hidden md:table-cell">日期</table-th>
+        <table-th class="w-1/12 hidden md:table-cell">评论</table-th>
+      </template>
+    </table-list>
   </card>
   <card class="mt-8"></card>
 </template>
@@ -26,9 +34,11 @@
 import { defineComponent, computed, onMounted ,ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
+import { useDayzh } from '@/utlis'
 import Card from '@/components/admin/Card.vue'
 import AdminLink from '@/components/admin/AdminLink.vue'
 import TableList from '@/components/admin/table/TableList.vue'
+import TableTh from '@/components/admin/table/TableTh.vue'
 import Selector from '@/components/Selector/index.vue'
 
 export default defineComponent({
@@ -36,6 +46,7 @@ export default defineComponent({
     Card,
     AdminLink,
     TableList,
+    TableTh,
     Selector
   },
   setup() {
@@ -82,15 +93,15 @@ export default defineComponent({
       const get = store.getters['admin/getTagList']
       return [ base, ...get ]
     })
-      
+    const tableItemIsChange = (value: any) => {
+      console.log(value)
+    }
+    
     onMounted(() => {
       store.dispatch('admin/getCategoryList')
       store.dispatch('admin/getTagList')
       if(!post_type.value || post_type.value === 'post') {
         store.dispatch('admin/getTableList', { currentPage: currentPage.value })
-        setTimeout(() => {
-          console.log(posts.value)
-        }, 3000)
       } else if(post_type.value === 'page') {
         console.log('page')
       }
@@ -101,7 +112,9 @@ export default defineComponent({
       optionsOne,
       categoryOptions,
       tagOptions,
-      posts
+      posts,
+      useDayzh,
+      tableItemIsChange
     }
   }
 })

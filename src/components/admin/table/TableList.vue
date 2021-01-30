@@ -5,78 +5,86 @@
         <table-th class="w-12 text-center relative">
           <table-checkbox :checked="isAllChecked" @change="allCheckboxChange" />
         </table-th>
-        <table-th class="w-full md:w-4/12">标题</table-th>
-        <table-th class="w-2/12 hidden md:table-cell">标签</table-th>
-        <table-th class="w-2/12 hidden md:table-cell">分类</table-th>
-        <table-th class="w-2/12 hidden md:table-cell">日期</table-th>
-        <table-th class="w-1/12 hidden md:table-cell">评论</table-th>
+        <slot/>
       </tr>
     </thead>
-    <tbody>
-      <table-body-item v-for="(item, index) in globalResult"
+    <tbody v-if='list'>
+      <table-item
+        v-for="(item, index) in list"
         :key="item.id"
-        :index="Number(index)"
+        :index="index"
         :itemData="item"
-        :currentValue="checkedList[index] || false"
-        @change="change"/>
+        :currentValue="checkedList[index] ? checkedList[index].isChecked : false"
+        @change="change"
+        @onMounted="itemOnMounted"
+      />
     </tbody>
   </table>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, PropType } from 'vue'
-import { PostsProps } from '@/types'
+import { defineComponent, toRefs, PropType, reactive } from 'vue'
+import { PostListProps } from '@/types'
 import TableTh from './TableTh.vue'
-import TableBodyItem from './TableBodyItem.vue'
+import TableItem from './TableBodyItem.vue'
 import TableCheckbox from './TableCheckbox.vue'
 
+interface CheckboxResProps {
+  id: string;
+  isChecked: boolean;
+}
+interface Istate {
+  isAllChecked: boolean;
+  checkedList: CheckboxResProps[];
+  listLength: number;
+}
 export default defineComponent({
   components: {
     TableTh,
-    TableBodyItem,
+    TableItem,
     TableCheckbox
   },
   props: {
-    list: {
-      type: Object as PropType<PostsProps>,
-      default: {},
-      required: true
-    },
-    pageSize: {
-      type: Number,
-      default: 12
-    }
+    list: Array as PropType<PostListProps[]>
   },
-  setup(props) {
-    const isAllChecked = ref(false) // 是否全部选中
-    const checkedList = ref<any>([])  // checked 选中状态列表
-    const globalResult = computed(() => props.list)
+  emits: ['isChange'],
+  setup(props, { emit }) {
+    const state: Istate = reactive({
+      isAllChecked: false, // 是否全部选中
+      checkedList: [],  // checked 选中状态列表
+      listLength: 0 // 列表长度
+    })
 
     const change = (result: any) => {  // checkbox 改变
-      checkedList.value[result[0]] = result[1]  // result：[index, isChecked]
-      console.log(checkedList.value)
-      const res = checkedList.value.every((value: boolean) => {
-        return value === true
+      state.checkedList[result[0]] = { id: result[1], isChecked: result[2] }  // result：[index, id, isChecked]
+      emit('isChange', state.checkedList)
+      if(state.checkedList.length < state.listLength) return
+      const res = state.checkedList.every(item => {
+        return item.isChecked === true
       })
-      isAllChecked.value = res
+      state.isAllChecked = res
     }
+    const itemOnMounted = () => state.listLength++
     const allCheckboxChange = () => { // 食物链顶端的 checkbox 被改变（大雾
-      const value = isAllChecked.value = !isAllChecked.value  // 切换状态
-      if(checkedList.value.length < props.pageSize) return
+      const value = state.isAllChecked = !state.isAllChecked  // 切换状态
       if(value) { // 如果勾上了
-        for(const index in globalResult.value) {  // 按照当前列表的数据长度循环
-          checkedList.value[index] = true // true 一把梭
+        for(const i in props.list) {  // 按照当前列表的数据长度循环
+          state.checkedList[Number(i)] = {
+            id: props.list[Number(i)].id,
+            isChecked: true
+          } // true 一把梭
         }
       } else {  // 不然没勾上
-        checkedList.value = []  // 清空
+        state.checkedList = []  // 清空
       }
+      emit('isChange', state.checkedList)
     }
+
     return {
-      globalResult,
-      isAllChecked,
+      ...toRefs(state),
       change,
-      allCheckboxChange,
-      checkedList
+      itemOnMounted,
+      allCheckboxChange
     }
   }
 })

@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, onMounted } from 'vue'
 import { PostListProps } from '@/types'
 import { useDayzh } from '@/utlis'
 import AdminLink from '@/components/admin/AdminLink.vue'
@@ -44,20 +44,20 @@ export default defineComponent({
       default: {},
       required: true
     },
-    index: {
-      type: Number,
-      required: true
-    },
+    index: Number,
     currentValue: {
       type: Boolean,
       default: false
     }
   },
-  emits: ['change'],
+  emits: ['change', 'onMounted'],
   setup(props, { emit }) {
     const change = (e: any) => {  // checkbox 改变
-      emit('change', [props.index, (e.target.checked)]) // 提交 [index, isChecked]
+      emit('change', [props.index, props.itemData.id, (e.target.checked)]) // 提交 [index, isChecked]
     }
+    onMounted(() => {
+      emit('onMounted')
+    })
     return {
       change,
       useDayzh
