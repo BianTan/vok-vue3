@@ -3,7 +3,7 @@
     <card class="overflow-hidden px-8 md:px-12 py-6 md:py-8" v-if="currentPost">
       <div class="flex">
         <img :src="currentPost.author.avatar_url ? currentPost.author.avatar_url : require('@/assets/img/ava.jpg')" :alt="currentPost.author.name" class="h-12 w-12 rounded-full shadow mr-4">
-        <div class="flex flex-col justify-between">
+        <div class="flex flex-col justify-between overflow-hidden">
           <span class="text-gray-900">{{currentPost.author.name}}</span>
           <info-list>
             <info-item iconName="date">{{createdDate}}</info-item>

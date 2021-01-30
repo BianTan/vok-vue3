@@ -37,27 +37,25 @@ export default defineComponent({
 
     const infoShow = ref(false)
     const posts = ref<PostsProps | null>(null)
-    const name = computed(() => String(route.name).toLocaleLowerCase())
-    const page = computed(() => Number(route.query.page) || 1)
+    const name = computed(() => String(route.name))
+    const page = computed(() => Number(route.query.currentPage) || 1)
     const id = computed(() => String(route.params.id) ||  "1")
 
-    const url = (currentPage: Number) => `${name.value}/${id.value}?currentPage=${currentPage}`
-
-    onMounted(() => {
-      get(`/term/${url(page.value)}`).then(res => {
-        posts.value = res.data
-      })
+    onMounted(async () => {
+      const res = await get(`/term/${name.value}/${id.value}?currentPage=${page.value}`)
+      if(!res) console.log(res)
+      posts.value = res.data
     })
 
     const pageEvents: PageEventsProps = reactive({
       prevClick: () => {
-        router.push({ path: `/${url(page.value - 1)}` })
-        },
-      nextClick: () => {
-        router.push({ path: `/${url(page.value + 1)}` })
+        router.push({ name: name.value, params: { id: id.value }, query: { currentPage: page.value - 1 } })
       },
-      currentChange: (val: Number) => {
-        router.push({ path: `/${url(val)}` })
+      nextClick: () => {
+        router.push({ name: name.value, params: { id: id.value }, query: { currentPage: page.value + 1 } })
+      },
+      currentChange: (val: number) => {
+        router.push({ name: name.value, params: { id: id.value }, query: { currentPage: val } })
       }
     })
     return {
