@@ -1,5 +1,4 @@
 import { IndexStateProps, PostListProps, ListProps } from "@/types"
-import { arrToObj } from '@/utlis'
 
 interface CurrentPostProps {
   res: ListProps<PostListProps>;
@@ -20,7 +19,7 @@ export default {
         total,
         pageSize,
         currentPage,
-        list: arrToObj(list)
+        list
       }
     }
     posts.loadedPage.push(currentPage)

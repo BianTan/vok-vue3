@@ -6,12 +6,12 @@
         <router-link class="text-white bg-admin-blue-500 inline-block py-4 px-8 rounded-md" to="/vok-admin">设置你的站点</router-link>
       </home-item>
       <home-item title="接下来" class="space-y-1">
-        <admin-link class="block">编辑文章</admin-link>
-        <admin-link class="block">添加页面</admin-link>
+        <admin-link class="block" :to="{ name: 'adminEdit' }">编辑文章</admin-link>
+        <admin-link class="block" :to="{ name: 'adminEdit', query: { post_type: 'page' } }">添加页面</admin-link>
       </home-item>
       <home-item title="更多操作" class="space-y-1">
-        <admin-link class="block">编辑菜单</admin-link>
-        <admin-link class="block">打开/关闭评论</admin-link>
+        <admin-link class="block" :to="{ name: 'options' }">编辑菜单</admin-link>
+        <admin-link class="block" :to="{ name: 'options' }">打开/关闭评论</admin-link>
       </home-item>
     </div>
   </card>

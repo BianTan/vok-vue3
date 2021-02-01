@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { URL } from '@/config'
 
 const IS_DEV = process.env.NODE_ENV !== 'production'
-axios.defaults.baseURL = IS_DEV ? '/api' : ''
+axios.defaults.baseURL = IS_DEV ? '/api' : URL
 axios.defaults.withCredentials = true
 
 // 请求超时
@@ -34,13 +35,13 @@ axios.interceptors.response.use(
 )
 
 // post方法
-export function post (url: string, data?: object) {
+export function post(url: string, data?: object) {
   const params = { ...data, ...commonParam }
   return axios.post(url, params)
 }
 
 // get方法
-export function get (url: string, data?: object) {
+export function get(url: string, data?: object) {
   const params = { ...data, ...commonParam }
   return axios.get(url, params)
 }
