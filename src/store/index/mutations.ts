@@ -27,5 +27,5 @@ export default {
   setCurrentPost({ currentPost }: IndexStateProps, { res, id }: CurrentPostProps) {
     currentPost.data = { ...currentPost.data, ...res }
     currentPost.loadedPost.push(id)
-  },
+  }
 }
