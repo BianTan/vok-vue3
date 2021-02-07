@@ -34,7 +34,6 @@ axios.interceptors.response.use(
   e => {
     const { statusText } = e.response
     store.commit('setLoadingStatus', 'error')
-    console.log(store.getters['getLoadingStatus'])
     return Promise.reject(statusText)
   }
 )

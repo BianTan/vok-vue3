@@ -22,13 +22,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 import { menuList } from '@/utlis/config'
 import Sidebar from '@/components/admin/sidebar/Sidebar.vue'
 import SidebarItem from '@/components/admin/sidebar/SidebarItem.vue'
 import AppHeader from '@/components/admin/AppHeader.vue'
 import MaskShadow from '@/components/Mask.vue'
+import { emitter } from '@/components/admin/sidebar/Sidebar.vue'
 
 export default defineComponent({
   components: {
@@ -39,10 +41,21 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const route = useRoute()
     const screenSmall = computed(() => store.getters['admin/getScreenSmall']) // 窗口状态
     const switchSmall = computed(() => {  // 窗口状态的 class
       if(screenSmall.value) return 'xl:container'  // 如果是缩小窗口，就添加 container
       return ''
+    })
+    const index = computed(() => route.meta.index)
+    watchEffect(() => {
+      if (index.value) {
+        let id = index.value
+        if ((route.query.post_type && route.query.post_type === 'page') || (route.query.page && route.name === 'adminPost')) {
+          id = 3
+        }
+        emitter.emit('adminMenuChange', id)
+      }
     })
 
     const isMenuShow = ref(false) // 是否展示菜单

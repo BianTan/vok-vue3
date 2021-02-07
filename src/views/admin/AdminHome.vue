@@ -3,7 +3,7 @@
     <h1 class="text-2xl">欢迎使用 VokBlog</h1>
     <div class="flex flex-col md:flex-row mt-3 md:mt-6 space-y-6 md:space-y-0">
       <home-item title="开始使用">
-        <router-link class="text-white bg-admin-blue-500 inline-block py-4 px-8 rounded-md" to="/vok-admin">设置你的站点</router-link>
+        <router-link class="text-white bg-admin-blue-500 inline-block py-4 px-8 rounded-md" to="/vok-admin/options">设置你的站点</router-link>
       </home-item>
       <home-item title="接下来" class="space-y-1">
         <admin-link class="block" :to="{ name: 'adminEdit' }">编辑文章</admin-link>
@@ -63,19 +63,19 @@ export default defineComponent({
     const info = [
       {
         total: 18,
-        url: '/vok-admin',
+        url: '/vok-admin/edit',
         iconName: 'post',
         description: ' 篇文章'
       },
       {
         total: 4,
-        url: '/vok-admin',
+        url: '/vok-admin/edit?post_type=page',
         iconName: 'page',
         description: ' 个页面'
       },
       {
         total: 236,
-        url: '/vok-admin',
+        url: '/vok-admin/comments',
         iconName: 'comment-admin',
         description: ' 条评论'
       }

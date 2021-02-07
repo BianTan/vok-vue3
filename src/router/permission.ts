@@ -44,7 +44,7 @@ const routeList: RouteListProps[] = [
 
 function addRoutes(routes: RouteListProps[]) {
   routes.forEach((item: any) => {
-    if(item.list && item.parentName) {
+    if (item.list && item.parentName) {
       item.list.forEach((val: any) => {
         val.component = require(`@/views/${val.component}.vue`).default
         router.addRoute(item.parentName, val)
@@ -58,9 +58,9 @@ function addRoutes(routes: RouteListProps[]) {
 
 let isLoaded = false
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title + titleSuffix
-  if(!isLoaded) {
+  if (!isLoaded) {
     addRoutes(routeList)
     isLoaded = true
     next({ ...to, replace: true })

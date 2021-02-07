@@ -8,7 +8,6 @@ export default createStore({
   },
   mutations: {
     setLoadingStatus(state, payload: string) {
-      console.log(state.loadingStatus, payload)
       state.loadingStatus = payload
     }
   },

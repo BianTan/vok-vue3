@@ -6,9 +6,9 @@
     <td class="px-4 py-3 font-bold truncate align-top">
       <admin-link to="/">{{itemData.title}}</admin-link><br/>
       <div class="mt-1 space-x-2 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out duration-200">
-        <admin-link to="/">编辑</admin-link>
+        <admin-link :to="{name: 'adminPost', query: {action: 'edit', post: itemData.id}}">编辑</admin-link>
         <admin-link to="/">移至回收站</admin-link>
-        <admin-link to="/">查看</admin-link>
+        <admin-link :to="{name: 'Post', params: {id: itemData.id}}">查看</admin-link>
       </div>
     </td>
     <td class="px-4 py-3 space-x-1 truncate align-top">

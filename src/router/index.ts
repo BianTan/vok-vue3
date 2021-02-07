@@ -75,22 +75,42 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/vok-admin',
         name: 'adminHome',
-        component: AdminHome
+        component: AdminHome,
+        meta: {
+          index: 1
+        }
       },
       {
         path: '/vok-admin/edit',
         name: 'adminEdit',
-        component: Edit
+        component: Edit,
+        meta: {
+          index: 2
+        }
       },
       {
         path: '/vok-admin/comments',
         name: 'adminComments',
-        component: Comments
+        component: Comments,
+        meta: {
+          index: 4
+        }
       },
       {
         path: '/vok-admin/options',
         name: 'options',
-        component: Options
+        component: Options,
+        meta: {
+          index: 5
+        }
+      },
+      {
+        path: '/vok-admin/post',
+        name: 'adminPost',
+        component: Options,
+        meta: {
+          index: 2
+        }
       }
     ]
   },

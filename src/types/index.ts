@@ -69,7 +69,7 @@ export interface PostsProps {
   total: number;
   currentPage: number;
   pageSize: number;
-  list: ListProps<PostListProps>;
+  list: PostListProps[];
 }
 /**
  * vuex 里保存的已加载文章数据： posts 里的 list

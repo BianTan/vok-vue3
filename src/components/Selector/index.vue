@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, PropType } from 'vue'
+import { defineComponent, reactive, toRefs, PropType, watchEffect } from 'vue'
 import TransitionDefault from '../transition/TransitionDefault.vue'
 import SearchInput from './input.vue'
 import SearchMenu from './menu.vue'
@@ -26,7 +26,11 @@ export default defineComponent({
   },
   props: {
     value: String,
-    data: Array as PropType<DataProps[]>
+    data: Array as PropType<DataProps[]>,
+    currentId: {
+      type: String,
+      default: "0"
+    }
   },
   emits: ['menuClick'],
   setup(props, { emit }) {
@@ -57,8 +61,10 @@ export default defineComponent({
       state.isItemClick = true  // 告诉楼上你点击啦！
       emit('menuClick', res)  // 把点击 menu 的获取的大宝贝给发出去
     }
-    onMounted(() => {
-      if(props.data) state.inputValue = props.data[0].text // 设置输入框的 value 为：传来的 menu 数组的第一个 text
+
+    watchEffect(() => {
+      const id = parseInt(props.currentId)  // 获取当前id
+      if(props.data && props.data[id]) state.inputValue = props.data[id].text // 设置输入框的 value
     })
     return {
       ...toRefs(state),
