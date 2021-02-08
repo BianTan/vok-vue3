@@ -65,11 +65,20 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: '登录'
+    }
+  },
+  {
     path: '/vok-admin',
     name: 'adminIndex',
     component: AdminIndex,
     meta: {
-      title: '仪表盘'
+      title: '仪表盘',
+      validate: true
     },
     children: [
       {
@@ -125,14 +134,6 @@ const routes: Array<RouteRecordRaw> = [
         component: Account,
         meta: {
           title: '个人信息'
-        }
-      },
-      {
-        path: '/login',
-        name: 'Login',
-        component: Login,
-        meta: {
-          title: '登录'
         }
       }
     ]

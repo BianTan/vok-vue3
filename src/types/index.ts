@@ -115,3 +115,12 @@ export interface RouteListProps {
   component?: string;
   meta?: RouteMetaProps;
 }
+
+// input 组件
+export type TagType = 'input' | 'textarea'
+export type RulesProp = RuleProp[]
+type RuleType = 'required' | 'email'
+export interface RuleProp {
+  type: RuleType;
+  message: string;
+}
