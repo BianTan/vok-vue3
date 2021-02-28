@@ -1,4 +1,5 @@
 import router from './index'
+import store from '../store'
 import { RouteListProps } from '@/types'
 import { titleSuffix } from '@/utlis/config'
 
@@ -59,12 +60,30 @@ function addRoutes(routes: RouteListProps[]) {
 let isLoaded = false
 
 router.beforeEach(async (to, from, next) => {
+  const { user, token } = store.state
+  const { requiredLogin } = to.meta
   document.title = to.meta.title + titleSuffix
   if (!isLoaded) {
     addRoutes(routeList)
     isLoaded = true
     next({ ...to, replace: true })
   } else {
+    if (requiredLogin) {  // 如果需要登录访问
+      if (!user.isLogin) {  // 状态为未登录
+        if (token) {  // 存在 token 验证⬇️
+          store.dispatch('currentUser').then(() => {
+            next()  // 验证 token 有效 进入
+          }).catch(() => { // 无效
+            localStorage.removeItem('token')  // 移除失效 token
+            next('login') // 进入登录页面
+          })
+        } else {  // 不存在 token
+          next('login') // 进入登录页面
+        }
+      } else { // 状态为已登录
+        next()
+      }
+    }
     next()
   }
 })

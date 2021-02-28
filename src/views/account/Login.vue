@@ -9,7 +9,7 @@
       <validate-form @form-submit="handleSubmitClick" class="mt-8">
         <input type="hidden" name="remember" value="true">
         <div class="rounded-md space-y-2">
-          <validate-input :rules="emailRules" placeholder="请输入邮箱" type="email" class="mb-1" v-model="email">
+          <validate-input :rules="nameRules" placeholder="请输入账号" type="text" class="mb-1" v-model="name">
             <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">邮箱</label>
           </validate-input>
           <validate-input :rules="passwordRules" placeholder="请输入密码" type="password" v-model="password">
@@ -60,11 +60,10 @@ export default defineComponent({
     if (store.state.user.isLogin) router.push('/')  // 如果已经登陆了就跳转
 
     const state = reactive({
-      email: '',
+      name: '',
       password: '',
-      emailRules: [
-        { type: 'required', message: '邮箱地址不能为空' },
-        { type: 'email', message: '邮箱地址输入有误' }
+      nameRules: [
+        { type: 'required', message: '账号不能为空' }
       ] as RulesProp,
       passwordRules: [
         { type: 'required', message: '密码不能为空' }
@@ -74,9 +73,12 @@ export default defineComponent({
     const handleSubmitClick = (res: boolean) => {
       if (res) {
         const payload = {
-          email: state.email,
+          name: state.name,
           password: state.password
         }
+        store.dispatch('login', payload).then(res => {
+          console.log(res)
+        })
       }
     }
     return {

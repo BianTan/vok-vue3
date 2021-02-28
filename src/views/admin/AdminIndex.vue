@@ -12,7 +12,7 @@
       </sidebar-item>
     </sidebar>
     <div class="flex-1 w-full px-0 md:px-14 py-0 md:py-8">
-      <app-header @menuIconClick="handleMenuClick" class="mb-8" />
+      <app-header @menuIconClick="handleMenuClick" :user="userData" class="mb-8" />
       <div class="mb-12 mx-3 md:mx-0">
         <router-view :key="$route.fullPath"/>
       </div>
@@ -47,6 +47,7 @@ export default defineComponent({
       if(screenSmall.value) return 'xl:container'  // 如果是缩小窗口，就添加 container
       return ''
     })
+    const userData = computed(() => store.state.user)
     const index = computed(() => route.meta.index)
     watchEffect(() => {
       if (index.value) {
@@ -65,6 +66,7 @@ export default defineComponent({
     return {
       menuList,
       switchSmall,
+      userData,
       isMenuShow,
       handleMenuClick,
       handleMaskClick,

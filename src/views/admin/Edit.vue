@@ -17,15 +17,11 @@
     <div class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer" @click="handleFilterTermClick">筛选</div>
   </card>
   <card class="mt-8 px-0 py-0 md:px-4 md:py-4">
-    <table-list v-if="posts && loadingStatus === 'success'" :list="posts.list" @isChange="tableItemIsChange">
-      <template #default>
-        <table-th class="w-full md:w-4/12">标题</table-th>
-        <table-th class="w-2/12 hidden md:table-cell">标签</table-th>
-        <table-th class="w-2/12 hidden md:table-cell">分类</table-th>
-        <table-th class="w-2/12 hidden md:table-cell">日期</table-th>
-        <table-th class="w-1/12 hidden md:table-cell">评论</table-th>
-      </template>
-    </table-list>
+    <div v-if="loadingStatus === 'success' && posts.list">
+      <div v-for="(post, index) in posts.list" :key="index">
+        <h1>{{ post.title }}</h1>
+      </div>
+    </div>
     <p v-if="loadingStatus === 'loading'" class="text-center py-4">加载中...</p>
     <p v-if="loadingStatus === 'error'" class="text-center py-4">获取数据失败！</p>
   </card>
@@ -38,8 +34,6 @@ import { useStore } from 'vuex'
 import { useDayzh } from '@/utlis'
 import Card from '@/components/admin/Card.vue'
 import AdminLink from '@/components/admin/AdminLink.vue'
-import TableList from '@/components/admin/table/TableList.vue'
-import TableTh from '@/components/admin/table/TableTh.vue'
 import Selector from '@/components/Selector/index.vue'
 import { PostsProps } from '@/types'
 
@@ -47,8 +41,6 @@ export default defineComponent({
   components: {
     Card,
     AdminLink,
-    TableList,
-    TableTh,
     Selector
   },
   setup() {
@@ -139,14 +131,14 @@ export default defineComponent({
       store.dispatch('admin/getCategoryList') // 请求分类数据
       store.dispatch('admin/getTagList') // 请求标签数据
       let termStr = ''
-      if(termState.categoryId) { // 存在id
+      if(termState.categoryId) { // 存在分类 id
         termStr += `&categoryId=${termState.categoryId}`
       }
-      if(termState.tagId) { // 存在id
+      if(termState.tagId) { // 存在标签 id
         termStr += `&tagId=${termState.tagId}`
       }
       if((!postState.post_type || postState.post_type === 'post')) {  // 当前为 “文章”
-        store.dispatch('admin/getTableList', { currentPage: state.currentPage, post_status: postState.post_status ? postState.post_status : '', termStr })
+        store.dispatch('admin/getPostList', { currentPage: state.currentPage, post_status: postState.post_status ? postState.post_status : '', termStr })
       } else if(postState.post_type === 'page') {  // 当前为 “页面”
         console.log('page')
       }

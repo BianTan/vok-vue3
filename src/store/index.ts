@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createStore } from 'vuex'
-import { get, post } from '@/network'
+import { post } from '@/network'
 import indexStore from './index/index'
 import adminStore from './admin/index'
 
@@ -25,15 +25,16 @@ export default createStore({
     }
   },
   actions: {
-    async currentUser({ commit, state }) {
+    async currentUser({ state, commit }) {
       axios.defaults.headers.common.Authorization = `Bearer ${state.token}`
-      const res = await get('/user/current')
+      const res = await post('/user/current')
       commit('currentUser', res.data)
-      return res
+      return res.data
     },
     async login({ commit }, payload) {
       const res = await post('/user/login', payload)
       commit('login', res.data)
+      return res.data
     }
   },
   getters: {

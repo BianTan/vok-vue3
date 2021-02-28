@@ -78,7 +78,8 @@ const routes: Array<RouteRecordRaw> = [
     component: AdminIndex,
     meta: {
       title: '仪表盘',
-      validate: true
+      validate: true,
+      requiredLogin: true
     },
     children: [
       {
