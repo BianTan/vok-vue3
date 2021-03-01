@@ -1,11 +1,11 @@
 <template>
   <div class="inline-block">
     <card class="py-4">
-      <ul class="flex space-x-3">
-        <admin-link :to="{name: 'adminEdit', query: { post_type }}" class="text-center">全部文章（14）</admin-link>
-        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'publish' }}" class="text-center">已发布（12）</admin-link>
-        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'draft' }}" class="text-center">草稿箱（2）</admin-link>
-        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'trash' }}" class="text-center">回收站（0）</admin-link>
+      <ul class="flex space-x-3" v-if="statusList">
+        <admin-link :to="{name: 'adminEdit', query: { post_type }}" class="text-center">全部（{{statusList.allTotal}}）</admin-link>
+        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'publish' }}" class="text-center">已发布（{{statusList.publishTotal}}）</admin-link>
+        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'draft' }}" class="text-center">草稿箱（{{statusList.draftTotal}}）</admin-link>
+        <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'trash' }}" class="text-center">回收站（{{statusList.trashTotal}}）</admin-link>
       </ul>
     </card>
   </div>
@@ -51,6 +51,7 @@ export default defineComponent({
     // 数据 👇
     const postState = reactive({
       loadingStatus: computed(() => store.getters['getLoadingStatus']),
+      statusList: computed(() => store.getters['admin/getStatusList']),
       posts: computed((): PostsProps => store.getters['admin/getTableList']), // 获取文章列表
       post_type: computed(() => route.query.post_type || 'post'), // Edit编辑文章的类型 post or page
       post_status: computed(() => route.query.post_status) // Edit编辑的文章状态
@@ -65,7 +66,7 @@ export default defineComponent({
       tagId: computed(() => route.query.tagId)  // 由链接获得的标签ID
     })
     const options = reactive({
-      optionsOne: [
+      optionsOne: [ // 批量操作
         {
           id: 0,
           value: '0',
@@ -116,6 +117,9 @@ export default defineComponent({
       },
       handleFilterTermClick: () => {
         let termStr = ''
+        if(postState.post_status && postState.post_status !== '') {
+          termStr += `&post_status=${postState.post_status}`
+        }
         if(state.categoryId !== 0) {
           termStr += `&categoryId=${state.categoryId}`
         }
@@ -130,11 +134,12 @@ export default defineComponent({
     onMounted(() => {
       store.dispatch('admin/getCategoryList') // 请求分类数据
       store.dispatch('admin/getTagList') // 请求标签数据
+      store.dispatch('admin/getStatusList') // 请求获取文章数量
       let termStr = ''
-      if(termState.categoryId) { // 存在分类 id
+      if(termState.categoryId && termState.categoryId !== '0') { // 存在分类 id
         termStr += `&categoryId=${termState.categoryId}`
       }
-      if(termState.tagId) { // 存在标签 id
+      if(termState.tagId && termState.tagId !== '0') { // 存在标签 id
         termStr += `&tagId=${termState.tagId}`
       }
       if((!postState.post_type || postState.post_type === 'post')) {  // 当前为 “文章”

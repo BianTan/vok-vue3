@@ -28,7 +28,7 @@
         <p class="ml-4 truncate">{{useDayzh('MM月DD日 a hh:mm', item.createdAt)}}</p>
       </li>
     </home-card>
-    <home-card title="最近评论" class="space-y-2">
+    <home-card title="最近评论" class="space-y-2" v-if="false">
       <li class="flex items-center" v-for="item in commentInfo" :key="item._id">
         <img :src="item.author.avatar_url" :alt="item.author.name" class="h-10 w-10 rounded-full border">
         <div class="flex-1 pl-4 overflow-hidden">

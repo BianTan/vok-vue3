@@ -10,7 +10,7 @@
         <input type="hidden" name="remember" value="true">
         <div class="rounded-md space-y-2">
           <validate-input :rules="nameRules" placeholder="请输入账号" type="text" class="mb-1" v-model="name">
-            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">邮箱</label>
+            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">账号</label>
           </validate-input>
           <validate-input :rules="passwordRules" placeholder="请输入密码" type="password" v-model="password">
             <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">密码</label>
@@ -47,6 +47,8 @@ import { useStore } from 'vuex'
 import {RulesProp} from '@/types'
 import ValidateInput from '@/components/ValidateInput.vue'
 import ValidateForm from '@/components/VaildateForm.vue'
+import { createMessage } from '@/common/message'
+
 export default defineComponent({
   name: 'login',
   components: {
@@ -77,7 +79,14 @@ export default defineComponent({
           password: state.password
         }
         store.dispatch('login', payload).then(res => {
-          console.log(res)
+          if(res.token !== null) {
+            createMessage('登录成功，三秒后进入后台...', 'success')
+            setTimeout(() => {
+              router.push('/vok-admin')
+            }, 3000)
+          }
+        }).catch(err => {
+          createMessage(`登录失败！${err}`, 'error')
         })
       }
     }

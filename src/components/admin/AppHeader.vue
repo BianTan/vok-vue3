@@ -4,7 +4,7 @@
     <span class="flex items-center" v-if="user.isLogin"><i class="iconfont icon-user text-2xl mr-4"/>您好，{{user.name}}</span>
     <span class="hidden lg:block"><i :class="[{'icon-small': !screenSmall}, {'icon-big': screenSmall}]" class="iconfont text-2xl cursor-pointer" @click="switchClick"/></span>
     <span class="block lg:hidden"><i class="iconfont icon-menu text-2xl cursor-pointer" @click="handleMenuClick"/></span>
-    <span class="hidden md:block"><i class="iconfont icon-off text-2xl cursor-pointer text-red-500"/></span>
+    <span class="hidden md:block"><i class="iconfont icon-off text-2xl cursor-pointer text-red-500" @click="handleOffClick"/></span>
   </div>
 </template>
 
@@ -35,11 +35,17 @@ export default defineComponent({
       store.commit('admin/setScreenSmall', !screenSmall.value)  // 设置 state
     }
 
+    const handleOffClick = () => {
+      console.log('退出')
+    }
+
     const handleMenuClick = () => emit('menuIconClick')
+
     return{
       now,
       switchClick,
       screenSmall,
+      handleOffClick,
       handleMenuClick
     }
   }

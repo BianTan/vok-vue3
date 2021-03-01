@@ -16,5 +16,8 @@ export default {
   },
   getTagList: (state: AdminStateProps) => {
     return termTo(state.tagList)
+  },
+  getStatusList: (state: AdminStateProps) => {
+    return state.statusList
   }
 }

@@ -20,6 +20,16 @@ export interface AdminStateProps {
   tableList: PostsProps;
   categoryList: TermProps[];
   tagList: TermProps[];
+  statusList: StatusListProps;
+}
+/**
+ * 
+*/
+export interface StatusListProps {
+  allTotal: number;
+  publishTotal: number;
+  draftTotal: number;
+  trashTotal: number;
 }
 /**
  * 列表

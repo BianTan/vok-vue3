@@ -21,6 +21,7 @@ axios.interceptors.request.use(
   },
   e => {
     const { error } = e.response.data
+    store.commit('setLoadingStatus', 'error')
     return Promise.reject(error)
   }
 )
