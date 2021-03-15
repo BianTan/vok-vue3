@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { createStore } from 'vuex'
 import { post } from '@/network'
-import indexStore from './index/index'
-import adminStore from './admin/index'
+import indexStore from './index/'
+import adminStore from './admin/'
 
 export default createStore({
   state: {
@@ -33,8 +33,8 @@ export default createStore({
     },
     async login({ commit }, payload) {
       const res = await post('/user/login', payload)
-      commit('login', res.data)
-      return res.data
+      commit('login', res)
+      return res
     }
   },
   getters: {

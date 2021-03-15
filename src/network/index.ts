@@ -30,12 +30,12 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   res => {
     store.commit('setLoadingStatus', 'success')
-    return res
+    return res.data
   },
   e => {
-    const { statusText } = e.response
+    const { data } = e.response
     store.commit('setLoadingStatus', 'error')
-    return Promise.reject(statusText)
+    return Promise.reject(data)
   }
 )
 

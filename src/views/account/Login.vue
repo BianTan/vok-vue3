@@ -79,6 +79,7 @@ export default defineComponent({
           password: state.password
         }
         store.dispatch('login', payload).then(res => {
+          console.log(res)
           if(res.token !== null) {
             createMessage('登录成功，三秒后进入后台...', 'success')
             setTimeout(() => {
@@ -86,7 +87,7 @@ export default defineComponent({
             }, 3000)
           }
         }).catch(err => {
-          createMessage(`登录失败！${err}`, 'error')
+          createMessage(`登录失败！${err.msg ? err.msg : ''}`, 'error')
         })
       }
     }

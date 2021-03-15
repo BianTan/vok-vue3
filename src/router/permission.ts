@@ -28,7 +28,7 @@ const routeList: RouteListProps[] = [
         name: 'guestbook',
         component: 'index/Page',
         meta: {
-          title: '关于我'
+          title: '留言簿'
         }
       },
       {
@@ -36,7 +36,7 @@ const routeList: RouteListProps[] = [
         name: 'myfriends',
         component: 'index/Page',
         meta: {
-          title: '关于我'
+          title: '我的朋友'
         }
       }
     ]
