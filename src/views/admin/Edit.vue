@@ -1,7 +1,7 @@
 <template>
-  <div class="inline-block">
+  <div class="inline-block" v-if="statusList">
     <card class="py-4">
-      <ul class="flex space-x-3" v-if="statusList">
+      <ul class="flex space-x-3">
         <admin-link :to="{name: 'adminEdit', query: { post_type }}" class="text-center">全部（{{statusList.allTotal}}）</admin-link>
         <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'publish' }}" class="text-center">已发布（{{statusList.publishTotal}}）</admin-link>
         <admin-link :to="{name: 'adminEdit', query: { post_type, post_status: 'draft' }}" class="text-center">草稿箱（{{statusList.draftTotal}}）</admin-link>
@@ -9,6 +9,7 @@
       </ul>
     </card>
   </div>
+  <skeleton-edit v-else/>
   <card class="mt-8 py-4 px-2 hidden md:block">
     <selector :data="optionsOne"/>
     <div class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer">应用</div>
@@ -17,13 +18,13 @@
     <div class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer" @click="handleFilterTermClick">筛选</div>
   </card>
   <card class="mt-8 px-0 py-0 md:px-4 md:py-4">
-    <div v-if="loadingStatus === 'success' && posts.list">
+    <div v-if="loadingStatus === 'success' && posts">
       <div v-for="(post, index) in posts.list" :key="index">
         <h1>{{ post.title }}</h1>
       </div>
     </div>
-    <p v-if="loadingStatus === 'loading'" class="text-center py-4">加载中...</p>
-    <p v-if="loadingStatus === 'error'" class="text-center py-4">获取数据失败！</p>
+    <p v-else-if="loadingStatus === 'error'" class="text-center py-4">获取数据失败！</p>
+    <p v-else class="text-center py-4">加载中...</p>
   </card>
 </template>
 
@@ -33,15 +34,18 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useDayzh } from '@/utlis'
 import Card from '@/components/admin/Card.vue'
+import SkeletonEdit from '@/components/skeleton/SkeletonEdit.vue'
 import AdminLink from '@/components/admin/AdminLink.vue'
 import Selector from '@/components/Selector/index.vue'
-import { PostsProps } from '@/types'
+import { PostsProps, OptionsProps } from '@/types'
+import { get } from '@/network'
 
 export default defineComponent({
   components: {
     Card,
     AdminLink,
-    Selector
+    Selector,
+    SkeletonEdit
   },
   setup() {
     const route = useRoute()
@@ -52,7 +56,7 @@ export default defineComponent({
     const postState = reactive({
       loadingStatus: computed(() => store.getters['getLoadingStatus']),
       statusList: computed(() => store.getters['admin/getStatusList']),
-      posts: computed((): PostsProps => store.getters['admin/getTableList']), // 获取文章列表
+      posts: {} as PostsProps, // 获取文章列表
       post_type: computed(() => route.query.post_type || 'post'), // Edit编辑文章的类型 post or page
       post_status: computed(() => route.query.post_status) // Edit编辑的文章状态
     })
@@ -62,8 +66,8 @@ export default defineComponent({
       tagId: 0  // 当前标签 0 表示全部
     })
     const termState = reactive({
-      categoryId: computed(() => route.query.categoryId),  // 由链接获得的分类ID
-      tagId: computed(() => route.query.tagId)  // 由链接获得的标签ID
+      categoryId: computed(() => route.query.categoryId as string),  // 由链接获得的分类ID
+      tagId: computed(() => route.query.tagId as string)  // 由链接获得的标签ID
     })
     const options = reactive({
       optionsOne: [ // 批量操作
@@ -89,7 +93,7 @@ export default defineComponent({
           value: '0',
           text: '所有分类'
         }
-        const get = store.getters['admin/getCategoryList']  // 获取分类数据
+        const get: OptionsProps[] = store.getters['admin/getCategoryList']  // 获取分类数据
         return [ base, ...get ]
       }),
       tagOptions: computed(() => { // 获取所有文章标签
@@ -98,7 +102,7 @@ export default defineComponent({
           value: '0',
           text: '所有标签'
         }
-        const get = store.getters['admin/getTagList'] // 获取标签数据
+        const get: OptionsProps[] = store.getters['admin/getTagList'] // 获取标签数据
         return [ base, ...get ]
       })
     })
@@ -130,6 +134,18 @@ export default defineComponent({
       }
     })
 
+    const getPostList = async(payload: any) => {
+      postState.posts = null
+      const { currentPage = 1, post_status, termStr } = payload
+      const post_status_str = post_status.length > 0 ? `&post_status=${post_status}` : ''
+      try {
+        const res = await get(`/post/admin?currentPage=${currentPage}${post_status_str}${termStr}`)
+        postState.posts = res.data
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     // 实例被挂载
     onMounted(() => {
       store.dispatch('admin/getCategoryList') // 请求分类数据
@@ -137,15 +153,17 @@ export default defineComponent({
       store.dispatch('admin/getStatusList') // 请求获取文章数量
       let termStr = ''
       if(termState.categoryId && termState.categoryId !== '0') { // 存在分类 id
+        state.categoryId = parseInt(termState.categoryId)
         termStr += `&categoryId=${termState.categoryId}`
       }
       if(termState.tagId && termState.tagId !== '0') { // 存在标签 id
+        state.tagId = parseInt(termState.tagId)
         termStr += `&tagId=${termState.tagId}`
       }
       if((!postState.post_type || postState.post_type === 'post')) {  // 当前为 “文章”
-        store.dispatch('admin/getPostList', { currentPage: state.currentPage, post_status: postState.post_status ? postState.post_status : '', termStr })
+        getPostList({ currentPage: state.currentPage, post_status: postState.post_status ? postState.post_status : '', termStr })
       } else if(postState.post_type === 'page') {  // 当前为 “页面”
-        console.log('page')
+        getPostList({ currentPage: state.currentPage, post_status: postState.post_status ? postState.post_status : '', termStr })
       }
     })
     return {

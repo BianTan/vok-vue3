@@ -7,16 +7,6 @@ interface Ictx {
   commit: Commit;
 }
 export default {
-  async getPostList({ commit }: Ictx, payload: any) {
-    const { currentPage = 1, post_status, termStr } = payload
-    const post_status_str = post_status.length > 0 ? `&post_status=${post_status}` : ''
-    try {
-      const res = await get(`/post/admin?currentPage=${currentPage}${post_status_str}${termStr}`)
-      commit('setTableList', res.data)
-    } catch (error) {
-      console.log('error', error)
-    }
-  },
   async getCategoryList({ commit }: Ictx) {
     try {
       const res = await get('/term/category?isAll=true')

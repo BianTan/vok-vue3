@@ -17,7 +17,6 @@ export interface IndexStateProps {
 export interface AdminStateProps {
   routes: null;
   screenSmall: boolean;
-  tableList: PostsProps;
   categoryList: TermProps[];
   tagList: TermProps[];
   statusList: StatusListProps;
