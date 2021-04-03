@@ -55,4 +55,17 @@ li {
   @apply md:border-l md:border-gray-200 md:pl-6;
 }
 
+label > input + div {
+  width: 18px;
+  height: 18px;
+  @apply border border-admin-blue-500;
+}
+label > input:checked + div {
+  @apply bg-admin-blue-400 border-admin-blue-500;
+}
+label > input:checked + div::before {
+  content: "\e606";
+  @apply top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white absolute text-sm;
+}
+
 /* purgecss end ignore */

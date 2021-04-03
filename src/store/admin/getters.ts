@@ -8,9 +8,6 @@ export default {
   getScreenSmall: (state: AdminStateProps) => {
     return state.screenSmall
   },
-  getTableList: (state: AdminStateProps) => {
-    return state.tableList
-  },
   getCategoryList: (state: AdminStateProps) => {
     return termTo(state.categoryList)
   },

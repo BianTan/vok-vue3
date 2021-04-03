@@ -96,6 +96,7 @@ export interface PostListProps {
   author: AuthorProps;
   createdAt: string;
   updatedAt: string;
+  checked?: boolean;
 }
 
 /**
