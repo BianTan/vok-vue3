@@ -2,6 +2,7 @@ import router from './index'
 import store from '../store'
 import { RouteListProps } from '@/types'
 import { titleSuffix } from '@/utlis/config'
+import { createMessage } from '@/common/message'
 
 const routeList: RouteListProps[] = [
   {
@@ -69,25 +70,25 @@ router.beforeEach((to, from, next) => {
     next({ ...to, replace: true })
   } else {
     if (!user.isLogin) {  // 未登录
-      if (token) {  // 存在 token
-        store.dispatch('currentUser').then(() => {
-          next()
-        }).catch(err => { // token 失效
-          if (err === 'Unauthorized') localStorage.removeItem('token')  // token 失效
-          if (requiredLogin) {  // 需要登录才能访问
-            next('login')
-          } else {
+      if(requiredLogin) {  // 需要登录可访问
+        if (token) {  // 存在 token
+          store.dispatch('currentUser').then(() => {
             next()
-          }
-        })
-      } else {  // 已登录
-        if (requiredLogin) {  // 需要登录才能访问
+          }).catch(err => { // token 失效
+            if (err && err.code === 401) {
+              localStorage.removeItem('token')  // token 失效
+              next('login')
+              createMessage('登录信息已过期，请登录后访问.', 'error')
+            }
+          })
+        } else {  // 不存在 token
           next('login')
-        } else {
-          next()
+          createMessage('未登录，请登录后访问.', 'error')
         }
+      } else {  // 不需要登录可访问
+        next()
       }
-    } else {
+    } else {  // 已登录
       next()
     }
   }

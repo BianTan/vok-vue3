@@ -24,9 +24,9 @@
           <div
             class="text-sm text-admin-blue-500 space-x-2 opacity-0 group-hover:opacity-100 transition"
           >
-            <a href="#">编辑</a>
+            <a :href="`/vok-admin/post?id=${data.id}`">编辑</a>
             <a href="#">移至回收站</a>
-            <a href="#">查看</a>
+            <a :href="`/post/${data.id}.html`" target="_block">查看</a>
           </div>
         </div>
       </div>
@@ -53,16 +53,19 @@
     </td>
     <td class="hidden lg:table-cell px-5 py-3 text-right text-sm align-top">
       <div class="ml-4">
-        <p class="text-sm text-gray-900">已发布</p>
-        <div class="text-sm text-gray-500">2020-06-19</div>
+        <p class="text-sm text-gray-900">{{ getStatus(data.post_status) }}</p>
+        <div class="text-sm text-gray-500">
+          {{ useDay('YYYY-MM-DD', data.createdAt) }}
+        </div>
       </div>
     </td>
   </tr>
 </template>
 
 <script lang="ts">
-import { PostListProps } from '@/types'
 import { defineComponent, InputHTMLAttributes, PropType } from 'vue'
+import { PostListProps } from '@/types'
+import { useDay } from '@/utlis'
 
 export default defineComponent({
   name: 'EditTableItem',
@@ -74,6 +77,22 @@ export default defineComponent({
   },
   emit: ['handleCheckboxChange'],
   setup(props, { emit }) {
+    const getStatus = (value: string) => {
+      let res = ''
+      switch (value) {
+        case 'publish':
+          res = '已发布'
+          break
+        case 'draft':
+          res = '草稿箱'
+          break
+        case 'trash':
+          res = '回收站'
+          break
+      }
+      return res
+    }
+
     const handleCheckboxChange = (e: InputEvent) => {
       emit('handleCheckboxChange', {
         id: props.data.id,
@@ -82,7 +101,9 @@ export default defineComponent({
     }
 
     return {
-      handleCheckboxChange
+      getStatus,
+      handleCheckboxChange,
+      useDay
     }
   }
 })

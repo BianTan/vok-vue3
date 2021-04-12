@@ -25,11 +25,11 @@ export default createStore({
     }
   },
   actions: {
-    async currentUser({ state, commit }) {
+    currentUser({ state, commit }) {
       axios.defaults.headers.common.Authorization = `Bearer ${state.token}`
-      const res = await post('/user/current')
-      commit('currentUser', res.data)
-      return res.data
+      return post('/user/current').then(res => {
+        commit('currentUser', res.data)
+      })
     },
     async login({ commit }, payload) {
       const res = await post('/user/login', payload)

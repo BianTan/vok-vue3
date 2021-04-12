@@ -10,6 +10,7 @@ import AdminHome from '@/views/admin/AdminHome.vue'
 import Edit from '@/views/admin/Edit.vue'
 import Comments from '@/views/admin/Comments.vue'
 import Options from '@/views/admin/Options.vue'
+import AdminPost from '@/views/admin/Post.vue'
 
 import AccountIndex from '@/views/account/AccountIndex.vue'
 import Account from '@/views/account/Account.vue'
@@ -117,7 +118,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/vok-admin/post',
         name: 'adminPost',
-        component: Options,
+        component: AdminPost,
         meta: {
           index: 2
         }

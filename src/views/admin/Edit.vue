@@ -61,7 +61,7 @@
       筛选
     </div>
   </card>
-  <card class="mt-8 px-0 py-0 md:px-4 md:py-4">
+  <card class="mt-8 px-0 py-0 md:px-4 md:py-4 overflow-hidden">
     <div v-if="loadingStatus === 'success' && posts">
       <edit-table :data="posts.list" />
     </div>
@@ -207,7 +207,7 @@ export default defineComponent({
       store.dispatch('admin/getCategoryList') // 请求分类数据
       store.dispatch('admin/getTagList') // 请求标签数据
       store.dispatch('admin/getStatusList') // 请求获取文章数量
-      let termStr = ''
+      let termStr = '&fields=post_status'
       if (termState.categoryId && termState.categoryId !== '0') {
         // 存在分类 id
         state.categoryId = parseInt(termState.categoryId)

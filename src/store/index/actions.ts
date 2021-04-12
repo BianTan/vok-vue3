@@ -11,7 +11,7 @@ export default {
   async getPosts({ state, commit }: Ictx, { currentPage = 1 }) {
     const index = state.posts.loadedPage.indexOf(currentPage)
     if (index < 0) {
-      const res = await get(`/post?currentPage=${currentPage}&post_status=publish`)
+      const res = await get(`/post?currentPage=${currentPage}`)
       commit('setPosts', res.data)
     }
   },

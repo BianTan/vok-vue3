@@ -20,8 +20,8 @@ axios.interceptors.request.use(
     return req
   },
   e => {
-    const { error } = e.response.data
     store.commit('setLoadingStatus', 'error')
+    const { error } = e.response.data
     return Promise.reject(error)
   }
 )
@@ -33,8 +33,8 @@ axios.interceptors.response.use(
     return res.data
   },
   e => {
-    const { data } = e.response
     store.commit('setLoadingStatus', 'error')
+    const { data } = e.response
     return Promise.reject(data)
   }
 )

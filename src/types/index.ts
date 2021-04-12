@@ -97,6 +97,7 @@ export interface PostListProps {
   createdAt: string;
   updatedAt: string;
   checked?: boolean;
+  post_status?: string;
 }
 
 /**

@@ -76,7 +76,11 @@ export default defineComponent({
     const state = reactive({
       posts: props.data,
       checkedTotal: computed(
-        () => props.data.filter(post => post.checked === true).length
+        () =>
+          [].filter.call(
+            props.data,
+            (post: PostListProps) => post.checked === true
+          ).length
       )
     })
 
