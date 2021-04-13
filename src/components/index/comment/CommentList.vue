@@ -1,7 +1,9 @@
 <template>
   <card class="overflow-hidden px-8 md:px-12 py-6 md:py-8">
-    <h1 class="text-xl sm:text-2xl text-gray-600 font-bold">{{commentTitle}}</h1>
-    <slot/>
+    <h1 class="text-xl sm:text-2xl text-gray-600 font-bold">
+      {{ commentTitle }}
+    </h1>
+    <slot />
   </card>
 </template>
 

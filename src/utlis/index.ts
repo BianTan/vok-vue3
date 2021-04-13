@@ -77,3 +77,19 @@ export const getStatus = (value: string) => {
   }
   return res
 }
+
+/**
+ * 获取文章类型
+*/
+export const getPostType = (value: number) => {
+  let res = ''
+  switch (value) {
+    case 0:
+      res = '文章'
+      break
+    case 1:
+      res = '留言'
+      break
+  }
+  return res
+}

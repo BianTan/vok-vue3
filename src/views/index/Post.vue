@@ -1,6 +1,9 @@
 <template>
-  <div class="space-y-12">
-    <card class="overflow-hidden px-8 md:px-12 py-6 md:py-8" v-if="currentPost">
+  <div class="overflow-hidden p-1 -m-1">
+    <card
+      class="flex-1 overflow-hidden w-full px-8 md:px-12 py-6 md:py-8 mb-12"
+      v-if="currentPost"
+    >
       <div class="flex">
         <img
           :src="
@@ -44,12 +47,12 @@
       </h1>
       <div
         id="post_content"
-        class="text-gray-700"
+        class="text-gray-800"
         v-html="currentPost.content"
       />
     </card>
     <skeleton-post v-else />
-    <comment-list id="comment-list" v-if="false"> Hello </comment-list>
+    <comment-list id="comment-list" v-if="true"> Hello </comment-list>
   </div>
 </template>
 

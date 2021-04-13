@@ -1,10 +1,33 @@
 <template>
-  <div class="bg-white text-gray-700 h-18 md:rounded-md shadow-admin flex items-center justify-end px-8 space-x-6 select-none w-full" id="admin-header">
-    <span class="hidden md:block">{{now}}</span>
-    <span class="flex items-center" v-if="user.isLogin"><i class="iconfont icon-user text-2xl mr-4"/>您好，{{user.name}}</span>
-    <span class="hidden lg:block"><i :class="[{'icon-small': !screenSmall}, {'icon-big': screenSmall}]" class="iconfont text-2xl cursor-pointer" @click="switchClick"/></span>
-    <span class="block lg:hidden"><i class="iconfont icon-menu text-2xl cursor-pointer" @click="handleMenuClick"/></span>
-    <span class="hidden md:block"><i class="iconfont icon-off text-2xl cursor-pointer text-red-500" @click="handleOffClick"/></span>
+  <div
+    class="bg-white text-gray-700 h-18 md:rounded-md shadow-admin flex items-center justify-end px-8 space-x-6 select-none w-full"
+    id="admin-header"
+  >
+    <span class="hidden md:block">{{ now }}</span>
+    <span class="flex items-center" v-if="user.isLogin"
+      ><i class="iconfont icon-user text-2xl mr-4" />您好，{{ user.name }}</span
+    >
+    <span
+      ><i
+        class="iconfont icon-new text-2xl cursor-pointer"
+        @click="$router.push('/vok-admin/new-post')"
+    /></span>
+    <span class="hidden lg:block"
+      ><i
+        :class="[{ 'icon-small': !screenSmall }, { 'icon-big': screenSmall }]"
+        class="iconfont text-2xl cursor-pointer"
+        @click="switchClick"
+    /></span>
+    <span class="block lg:hidden"
+      ><i
+        class="iconfont icon-menu text-2xl cursor-pointer"
+        @click="handleMenuClick"
+    /></span>
+    <span class="hidden md:block"
+      ><i
+        class="iconfont icon-off text-2xl cursor-pointer text-red-500"
+        @click="handleOffClick"
+    /></span>
   </div>
 </template>
 
@@ -26,13 +49,14 @@ export default defineComponent({
     const now = computed(() => useDayzh('YYYY年M月DD日 dddd'))
 
     const screenSmall = computed(() => store.getters['admin/getScreenSmall']) // 获取状态
-    const switchClick = () => { // 点击切换状态
-      if(screenSmall.value) {
+    const switchClick = () => {
+      // 点击切换状态
+      if (screenSmall.value) {
         localStorage.setItem('screenSmall', '0')
       } else {
         localStorage.setItem('screenSmall', '1')
       }
-      store.commit('admin/setScreenSmall', !screenSmall.value)  // 设置 state
+      store.commit('admin/setScreenSmall', !screenSmall.value) // 设置 state
     }
 
     const handleOffClick = () => {
@@ -41,7 +65,7 @@ export default defineComponent({
 
     const handleMenuClick = () => emit('menuIconClick')
 
-    return{
+    return {
       now,
       switchClick,
       screenSmall,

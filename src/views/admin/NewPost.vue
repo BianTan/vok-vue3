@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="flex flex-col lg:flex-row"
-    v-if="!!post.id && !!categories[0].value"
-  >
+  <div class="flex flex-col lg:flex-row">
     <div class="flex-1">
       <card class="inline-block rounded-md overflow-hidden mb-4 w-full">
         <input
@@ -28,25 +25,6 @@
         <template v-slot:default>
           <div class="text-sm space-y-2">
             <p>
-              状态：<span class="font-bold mr-2" v-if="!isEditStatus">{{
-                getStatus(post.post_status)
-              }}</span>
-              <selector
-                :data="postStatus"
-                :currentId="
-                  postStatus.find(f => f.value === post.post_status).id
-                "
-                @menuClick="handleEditStatusInputClick"
-                v-if="isEditStatus"
-              />
-              <a
-                @click="handleEditStatusBtnClick"
-                href="javascript:;"
-                class="text-sm text-admin-blue-600"
-                >{{ isEditStatus ? '确定' : '编辑' }}</a
-              >
-            </p>
-            <p>
               类型：<span class="font-bold mr-2" v-if="!isEditPostType">{{
                 getPostType(post.type)
               }}</span>
@@ -63,32 +41,21 @@
                 >{{ isEditPostType ? '确定' : '编辑' }}</a
               >
             </p>
-            <p>
-              发布于：<span class="font-bold">{{
-                useDay('YYYY 年 MM 月 DD 日', post.createdAt)
-              }}</span>
-            </p>
           </div>
         </template>
         <template v-slot:footer>
-          <div class="flex justify-between items-center py-2 px-4 border-t">
-            <a
-              :href="`/post/${postId}.html`"
-              target="_blank"
-              class="text-sm text-admin-blue-600"
-              >查看</a
-            >
+          <div class="flex justify-end items-center py-2 px-4 border-t">
             <button
-              @click="handleUpdateBtnClick"
+              @click="handleCreatePostBtnClick"
               class="text-sm bg-admin-blue-500 text-white py-1 px-4 rounded focus:outline-none"
             >
-              更新
+              发布
             </button>
           </div>
         </template>
       </edit-sidebar-box>
       <edit-sidebar-box title="分类">
-        <div class="space-y-2">
+        <div class="space-y-2" v-if="categories">
           <label
             class="flex items-center select-none"
             v-for="item in categories"
@@ -99,7 +66,7 @@
               type="radio"
               name="category"
               :value="item.value"
-              :checked="item.value === post.category.id"
+              :checked="item.value === '1'"
               @change="handleCategoryChange(item)"
             />
             <div
@@ -157,12 +124,12 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute, useRouter } from 'vue-router'
-import { PostListProps, OptionsProps } from '@/types'
+import { useRouter } from 'vue-router'
+import { OptionsProps } from '@/types'
 import { editApi } from '@/config'
-import { get, patch, post } from '@/network'
-import { postStatus, postType } from '@/utlis/config'
-import { useDay, getStatus, getPostType } from '@/utlis'
+import { post } from '@/network'
+import { getPostType } from '@/utlis'
+import { postType } from '@/utlis/config'
 import { createMessage } from '@/common/message'
 import Editor from '@tinymce/tinymce-vue'
 import Card from '@/components/index/Card.vue'
@@ -178,12 +145,22 @@ export default defineComponent({
     Selector
   },
   setup() {
-    const route = useRoute()
-    const router = useRouter()
     const store = useStore()
+    const router = useRouter()
 
     const state = reactive({
-      post: {} as PostListProps,
+      isEditPostType: false,
+      EditType: 0,
+      post: {
+        title: '',
+        content: '',
+        category: '1',
+        tags: [],
+        type: 0,
+        post_url: '',
+        description: ''
+      },
+      addTagInputContent: '',
       editOption: {
         min_height: 640,
         menubar: true,
@@ -195,39 +172,19 @@ export default defineComponent({
         ],
         toolbar:
           'undo redo emoticons | formatselect | bold italic backcolor | \
-           alignleft aligncenter alignright alignjustify | \
+           alignleft aligncenter alignright alignjustify  | \
            bullist numlist outdent indent | removeformat | help',
         language: 'zh_CN',
         toolbar_sticky: true,
         typeahead_urls: true,
         remove_trailing_brs: true,
-        content_css: 'default', // dark document writer
-        body_class: 'overflow-auto'
+        content_css: 'default' // dark document writer
       },
       categories: computed<OptionsProps[]>(
         () => store.getters['admin/getCategoryList']
-      ),
-      postId: '',
-      addTagInputContent: '',
-      isEditStatus: false,
-      EditStatus: '',
-      isEditPostType: false,
-      EditType: 0
+      )
     })
 
-    /**
-     * 更改文章状态 按钮点击
-     */
-    const handleEditStatusBtnClick = () => {
-      if (state.isEditStatus) state.post.post_status = state.EditStatus
-      state.isEditStatus = !state.isEditStatus
-    }
-    /**
-     * 文章状态选择框 点击
-     */
-    const handleEditStatusInputClick = (res: string[]) => {
-      state.EditStatus = res[0]
-    }
     /**
      * 更改文章类型 按钮点击
      */
@@ -239,41 +196,34 @@ export default defineComponent({
      * 文章类型选择框 点击
      */
     const handleEditTypeInputClick = (res: string[]) => {
-      console.log(res)
       state.EditType = parseInt(res[0])
     }
     /**
-     * 更新文章按钮 点击
+     * 创建文章按钮 点击
      */
-    const handleUpdateBtnClick = () => {
-      const {
-        title,
-        content,
-        type,
-        post_url = '',
-        category,
-        tags,
-        post_status
-      } = state.post
-      const cTags = tags.map(tag => {
+    const handleCreatePostBtnClick = () => {
+      const data = { ...state.post }
+      data.tags = state.post.tags.map(tag => {
         return tag.id
       })
-      const data = {
-        title,
-        content,
-        type,
-        category: category.id,
-        tags: cTags,
-        post_url,
-        post_status
-      }
-      patch(`/post/${state.postId}`, data)
+      data.description = state.post.content
+        .replace(/<[^>]*>/gi, ' ')
+        .replace(/<\/[^>]*>/gi, ' ')
+        .replace(/&nbsp;|&#160;/gi, ' ')
+        .replace(/\s+/gi, ' ')
+        .trim()
+        .substr(0, 150)
+      console.log(data)
+      post('/post', data)
         .then((res: any) => {
-          if (res.code === 201) createMessage(res.msg, 'success')
+          if (res.code === 201) {
+            router.push(`/vok-admin/post?id=${res.data[0].id}`)
+            createMessage(res.msg, 'success')
+          }
         })
         .catch(error => {
           createMessage(
-            `更新失败：${error.msg ? error.msg : error.message}`,
+            `发布失败：${error.msg ? error.msg : error.message}`,
             'error'
           )
         })
@@ -282,10 +232,7 @@ export default defineComponent({
      * 分类单选框 改变
      */
     const handleCategoryChange = (category: OptionsProps) => {
-      state.post.category = {
-        id: category.value,
-        name: category.text
-      }
+      state.post.category = category.value
     }
     /**
      * 添加标签
@@ -347,34 +294,20 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      route.query.id
-        ? (state.postId = route.query.id.toString())
-        : router.push('/vok-admin')
       store.dispatch('admin/getCategoryList') // 请求分类数据
-      get(`/post/admin/${state.postId}`)
-        .then(res => {
-          state.post = res.data[0]
-          state.EditStatus = state.post.post_status
-        })
-        .catch(err => createMessage(err.msg, 'error'))
     })
 
     return {
       ...toRefs(state),
-      postStatus,
-      postType,
       editApi,
-      getStatus,
       getPostType,
-      useDay,
-      handleEditStatusBtnClick,
-      handleEditStatusInputClick,
+      postType,
       handleEditTypeBtnClick,
       handleEditTypeInputClick,
-      handleUpdateBtnClick,
+      handleCreatePostBtnClick,
+      handleCategoryChange,
       addTag,
       handleDeleteTagBtnClick,
-      handleCategoryChange,
       handleCoverClick
     }
   }

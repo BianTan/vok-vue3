@@ -23,10 +23,16 @@ li {
 
 /** 文章 **/
 #post_content p {
-  @apply text-sm leading-6 sm:text-base sm:leading-7;
+  @apply text-sm leading-6 md:text-base md:leading-7 mb-3 break-all;
+}
+#post_content pre {
+  @apply overflow-x-scroll;
+}
+#post_content blockquote {
+  @apply border-l-4 overflow-auto text-gray-500 bg-gray-100 -mx-8 my-8 md:-mx-12 px-8 py-8 md:px-12 text-sm;
 }
 #post_content img {
-  @apply max-w-full rounded;
+  @apply max-w-full rounded mt-5;
 }
 #post_content a {
   @apply text-blue-600 hover:text-blue-400 transition duration-200 ease-in-out;

@@ -33,18 +33,16 @@ export const menuList = [
   }
 ]
 
-export interface PostTypeProps {
-  id: number;
-  desc: string;
-}
-export const postType: PostTypeProps[] = [
+export const postType = [
   {
     id: 0,
-    desc: '文章'
+    value: '0',
+    text: '文章'
   },
   {
     id: 1,
-    desc: '留言'
+    value: '1',
+    text: '留言'
   }
 ]
 

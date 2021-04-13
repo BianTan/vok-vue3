@@ -84,6 +84,7 @@ import SkeletonEdit from '@/components/skeleton/SkeletonEdit.vue'
 import AdminLink from '@/components/admin/AdminLink.vue'
 import Selector from '@/components/Selector/index.vue'
 import EditTable from '@/components/admin/EditTable/index.vue'
+import { createMessage } from '@/common/message'
 
 export default defineComponent({
   components: {
@@ -198,7 +199,10 @@ export default defineComponent({
         )
         postState.posts = res.data
       } catch (error) {
-        console.log(error)
+        createMessage(
+          `请求错误：${error.msg ? error.msg : error.message}`,
+          'error'
+        )
       }
     }
 
@@ -227,13 +231,20 @@ export default defineComponent({
         })
       } else if (postState.post_type === 'page') {
         // 当前为 “页面”
-        getPostList({
-          currentPage: state.currentPage,
-          post_status: postState.post_status ? postState.post_status : '',
-          termStr
-        })
+        postState.posts = {
+          currentPage: 1,
+          list: [],
+          pageSize: 12,
+          total: 0
+        }
+        // getPostList({
+        //   currentPage: state.currentPage,
+        //   post_status: postState.post_status ? postState.post_status : '',
+        //   termStr
+        // })
       }
     })
+
     return {
       useDayzh,
       ...toRefs(postState),
