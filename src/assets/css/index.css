@@ -54,18 +54,36 @@ li {
 #admin-header span:not(:first-child) {
   @apply md:border-l md:border-gray-200 md:pl-6;
 }
-
+/** 复选框 **/
 label > input + div {
   width: 18px;
   height: 18px;
   @apply border border-admin-blue-500;
 }
-label > input:checked + div {
+label > input[type="checkbox"]:checked + div {
   @apply bg-admin-blue-400 border-admin-blue-500;
 }
-label > input:checked + div::before {
+label > input[type="checkbox"]:checked + div::before {
   content: "\e606";
   @apply top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white absolute text-sm;
+}
+/** 单选框 **/
+label > input[type="radio"] + div {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  @apply border border-admin-blue-500;
+}
+label > input[type="radio"] + div::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  @apply top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-admin-blue-400 absolute opacity-0 transition;
+}
+
+label > input[type="radio"]:checked + div::before {
+  @apply opacity-100;
 }
 
 /* purgecss end ignore */

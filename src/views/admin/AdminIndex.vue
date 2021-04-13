@@ -15,7 +15,7 @@
         <span class="lg:hidden xl:inline-block">{{ item.name }}</span>
       </sidebar-item>
     </sidebar>
-    <div class="flex-1 w-full px-0 md:px-14 py-0 md:py-8">
+    <div class="flex-1 w-full px-0 md:px-10 py-0 md:py-8">
       <app-header
         @menuIconClick="handleMenuClick"
         :user="userData"

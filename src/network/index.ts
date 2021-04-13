@@ -50,3 +50,9 @@ export function get(url: string, data?: object) {
   const params = { ...data, ...commonParam }
   return axios.get(url, params)
 }
+
+// patch方法
+export function patch(url: string, data?: object) {
+  const params = { ...data, ...commonParam }
+  return axios.patch(url, params)
+}

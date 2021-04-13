@@ -58,3 +58,22 @@ export const useDay = (format?: string, date?: string | number | Date | dayjs.Da
 export const useDayzh = (format?: string, date?: string | number | Date | dayjs.Dayjs) => {
   return dayjs(date).locale('zh-cn').format(format)
 }
+
+/**
+ * 获取文章状态
+*/
+export const getStatus = (value: string) => {
+  let res = ''
+  switch (value) {
+    case 'publish':
+      res = '已发布'
+      break
+    case 'draft':
+      res = '草稿箱'
+      break
+    case 'trash':
+      res = '回收站'
+      break
+  }
+  return res
+}

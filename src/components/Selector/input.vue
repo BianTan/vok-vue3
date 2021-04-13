@@ -1,15 +1,18 @@
 <template>
   <div class="border px-3 rounded-md relative cursor-pointer">
     <input
-      class="top-0 left-0 outline-none text-sm w-32"
+      class="top-0 left-0 outline-none text-sm w-18"
       type="text"
-      :class="[{'cursor-pointer': isShow}, {'cursor-text': !isShow}]"
+      :class="[{ 'cursor-pointer': isShow }, { 'cursor-text': !isShow }]"
       :value="value"
       @input="input"
       @focus="focus"
       @blur="blur"
     />
-    <i class="iconfont" :class="[{'icon-down': isShow}, {'icon-search': !isShow}]"/>
+    <i
+      class="iconfont"
+      :class="[{ 'icon-down': isShow }, { 'icon-search': !isShow }]"
+    />
   </div>
 </template>
 
@@ -31,7 +34,7 @@ export default defineComponent({
       emit('input', e.target.value) // 触发 input，把 value 发送给粑粑👨
     }
     const focus = () => {
-      isShow.value = false  // 控制鼠标 icon 的，看上面 class
+      isShow.value = false // 控制鼠标 icon 的，看上面 class
       emit('focus', props.value)
     }
     const blur = () => {

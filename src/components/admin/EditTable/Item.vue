@@ -17,15 +17,17 @@
         </div>
         <div class="ml-4">
           <a
-            href="#"
-            class="align-top text-sm font-medium text-admin-blue-600"
+            href="javascript:;"
+            class="align-top text-sm font-medium text-admin-blue-600 cursor-default"
             >{{ data.title }}</a
           >
           <div
             class="text-sm text-admin-blue-500 space-x-2 opacity-0 group-hover:opacity-100 transition"
           >
-            <a :href="`/vok-admin/post?id=${data.id}`">编辑</a>
-            <a href="#">移至回收站</a>
+            <router-link :to="`/vok-admin/post?id=${data.id}`"
+              >编辑</router-link
+            >
+            <a href="javascript:;">移至回收站</a>
             <a :href="`/post/${data.id}.html`" target="_block">查看</a>
           </div>
         </div>

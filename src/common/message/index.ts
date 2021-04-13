@@ -11,7 +11,7 @@ export function createMessage(message: string, type?: MessageType, time = 3000) 
   document.body.appendChild(mountNode)
   messageInstance.mount(mountNode)
   setTimeout(() => {
-    // messageInstance.unmount(mountNode)
-    // document.body.removeChild(mountNode)
+    messageInstance.unmount(mountNode)
+    document.body.removeChild(mountNode)
   }, time)
 }

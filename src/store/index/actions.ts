@@ -20,6 +20,7 @@ export default {
     if (index < 0) { // 如果当前文章未请求过数据才 get
       const res = await get(`/post/${id}`)
       commit('setCurrentPost', { res: arrToObj(res.data), id })
+      return res
     }
   }
 } 

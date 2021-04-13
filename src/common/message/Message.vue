@@ -1,7 +1,7 @@
 <template>
   <div
     :class="classAry"
-    class="border-t-4 rounded-b px-6 py-3 shadow-md fill-current fixed top-10 left-1/2 transform -translate-x-1/2"
+    class="z-50 w-11/12 md:w-auto border-t-4 rounded-b px-6 py-3 shadow-md fill-current fixed top-10 left-1/2 transform -translate-x-1/2"
   >
     <div class="flex items-center">
       <div class="py-1">
@@ -15,7 +15,7 @@
           ></path>
         </svg>
       </div>
-      <p class="font-bold">{{message}}</p>
+      <p class="font-bold">{{ message }}</p>
     </div>
   </div>
 </template>
@@ -31,11 +31,14 @@ export default defineComponent({
     },
     message: String
   },
-  setup (props) {
+  setup(props) {
     const classAry = [
-      {'bg-red-100 border-red-500 text-red-500': props.type === 'error'},
-      {'bg-teal-100 border-teal-500 text-teal-500': props.type === 'success'},
-      {'bg-indigo-100 border-indigo-500 text-indigo-500': props.type === 'default'}
+      { 'bg-red-100 border-red-500 text-red-500': props.type === 'error' },
+      { 'bg-teal-100 border-teal-500 text-teal-500': props.type === 'success' },
+      {
+        'bg-indigo-100 border-indigo-500 text-indigo-500':
+          props.type === 'default'
+      }
     ]
     return {
       classAry

@@ -32,3 +32,36 @@ export const menuList = [
     iconName: 'setting'
   }
 ]
+
+export interface PostTypeProps {
+  id: number;
+  desc: string;
+}
+export const postType: PostTypeProps[] = [
+  {
+    id: 0,
+    desc: '文章'
+  },
+  {
+    id: 1,
+    desc: '留言'
+  }
+]
+
+export const postStatus = [
+  {
+    id: '0',
+    value: 'publish',
+    text: '已发布'
+  },
+  {
+    id: '1',
+    value: 'draft',
+    text: '草稿箱'
+  },
+  {
+    id: '2',
+    value: 'trash',
+    text: '回收站'
+  }
+]
