@@ -22,8 +22,11 @@ li {
 }
 
 /** 文章 **/
+#post_content p {
+  @apply text-sm leading-6 md:text-base md:leading-7 break-all;
+}
 #post_content > p {
-  @apply text-sm leading-6 md:text-base md:leading-7 mb-3 break-all;
+  @apply mb-3;
 }
 #post_content pre {
   @apply overflow-x-scroll;

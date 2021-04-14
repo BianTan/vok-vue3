@@ -6,7 +6,7 @@
     >
       <div class="flex h-full w-full">
         <div class="flex-1 relative" @click="handleClick">
-          <transition-group>
+          <transition-group-default>
             <img
               v-for="(img, index) in data"
               :key="index"
@@ -15,7 +15,7 @@
               @click="isButtonShow = !isButtonShow"
               class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-9/10 max-h-9/10 cursor-pointer"
             />
-          </transition-group>
+          </transition-group-default>
           <transition-default>
             <div v-show="isButtonShow">
               <span class="absolute top-2 left-2 text-white text-xs"
@@ -54,6 +54,7 @@
 <script lang="ts">
 import { defineComponent, PropType, reactive, toRefs, watch } from 'vue'
 import TransitionDefault from '@/components/transition/TransitionDefault.vue'
+import TransitionGroupDefault from '@/components/transition/TransitionGroupDefault.vue'
 import iconfont from './iconfont.vue'
 import Sidebar from './sidebar.vue'
 
@@ -61,6 +62,7 @@ export default defineComponent({
   name: 'VueLightbox',
   components: {
     TransitionDefault,
+    TransitionGroupDefault,
     iconfont,
     Sidebar
   },

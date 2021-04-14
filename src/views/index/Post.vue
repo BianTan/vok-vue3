@@ -2,7 +2,7 @@
   <div class="overflow-hidden p-1 -m-1">
     <card
       class="flex-1 overflow-hidden w-full px-8 md:px-12 py-6 md:py-8 mb-12"
-      v-if="currentPost"
+      v-if="loadingStatus === 'success' && currentPost"
     >
       <div class="flex">
         <img
@@ -55,8 +55,11 @@
         v-html="currentPost.content"
       />
     </card>
-    <skeleton-post v-else />
-    <comment-list id="comment-list" v-if="true"> Hello </comment-list>
+    <card v-else-if="loadingStatus === 'error'" class="text-center py-4">
+      获取数据失败！
+    </card>
+    <skeleton-post v-else class="mb-12" />
+    <comment-list id="comment-list" v-if="false"> Hello </comment-list>
     <vue-lightbox ref="lightboxRef" :data="imgArry" />
   </div>
 </template>
@@ -104,7 +107,8 @@ export default defineComponent({
 
     const state = reactive({
       id: '',
-      imgArry: [] as string[]
+      imgArry: [] as string[],
+      loadingStatus: computed(() => store.getters['getLoadingStatus'])
     })
 
     const currentPost = computed<PostListProps>(() =>

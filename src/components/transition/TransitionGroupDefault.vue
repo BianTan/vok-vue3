@@ -1,12 +1,12 @@
 <template>
   <transition-group
-      enter-active-class="transition ease-out duration-200"
-      enter-class="transform opacity-0 scale-95"
-      enter-to-class="transform opacity-100 scale-100"
-      leave-active-class="transition ease-in duration-200"
-      leave-class="transform opacity-100 scale-100"
-      leave-to-class="transform opacity-0 scale-95"
-    >
-    <slot/>
+    enter-active-class="transition ease-out duration-200 opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="transition ease-in duration-200"
+    leave-class="opacity-100"
+    leave-to-class="opacity-0"
+    tag="ul"
+  >
+    <slot />
   </transition-group>
 </template>
