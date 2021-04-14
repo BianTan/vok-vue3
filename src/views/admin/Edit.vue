@@ -109,8 +109,8 @@ export default defineComponent({
     })
     const state = reactive({
       currentPage: 1, // 当前列表第几页？
-      categoryId: 0, // 当前分类 0 表示全部
-      tagId: 0 // 当前标签 0 表示全部
+      categoryId: 0, // 当前筛选分类 0 表示全部
+      tagId: 0 // 当前筛选标签 0 表示全部
     })
     const termState = reactive({
       categoryId: computed(() => route.query.categoryId as string), // 由链接获得的分类ID

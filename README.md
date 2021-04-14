@@ -25,6 +25,14 @@ Q：为什么叫 Vok ？ A：瞎写的 嘻嘻
 
 ![home_PC](images/post.png)
 
+### 电脑端 图片灯箱
+
+![home_PC](images/lightbox_pc.png)
+
+### 移动端 图片灯箱
+
+![home_PC](images/lightbox_phone.png)
+
 ### 电脑端 登录
 
 ![home_PC](images/login.png)

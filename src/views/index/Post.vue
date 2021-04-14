@@ -42,33 +42,46 @@
         :alt="currentPost.title"
         class="mt-8 rounded"
       />
-      <h1 class="text-xl md:text-2xl xl:text-3xl my-6 text-gray-800">
+      <h1 class="text-xl md:mb-14 md:text-2xl xl:text-3xl my-6 text-gray-800">
         {{ currentPost.title }}
       </h1>
       <div
         id="post_content"
         class="text-gray-800"
+        v-lightbox="{
+          imgs: getImages,
+          openLightbox
+        }"
         v-html="currentPost.content"
       />
     </card>
     <skeleton-post v-else />
     <comment-list id="comment-list" v-if="true"> Hello </comment-list>
+    <vue-lightbox ref="lightboxRef" :data="imgArry" />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  onMounted,
+  reactive,
+  toRefs
+} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { PostListProps } from '@/types'
 import { useCommentCount, useDay } from '@/utlis'
 import { titleSuffix } from '@/utlis/config'
+import { createMessage } from '@/common/message'
+import lightbox from '@/libs/VueLightbox/directives'
 import Card from '@/components/index/Card.vue'
 import InfoList from '@/components/index/info/InfoList.vue'
 import InfoItem from '@/components/index/info/InfoItem.vue'
 import CommentList from '@/components/index/comment/CommentList.vue'
 import SkeletonPost from '@/components/skeleton/SkeletonPost.vue'
-import { createMessage } from '@/common/message'
 
 export default defineComponent({
   components: {
@@ -78,15 +91,24 @@ export default defineComponent({
     CommentList,
     SkeletonPost
   },
+  directives: {
+    lightbox
+  },
   name: 'Post',
   setup() {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const id = ref('1')
+
+    const instance = getCurrentInstance()
+
+    const state = reactive({
+      id: '',
+      imgArry: [] as string[]
+    })
 
     const currentPost = computed<PostListProps>(() =>
-      store.getters['index/getCurrentPost'](id.value)
+      store.getters['index/getCurrentPost'](state.id)
     )
     const commentCount = computed(() =>
       useCommentCount(currentPost.value.comment_count)
@@ -95,15 +117,19 @@ export default defineComponent({
       useDay('YYYY 年 MM 月 DD 日', currentPost.value.createdAt)
     )
 
+    const getImages = (imgs: string[]) => (state.imgArry = imgs)
+    const openLightbox = (id?: string) =>
+      (instance.refs.lightboxRef as any).openLightbox(id)
+
     if (route.params.id) {
       const params = route.params.id + ''
       const res = params.match(/(.*?).html/)
-      if (res) id.value = res[1]
+      if (res) state.id = res[1]
     }
 
     onMounted(() => {
       store
-        .dispatch('index/getCurrentPost', id.value)
+        .dispatch('index/getCurrentPost', state.id)
         .then(res => {
           if (res.code === 200) document.title = res.data[0].title + titleSuffix
         })
@@ -123,9 +149,12 @@ export default defineComponent({
     })
 
     return {
+      ...toRefs(state),
       currentPost,
       commentCount,
-      createdDate
+      createdDate,
+      getImages,
+      openLightbox
     }
   }
 })

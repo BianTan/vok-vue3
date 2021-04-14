@@ -22,6 +22,12 @@ module.exports = {
       lineHeight: {
         '11': '2.75rem'
       },
+      maxWidth: {
+        '9/10': '90%'
+      },
+      maxHeight: {
+        '9/10': '90%'
+      },
       colors: {
         'admin-blue': {
           '50': '#f6fbfc',
