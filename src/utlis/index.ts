@@ -93,3 +93,28 @@ export const getPostType = (value: number) => {
   }
   return res
 }
+
+/**
+ * 防抖
+*/
+export const debounce = <T extends (...args: any[]) => any>(callback: T, delay = 200, tiggleNow = false) => {
+  let timer: ReturnType<typeof setTimeout> | null = null
+  return (...args: Parameters<T>): ReturnType<T> => {
+    let result: any;
+    if(timer) clearTimeout(timer)
+    if(tiggleNow) {
+      const exec = !timer
+      timer = setTimeout(() => {
+        timer = null
+      }, delay)
+      if(exec) {
+        result = callback(args)
+      }
+    } else {
+      timer = setTimeout(() => {
+        result = callback(args)
+      }, delay)
+    }
+    return result
+  }
+}

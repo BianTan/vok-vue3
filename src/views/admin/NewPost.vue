@@ -46,7 +46,7 @@
         <template v-slot:footer>
           <div class="flex justify-end items-center py-2 px-4 border-t">
             <button
-              @click="handleCreatePostBtnClick"
+              @click="debounceCreate"
               class="text-sm bg-admin-blue-500 text-white py-1 px-4 rounded focus:outline-none"
             >
               发布
@@ -83,10 +83,10 @@
             placeholder="多个标签请用英文逗号（,）分开"
             class="text-sm px-2 py-1 outline-none border rounded"
             v-model="addTagInputContent"
-            @keyup="addTag"
+            @keyup="debounceAddTag"
           />
           <button
-            @click="addTag"
+            @click="debounceAddTag"
             class="text-sm focus:outline-none bg-admin-blue-500 text-white rounded ml-2 px-2"
           >
             添加
@@ -128,7 +128,7 @@ import { useRouter } from 'vue-router'
 import { OptionsProps } from '@/types'
 import { editApi } from '@/config'
 import { post } from '@/network'
-import { getPostType } from '@/utlis'
+import { debounce, getPostType } from '@/utlis'
 import { postType } from '@/utlis/config'
 import { createMessage } from '@/common/message'
 import Editor from '@tinymce/tinymce-vue'
@@ -228,6 +228,7 @@ export default defineComponent({
           )
         })
     }
+    const debounceCreate = debounce(handleCreatePostBtnClick, 500, true)
     /**
      * 分类单选框 改变
      */
@@ -274,6 +275,7 @@ export default defineComponent({
         })
       }
     }
+    const debounceAddTag = debounce(addTag, 500, true)
     /**
      * 删除标签 点击
      */
@@ -304,9 +306,9 @@ export default defineComponent({
       postType,
       handleEditTypeBtnClick,
       handleEditTypeInputClick,
-      handleCreatePostBtnClick,
+      debounceCreate,
       handleCategoryChange,
-      addTag,
+      debounceAddTag,
       handleDeleteTagBtnClick,
       handleCoverClick
     }

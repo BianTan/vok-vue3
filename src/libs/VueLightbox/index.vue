@@ -83,9 +83,10 @@ export default defineComponent({
     })
 
     const resetTimer = () => {
-      clearTimeout(state.timer)
-      if (state.isButtonShow)
+      if (state.isButtonShow) {
+        clearTimeout(state.timer)
         state.timer = setTimeout(() => (state.isButtonShow = false), 5000)
+      }
     }
     const openLightbox = (id = '0') => {
       state.currentId = parseInt(id)
@@ -117,16 +118,42 @@ export default defineComponent({
       resetTimer()
     }
 
-    watch(
-      () => state.isButtonShow,
-      newValue => {
-        if (newValue) {
-          state.timer = setTimeout(() => (state.isButtonShow = false), 5000)
-        } else {
-          clearTimeout(state.timer)
-        }
+    const keydown = (e: KeyboardEvent) => {
+      const type = e.code
+      switch (type) {
+        case 'ArrowLeft':
+          goPrev()
+          break
+        case 'ArrowRight':
+          goNext()
+          break
+        case 'Escape':
+        case 'Space':
+          e.preventDefault()
+          state.isShow = false
+          break
       }
-    )
+    }
+    const buttonShow = () => {
+      state.isButtonShow = true
+    }
+
+    watch([() => state.isButtonShow, () => state.isShow], newValue => {
+      if (newValue[0]) {
+        // 这个是 isButtonShow
+        state.timer = setTimeout(() => (state.isButtonShow = false), 5000)
+      } else if (!newValue[0]) {
+        clearTimeout(state.timer)
+      }
+      if (newValue[1]) {
+        // 这个是 isShow
+        window.addEventListener('keydown', keydown)
+        window.addEventListener('mousemove', buttonShow)
+      } else if (!newValue[1]) {
+        window.removeEventListener('keydown', keydown)
+        window.removeEventListener('mousemove', buttonShow)
+      }
+    })
 
     return {
       ...toRefs(state),

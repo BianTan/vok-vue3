@@ -79,7 +79,7 @@
               >查看</a
             >
             <button
-              @click="handleUpdateBtnClick"
+              @click="debounceUpdate"
               class="text-sm bg-admin-blue-500 text-white py-1 px-4 rounded focus:outline-none"
             >
               更新
@@ -116,10 +116,10 @@
             placeholder="多个标签请用英文逗号（,）分开"
             class="text-sm px-2 py-1 outline-none border rounded"
             v-model="addTagInputContent"
-            @keyup="addTag"
+            @keyup="debounceAddTag"
           />
           <button
-            @click="addTag"
+            @click="debounceAddTag"
             class="text-sm focus:outline-none bg-admin-blue-500 text-white rounded ml-2 px-2"
           >
             添加
@@ -162,7 +162,7 @@ import { PostListProps, OptionsProps } from '@/types'
 import { editApi } from '@/config'
 import { get, patch, post } from '@/network'
 import { postStatus, postType } from '@/utlis/config'
-import { useDay, getStatus, getPostType } from '@/utlis'
+import { useDay, getStatus, getPostType, debounce } from '@/utlis'
 import { createMessage } from '@/common/message'
 import Editor from '@tinymce/tinymce-vue'
 import Card from '@/components/index/Card.vue'
@@ -278,6 +278,7 @@ export default defineComponent({
           )
         })
     }
+    const debounceUpdate = debounce(handleUpdateBtnClick, 500, true)
     /**
      * 分类单选框 改变
      */
@@ -327,6 +328,7 @@ export default defineComponent({
         })
       }
     }
+    const debounceAddTag = debounce(addTag, 500, true)
     /**
      * 删除标签 点击
      */
@@ -371,11 +373,12 @@ export default defineComponent({
       handleEditStatusInputClick,
       handleEditTypeBtnClick,
       handleEditTypeInputClick,
-      handleUpdateBtnClick,
-      addTag,
+      debounceUpdate,
+      debounceAddTag,
       handleDeleteTagBtnClick,
       handleCategoryChange,
-      handleCoverClick
+      handleCoverClick,
+      debounce
     }
   }
 })
