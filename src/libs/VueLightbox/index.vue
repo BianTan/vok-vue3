@@ -53,6 +53,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, reactive, toRefs, watch } from 'vue'
+import { throttle } from './utlis'
 import TransitionDefault from '@/components/transition/TransitionDefault.vue'
 import TransitionGroupDefault from '@/components/transition/TransitionGroupDefault.vue'
 import iconfont from './iconfont.vue'
@@ -118,8 +119,8 @@ export default defineComponent({
       resetTimer()
     }
 
-    const keydown = (e: KeyboardEvent) => {
-      const type = e.code
+    const keydown = (e: any) => {
+      const type = e[0].code
       switch (type) {
         case 'ArrowLeft':
           goPrev()
@@ -129,14 +130,14 @@ export default defineComponent({
           break
         case 'Escape':
         case 'Space':
-          e.preventDefault()
+          e[0].preventDefault()
           state.isShow = false
           break
       }
     }
-    const buttonShow = () => {
-      state.isButtonShow = true
-    }
+    const throttleKeydoen = throttle(keydown)
+    const buttonShow = () => (state.isButtonShow = true)
+    const throttleShow = throttle(buttonShow, 5000)
 
     watch([() => state.isButtonShow, () => state.isShow], newValue => {
       if (newValue[0]) {
@@ -147,11 +148,11 @@ export default defineComponent({
       }
       if (newValue[1]) {
         // 这个是 isShow
-        window.addEventListener('keydown', keydown)
-        window.addEventListener('mousemove', buttonShow)
+        window.addEventListener('keydown', throttleKeydoen)
+        window.addEventListener('mousemove', throttleShow)
       } else if (!newValue[1]) {
-        window.removeEventListener('keydown', keydown)
-        window.removeEventListener('mousemove', buttonShow)
+        window.removeEventListener('keydown', throttleKeydoen)
+        window.removeEventListener('mousemove', throttleShow)
       }
     })
 

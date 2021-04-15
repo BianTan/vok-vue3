@@ -56,7 +56,7 @@
     />
     <div
       class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer"
-      @click="handleFilterTermClick"
+      @click="throttleFilter"
     >
       筛选
     </div>
@@ -76,15 +76,15 @@
 import { defineComponent, computed, onMounted, reactive, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { useDayzh } from '@/utlis'
+import { useDayzh, throttle } from '@/utlis'
 import { get } from '@/network'
 import { PostsProps, OptionsProps } from '@/types'
+import { createMessage } from '@/common/message'
 import Card from '@/components/admin/Card.vue'
 import SkeletonEdit from '@/components/skeleton/SkeletonEdit.vue'
 import AdminLink from '@/components/admin/AdminLink.vue'
 import Selector from '@/components/Selector/index.vue'
 import EditTable from '@/components/admin/EditTable/index.vue'
-import { createMessage } from '@/common/message'
 
 export default defineComponent({
   components: {
@@ -159,6 +159,19 @@ export default defineComponent({
     //数据 👆
 
     // 事件 👇
+    const handleFilterTermClick = () => {
+      let termStr = ''
+      if (postState.post_status && postState.post_status !== '') {
+        termStr += `&post_status=${postState.post_status}`
+      }
+      if (state.categoryId !== 0) {
+        termStr += `&categoryId=${state.categoryId}`
+      }
+      if (state.tagId !== 0) {
+        termStr += `&tagId=${state.tagId}`
+      }
+      router.push(`/vok-admin/edit?post_type=${postState.post_type}${termStr}`)
+    }
     const clickEvent = reactive({
       getCategoryId: (res: string[]) => {
         // 获取 selector 组件 category 传来的 数据 [index, value]
@@ -171,21 +184,7 @@ export default defineComponent({
       tableItemIsChange: (value: any) => {
         console.log(value)
       },
-      handleFilterTermClick: () => {
-        let termStr = ''
-        if (postState.post_status && postState.post_status !== '') {
-          termStr += `&post_status=${postState.post_status}`
-        }
-        if (state.categoryId !== 0) {
-          termStr += `&categoryId=${state.categoryId}`
-        }
-        if (state.tagId !== 0) {
-          termStr += `&tagId=${state.tagId}`
-        }
-        router.push(
-          `/vok-admin/edit?post_type=${postState.post_type}${termStr}`
-        )
-      }
+      throttleFilter: throttle(handleFilterTermClick, 1000)
     })
 
     const getPostList = async (payload: any) => {
