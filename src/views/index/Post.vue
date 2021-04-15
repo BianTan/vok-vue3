@@ -52,6 +52,7 @@
           imgs: getImages,
           openLightbox
         }"
+        target="_blank"
         v-html="currentPost.content"
       />
     </card>
@@ -143,12 +144,10 @@ export default defineComponent({
         .catch(error => {
           if (error.code === 404) {
             createMessage(
-              `错误：${error.msg ? error.msg : error.message} 三秒后回到首页`,
+              `错误：${error.msg ? error.msg : error.message} 回到首页`,
               'error'
             )
-            setTimeout(() => {
-              router.push('/')
-            }, 3000)
+            router.push('/')
           }
         })
       if (currentPost.value)

@@ -61,15 +61,24 @@
       筛选
     </div>
   </card>
-  <card class="mt-8 px-0 py-0 md:px-4 md:py-4 overflow-hidden">
-    <div v-if="loadingStatus === 'success' && posts">
-      <edit-table :data="posts.list" />
-    </div>
-    <p v-else-if="loadingStatus === 'error'" class="text-center py-4">
-      获取数据失败！
-    </p>
-    <p v-else class="text-center py-4">加载中...</p>
+  <edit-list
+    v-if="loadingStatus === 'success' && posts"
+    :total="posts.total"
+    :pageSize="posts.pageSize"
+    :currentPage="posts.currentPage"
+    @prevClick="goPrev"
+    @nextClick="goNext"
+  >
+    <card class="mt-8 px-0 py-0 md:px-4 md:py-4 overflow-hidden">
+      <div v-if="loadingStatus === 'success' && posts">
+        <edit-table :data="posts.list" />
+      </div>
+    </card>
+  </edit-list>
+  <card v-else-if="loadingStatus === 'error'" class="text-center py-4 mt-8">
+    获取数据失败！
   </card>
+  <card v-else class="text-center py-4 mt-8">加载中...</card>
 </template>
 
 <script lang="ts">
@@ -85,6 +94,7 @@ import SkeletonEdit from '@/components/skeleton/SkeletonEdit.vue'
 import AdminLink from '@/components/admin/AdminLink.vue'
 import Selector from '@/components/Selector/index.vue'
 import EditTable from '@/components/admin/EditTable/index.vue'
+import EditList from '@/components/admin/EditList.vue'
 
 export default defineComponent({
   components: {
@@ -92,7 +102,8 @@ export default defineComponent({
     AdminLink,
     Selector,
     SkeletonEdit,
-    EditTable
+    EditTable,
+    EditList
   },
   setup() {
     const route = useRoute()
@@ -184,6 +195,20 @@ export default defineComponent({
       tableItemIsChange: (value: any) => {
         console.log(value)
       },
+      goPrev: () => {
+        const query = { ...route.query }
+        router.push({
+          name: 'adminEdit',
+          query: { ...query, page: state.currentPage - 1 }
+        })
+      },
+      goNext: () => {
+        const query = { ...route.query }
+        router.push({
+          name: 'adminEdit',
+          query: { ...query, page: state.currentPage + 1 }
+        })
+      },
       throttleFilter: throttle(handleFilterTermClick, 1000)
     })
 
@@ -207,9 +232,13 @@ export default defineComponent({
 
     // 实例被挂载
     onMounted(() => {
+      state.currentPage = parseInt((route.query.page as string) || '1')
+
+      // 请求数据
       store.dispatch('admin/getCategoryList') // 请求分类数据
       store.dispatch('admin/getTagList') // 请求标签数据
       store.dispatch('admin/getStatusList') // 请求获取文章数量
+
       let termStr = '&fields=post_status'
       if (termState.categoryId && termState.categoryId !== '0') {
         // 存在分类 id
@@ -231,7 +260,7 @@ export default defineComponent({
       } else if (postState.post_type === 'page') {
         // 当前为 “页面”
         postState.posts = {
-          currentPage: 1,
+          currentPage: state.currentPage,
           list: [],
           pageSize: 12,
           total: 0
