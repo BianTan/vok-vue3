@@ -2,7 +2,7 @@
   <transition-default>
     <div
       class="fixed top-0 left-0 w-full h-full overflow-hidden z-50 bg-gray-800 bg-opacity-80 select-none"
-      v-if="isShow && data.length > 0"
+      v-show="isShow && data.length > 0"
     >
       <div class="flex h-full w-full">
         <div class="flex-1 relative" @click="handleClick">
@@ -71,6 +71,10 @@ export default defineComponent({
     data: {
       type: Array as PropType<string[]>,
       default: []
+    },
+    buttonShowTime: {
+      type: Number,
+      default: 2300
     }
   },
   setup(props) {
@@ -86,7 +90,10 @@ export default defineComponent({
     const resetTimer = () => {
       if (state.isButtonShow) {
         clearTimeout(state.timer)
-        state.timer = setTimeout(() => (state.isButtonShow = false), 5000)
+        state.timer = setTimeout(
+          () => (state.isButtonShow = false),
+          props.buttonShowTime
+        )
       }
     }
     const openLightbox = (id = '0') => {
@@ -136,21 +143,31 @@ export default defineComponent({
       }
     }
     const throttleKeydoen = throttle(keydown)
-    const buttonShow = () => (state.isButtonShow = true)
-    const throttleShow = throttle(buttonShow, 5000)
+    const buttonShow = () => {
+      if (state.isButtonShow) {
+        resetTimer()
+      }
+      state.isButtonShow = true
+    }
+    const throttleShow = throttle(buttonShow, props.buttonShowTime)
 
     watch([() => state.isButtonShow, () => state.isShow], newValue => {
       if (newValue[0]) {
         // 这个是 isButtonShow
-        state.timer = setTimeout(() => (state.isButtonShow = false), 5000)
+        state.timer = setTimeout(
+          () => (state.isButtonShow = false),
+          props.buttonShowTime
+        )
       } else if (!newValue[0]) {
         clearTimeout(state.timer)
       }
       if (newValue[1]) {
         // 这个是 isShow
+        document.body.style.overflow = 'hidden'
         window.addEventListener('keydown', throttleKeydoen)
         window.addEventListener('mousemove', throttleShow)
       } else if (!newValue[1]) {
+        document.body.style.overflow = 'auto'
         window.removeEventListener('keydown', throttleKeydoen)
         window.removeEventListener('mousemove', throttleShow)
       }

@@ -23,7 +23,7 @@
             <p class="text-lg font-bold mt-1">BianDan</p>
           </div>
           <div class="pt-4" v-show="currentIndex === 1">
-            <h1>不是吧</h1>
+            <div id="title-tree" class="text-base"></div>
           </div>
         </template>
       </sidebar>
@@ -69,6 +69,7 @@ export default defineComponent({
         indexData.currentIndex = 0 // 显示 站点信息 选项卡
       }
     })
+
     return {
       ...toRefs(indexData)
     }

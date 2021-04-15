@@ -141,3 +141,93 @@ export const throttle = <T extends (...args: any[]) => any>(callback: T, delay =
     return result
   }
 }
+
+export const buildToc = (contentId: string, listId: string) => {
+  const content = document.getElementById(contentId)
+  if (!content) {
+    return
+  }
+  const tree = content.querySelectorAll('*'),
+    ele = document.getElementById(listId),
+    tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    // 初始化一个有序列表
+    rootList = document.createElement('ol')
+  // 当前的根列表
+  let list = rootList,
+    lastLevel = 1
+
+  ele.append(rootList)
+
+  tree.forEach(function (node, index) {
+    // 当前 nodeName 存在于 H 标签列表；H 标签是否存在有效标题
+    if (
+      tags.indexOf(node.nodeName.toLowerCase()) !== -1 &&
+      node.textContent.length > 0
+    ) {
+      // 标记该标题的 id hash 以便跳转
+      node.setAttribute('id', 'toc-' + index)
+
+      // 获取 H 标签的级别
+      const level = parseInt(node.nodeName.slice(1)),
+        // 为该 H 标题创建索引<li level=1><a href="#toc-1">title</a></li>
+        li = document.createElement('li'),
+        a = document.createElement('a')
+      // 标记索引级别
+      li.setAttribute('data-level', level.toString())
+      li.setAttribute('class', 'list-decimal')
+      a.setAttribute('href', '#toc-' + index)
+      a.setAttribute('title', node.textContent)
+      a.textContent = node.textContent
+      li.appendChild(a)
+
+      if (index === 0 || lastLevel === level) {
+        // 将大标题插入根列表
+        list.appendChild(li)
+      } else if (lastLevel < level) {
+        if (list.hasChildNodes()) {
+          // 当前较上一标题为小标题则创建子列表，并插入索引
+          const ol = document.createElement('ol')
+          ol.setAttribute('class', 'toc-list list-outside')
+          ol.appendChild(li)
+          list.appendChild(ol)
+          // 更新当前的根列表
+          list = ol
+        } else {
+          // 上层根列表不存在索引则直接插入
+          list.appendChild(li)
+        }
+      } else if (lastLevel > level) {
+        // 当前较上一标题为大标题则创建子列表，则获取差几级
+        const diff = lastLevel - level
+        if (diff < 6) {
+          // 以当前根列表为基准，向父层遍历到所属层级根列表
+          let tmpList: any = list
+          for (let i = 1; i < 6; i++) {
+            if (tmpList.parentNode) {
+              tmpList = tmpList.parentNode
+              // 判断是否与该列表内索引层级一致 253,242如果返回
+              if (
+                tmpList.firstElementChild.getAttribute('data-level') ===
+                  level ||
+                i === diff
+              ) {
+                break
+              }
+            }
+          }
+          tmpList.appendChild(li)
+          list = tmpList
+        } else {
+          // 增强校错
+          rootList.appendChild(li)
+          list = rootList
+        }
+      }
+      lastLevel = level
+    }
+  })
+
+  if (rootList.hasChildNodes()) {
+    ele.parentElement.classList.remove('hidden')
+  }
+}

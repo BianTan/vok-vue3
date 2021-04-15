@@ -69,6 +69,7 @@ import {
   computed,
   defineComponent,
   getCurrentInstance,
+  nextTick,
   onMounted,
   reactive,
   toRefs
@@ -76,7 +77,7 @@ import {
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { PostListProps } from '@/types'
-import { useCommentCount, useDay } from '@/utlis'
+import { buildToc, useCommentCount, useDay } from '@/utlis'
 import { titleSuffix } from '@/utlis/config'
 import { createMessage } from '@/common/message'
 import lightbox from '@/libs/VueLightbox/directives'
@@ -131,11 +132,13 @@ export default defineComponent({
       if (res) state.id = res[1]
     }
 
-    onMounted(() => {
+    onMounted(async () => {
+      document.querySelector('#title-tree').innerHTML = ''
       store
         .dispatch('index/getCurrentPost', state.id)
         .then(res => {
           if (res.code === 200) document.title = res.data[0].title + titleSuffix
+          buildToc('post_content', 'title-tree')
         })
         .catch(error => {
           if (error.code === 404) {
@@ -150,6 +153,9 @@ export default defineComponent({
         })
       if (currentPost.value)
         document.title = currentPost.value.title + titleSuffix
+
+      await nextTick()
+      if (currentPost.value) buildToc('post_content', 'title-tree')
     })
 
     return {
