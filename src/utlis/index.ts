@@ -1,7 +1,6 @@
 require('dayjs/locale/zh-cn')
 import { TermProps, OptionsProps } from '@/types'
 import dayjs from 'dayjs'
-import { useGoTitle } from './useGoTitle'
 
 /**
  * 数组转换对象 key 为 id
@@ -125,21 +124,19 @@ export const debounce = <T extends (...args: any[]) => any>(callback: T, delay =
 */
 export const throttle = <T extends (...args: any[]) => any>(callback: T, delay = 200, tiggleNow = true) => {
   let timer: ReturnType<typeof setTimeout> | null = null
-  return (...args: Parameters<T>): ReturnType<T> => {
-    let result: any;
+  return (...args: Parameters<T>): void => {
     if(timer) return
     if(tiggleNow) {
-      result = callback(args)
+      callback(args)
       timer = setTimeout(() => {
         timer = null
       }, delay)
     } else {
       timer = setTimeout(() => {
-        result = callback(args)
+        callback(args)
         timer = null
       }, delay)
     }
-    return result
   }
 }
 
@@ -175,10 +172,11 @@ export const buildToc = (contentId: string, listId: string) => {
         a = document.createElement('a')
       // 标记索引级别
       li.setAttribute('data-level', level.toString())
-      li.setAttribute('class', 'list-decimal')
+      li.setAttribute('class', 'list-decimal py-005')
       a.setAttribute('href', '#toc-' + index)
       a.setAttribute('data-id', 'toc-' + index)
       a.setAttribute('title', node.textContent)
+      a.setAttribute('class', 'hover:text-blue-800 transition duration-300')
       a.textContent = node.textContent
       li.appendChild(a)
 
@@ -229,13 +227,26 @@ export const buildToc = (contentId: string, listId: string) => {
     }
   })
 
-  if (rootList.hasChildNodes()) {
-    ele.parentElement.classList.remove('hidden')
-  }
+  if (rootList.hasChildNodes()) ele.parentElement.classList.remove('hidden')
 
-  ele.addEventListener('click', (e: MouseEvent) => {
-    e.preventDefault()
-    const idName = (e.target as HTMLElement).dataset.id
-    if(idName) useGoTitle(idName)
+  return ele.querySelectorAll('a')
+}
+
+export const setTitleTreeHighlight = (...[args]: any) => {
+  const scrollTop = window.pageYOffset
+  const titleList = args[0]
+  const titleTree = args[1]
+  let topTitle: any
+  let idx: number
+  titleList.forEach((title: HTMLElement, index: number) => {
+    if (title.offsetTop - 88 > scrollTop) return
+    if (!topTitle || title.offsetTop - 88 >= topTitle.offsetTop) {
+      topTitle = title
+      idx = index
+    }
+  })
+  titleTree.forEach((title: HTMLElement, index: number) => {
+    if (index === idx) return title.classList.add('text-blue-800')
+    title.classList.remove('text-blue-800')
   })
 }

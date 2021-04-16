@@ -23,7 +23,7 @@
             <p class="text-lg font-bold mt-1">BianDan</p>
           </div>
           <div class="pt-4" v-show="currentIndex === 1">
-            <div id="title-tree" class="text-base"></div>
+            <div id="title-tree" class="text-sm"></div>
           </div>
         </template>
       </sidebar>

@@ -22,5 +22,8 @@ export default {
       commit('setCurrentPost', { res: arrToObj(res.data), id })
       return res
     }
+    return new Promise((res) => {
+      res({code: 10})
+    })
   }
 } 

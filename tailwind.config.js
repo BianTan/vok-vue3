@@ -17,6 +17,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
+        '005': '0.05rem',
         '18': '4.5rem'
       },
       lineHeight: {

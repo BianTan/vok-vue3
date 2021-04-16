@@ -72,15 +72,23 @@ import {
   getCurrentInstance,
   nextTick,
   onMounted,
+  onUnmounted,
   reactive,
   toRefs
 } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { PostListProps } from '@/types'
-import { buildToc, useCommentCount, useDay } from '@/utlis'
+import {
+  buildToc,
+  throttle,
+  useCommentCount,
+  useDay,
+  setTitleTreeHighlight
+} from '@/utlis'
 import { titleSuffix } from '@/utlis/config'
 import { createMessage } from '@/common/message'
+import useGoTitle from '@/utlis/useGoTitle'
 import lightbox from '@/libs/VueLightbox/directives'
 import Card from '@/components/index/Card.vue'
 import InfoList from '@/components/index/info/InfoList.vue'
@@ -104,13 +112,13 @@ export default defineComponent({
   name: 'Post',
   setup() {
     const route = useRoute()
-    const router = useRouter()
     const store = useStore()
 
     const instance = getCurrentInstance()
 
     const state = reactive({
       id: '',
+      timer: null,
       imgArry: [] as string[],
       loadingStatus: computed(() => store.getters['getLoadingStatus'])
     })
@@ -135,32 +143,56 @@ export default defineComponent({
       if (res) state.id = res[1]
     }
 
+    const addTitleClickEvent = (e: any) => {
+      e.preventDefault()
+      const idName = (e.target as HTMLElement).dataset.id
+      if (idName) {
+        const currentTarget = e.currentTarget
+        const target = e.target
+        useGoTitle(idName)
+        if (state.timer) clearTimeout(state.timer)
+        state.timer = setTimeout(() => {
+          currentTarget.querySelectorAll('a').forEach((item: HTMLElement) => {
+            item.classList.remove('text-blue-800')
+          })
+          target.classList.add('text-blue-800')
+        }, 320)
+      }
+    }
+    const throttleScroll = throttle(setTitleTreeHighlight, 300)
+
+    const init = (title: string) => {
+      // 初始化
+      document.title = title + titleSuffix // 设置标题
+      const titleList = document.querySelectorAll(
+        '#post_content > h1, #post_content > h2, #post_content > h3, #post_content > h4, #post_content > h5, #post_content > h6'
+      ) // 获取所有标题节点
+      const aList = buildToc('post_content', 'title-tree') // 生成标题目录，返回设置好的目录节点
+      document.addEventListener('scroll', () =>
+        // 监听滚动事件
+        throttleScroll(titleList, aList)
+      )
+      hljs.highlightAll() // 设置代码高亮
+    }
+
     onMounted(async () => {
-      document.querySelector('#title-tree').innerHTML = ''
-      store
-        .dispatch('index/getCurrentPost', state.id)
-        .then(res => {
-          if (res.code === 200) document.title = res.data[0].title + titleSuffix
-          buildToc('post_content', 'title-tree')
-          hljs.highlightAll()
-        })
-        .catch(error => {
-          if (error.code === 404) {
-            createMessage(
-              `错误：${error.msg ? error.msg : error.message} 回到首页`,
-              'error'
-            )
-            router.push('/')
-          }
-        })
-      if (currentPost.value)
-        document.title = currentPost.value.title + titleSuffix
+      try {
+        const res: any = await store.dispatch('index/getCurrentPost', state.id)
+        if (res.code === 200) init(res.data[0].title)
+        if (res.code === 10) init(currentPost.value.title)
+      } catch (error) {
+        createMessage(`错误：${error.msg ? error.msg : error.message}`, 'error')
+      }
 
       await nextTick()
-      if (currentPost.value) {
-        buildToc('post_content', 'title-tree')
-        hljs.highlightAll()
-      }
+      const titleWrapper = document.querySelector('#title-tree')
+      titleWrapper.addEventListener('click', addTitleClickEvent)
+    })
+
+    onUnmounted(() => {
+      const titleWrapper = document.querySelector('#title-tree')
+      titleWrapper.innerHTML = ''
+      titleWrapper.removeEventListener('click', addTitleClickEvent)
     })
 
     return {
