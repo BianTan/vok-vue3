@@ -135,3 +135,19 @@ export interface RuleProp {
   type: RuleType;
   message: string;
 }
+
+// 后台首页
+export interface HomeDataProps {
+  commentInfo: [];
+  info: {
+    total: number;
+    url: string;
+    iconName: string;
+    description: string;
+  }[];
+  postInfo: {
+    id: string;
+    title: string;
+    createdAt: string;
+  }[];
+}

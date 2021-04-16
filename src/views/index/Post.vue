@@ -87,6 +87,8 @@ import InfoList from '@/components/index/info/InfoList.vue'
 import InfoItem from '@/components/index/info/InfoItem.vue'
 import CommentList from '@/components/index/comment/CommentList.vue'
 import SkeletonPost from '@/components/skeleton/SkeletonPost.vue'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
 
 export default defineComponent({
   components: {
@@ -140,6 +142,7 @@ export default defineComponent({
         .then(res => {
           if (res.code === 200) document.title = res.data[0].title + titleSuffix
           buildToc('post_content', 'title-tree')
+          hljs.highlightAll()
         })
         .catch(error => {
           if (error.code === 404) {
@@ -154,7 +157,10 @@ export default defineComponent({
         document.title = currentPost.value.title + titleSuffix
 
       await nextTick()
-      if (currentPost.value) buildToc('post_content', 'title-tree')
+      if (currentPost.value) {
+        buildToc('post_content', 'title-tree')
+        hljs.highlightAll()
+      }
     })
 
     return {

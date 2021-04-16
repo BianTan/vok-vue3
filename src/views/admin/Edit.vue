@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-block" v-if="statusList">
+  <div class="inline-block" v-if="statusList && loadingStatus === 'success'">
     <card class="py-4">
       <ul class="flex space-x-3">
         <admin-link
@@ -34,31 +34,38 @@
       </ul>
     </card>
   </div>
-  <skeleton-edit v-else />
-  <card class="mt-8 py-4 px-2 hidden md:block">
+  <skeleton-edit v-else-if="loadingStatus === 'loading'" />
+  <card
+    class="inline-block py-4 w-1/2 text-center"
+    v-else-if="loadingStatus === 'error'"
+    >获取数据失败！</card
+  >
+  <card class="mt-8 py-4 px-2">
     <selector :data="optionsOne" />
     <div
       class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer"
     >
       应用
     </div>
-    <selector
-      :data="categoryOptions"
-      class="ml-4"
-      @menuClick="getCategoryId"
-      :currentId="categoryId"
-    />
-    <selector
-      :data="tagOptions"
-      class="pl-0"
-      @menuClick="getTagId"
-      :currentId="tagId"
-    />
-    <div
-      class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer"
-      @click="throttleFilter"
-    >
-      筛选
+    <div class="hidden md:inline-block" v-if="post_type != 'page'">
+      <selector
+        :data="categoryOptions"
+        class="ml-4"
+        @menuClick="getCategoryId"
+        :currentId="categoryId"
+      />
+      <selector
+        :data="tagOptions"
+        class="pl-0"
+        @menuClick="getTagId"
+        :currentId="tagId"
+      />
+      <div
+        class="text-white bg-admin-blue-500 inline-block py-2 px-6 text-sm rounded-md cursor-pointer"
+        @click="throttleFilter"
+      >
+        筛选
+      </div>
     </div>
   </card>
   <edit-list
@@ -232,23 +239,25 @@ export default defineComponent({
 
     // 实例被挂载
     onMounted(() => {
-      state.currentPage = parseInt((route.query.page as string) || '1')
-
-      // 请求数据
-      store.dispatch('admin/getCategoryList') // 请求分类数据
-      store.dispatch('admin/getTagList') // 请求标签数据
-      store.dispatch('admin/getStatusList') // 请求获取文章数量
-
       let termStr = '&fields=post_status'
-      if (termState.categoryId && termState.categoryId !== '0') {
-        // 存在分类 id
-        state.categoryId = parseInt(termState.categoryId)
-        termStr += `&categoryId=${termState.categoryId}`
-      }
-      if (termState.tagId && termState.tagId !== '0') {
-        // 存在标签 id
-        state.tagId = parseInt(termState.tagId)
-        termStr += `&tagId=${termState.tagId}`
+
+      state.currentPage = parseInt((route.query.page as string) || '1') // 设置当前页数
+      store.dispatch('admin/getStatusList', postState.post_type || 'post') // 请求获取文章数量
+      if (postState.post_type != 'page') {
+        // 编辑类型是文章
+        // 请求数据
+        store.dispatch('admin/getCategoryList') // 请求分类数据
+        store.dispatch('admin/getTagList') // 请求标签数据
+        if (termState.categoryId && termState.categoryId !== '0') {
+          // 存在分类 id
+          state.categoryId = parseInt(termState.categoryId)
+          termStr += `&categoryId=${termState.categoryId}`
+        }
+        if (termState.tagId && termState.tagId !== '0') {
+          // 存在标签 id
+          state.tagId = parseInt(termState.tagId)
+          termStr += `&tagId=${termState.tagId}`
+        }
       }
       if (!postState.post_type || postState.post_type === 'post') {
         // 当前为 “文章”

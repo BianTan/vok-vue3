@@ -26,7 +26,8 @@ module.exports = {
         '9/10': '90%'
       },
       maxHeight: {
-        '9/10': '90%'
+        '9/10': '90%',
+        '520': '520px'
       },
       colors: {
         'admin-blue': {
