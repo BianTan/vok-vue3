@@ -1,6 +1,7 @@
 require('dayjs/locale/zh-cn')
 import { TermProps, OptionsProps } from '@/types'
 import dayjs from 'dayjs'
+import { useGoTitle } from './useGoTitle'
 
 /**
  * 数组转换对象 key 为 id
@@ -176,6 +177,7 @@ export const buildToc = (contentId: string, listId: string) => {
       li.setAttribute('data-level', level.toString())
       li.setAttribute('class', 'list-decimal')
       a.setAttribute('href', '#toc-' + index)
+      a.setAttribute('data-id', 'toc-' + index)
       a.setAttribute('title', node.textContent)
       a.textContent = node.textContent
       li.appendChild(a)
@@ -230,4 +232,10 @@ export const buildToc = (contentId: string, listId: string) => {
   if (rootList.hasChildNodes()) {
     ele.parentElement.classList.remove('hidden')
   }
+
+  ele.addEventListener('click', (e: MouseEvent) => {
+    e.preventDefault()
+    const idName = (e.target as HTMLElement).dataset.id
+    if(idName) useGoTitle(idName)
+  })
 }

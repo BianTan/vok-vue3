@@ -103,7 +103,9 @@ export default defineComponent({
     }
     const handleClick = (e: any) => {
       if (e.target === e.currentTarget)
-        state.isShow = state.sidebarIsShow = false
+        state.sidebarIsShow
+          ? (state.sidebarIsShow = false)
+          : (state.isShow = false)
     }
     const onSidebarItemClick = (id: number) => {
       state.currentId = id

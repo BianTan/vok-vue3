@@ -36,7 +36,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Tag',
         component: Term,
         meta: {
-          title: 'Tag'
+          title: '标签'
         }
       },
       {
@@ -44,7 +44,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Category',
         component: Term,
         meta: {
-          title: 'Category'
+          title: '分类'
         }
       },
       {
@@ -52,7 +52,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Page',
         component: Single,
         meta: {
-          title: 'Page'
+          title: '我是笨蛋小扁担 - 扁担长 板凳宽 | BianTanW | BianDan'
         }
       },
       {
@@ -60,7 +60,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Post',
         component: Post,
         meta: {
-          title: 'Post',
+          title: '标题加载中...',
           isPost: true
         }
       }
@@ -152,7 +152,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/404',
     name: 'notFound',
-    component: notFound
+    component: notFound,
+    meta: {
+      title: '404'
+    }
   },
   {
     path: '/*',

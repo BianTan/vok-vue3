@@ -35,7 +35,7 @@ li {
   @apply max-h-520 text-sm px-4 py-2;
 }
 #post_content code:not(.hljs) {
-  @apply bg-gray-100 rounded text-red-600 mx-1 py-1 px-2 text-sm;
+  @apply bg-gray-100 rounded text-red-500 mx-1 py-1 px-2 text-sm;
 }
 #post_content blockquote {
   @apply border-l-4 overflow-auto text-gray-500 bg-gray-50 -mx-8 my-8 md:-mx-12 px-8 py-8 md:px-12 text-sm;
