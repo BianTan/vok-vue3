@@ -269,7 +269,7 @@ export default defineComponent({
       }
       patch(`/post/${state.postId}`, data)
         .then((res: any) => {
-          if (res.code === 201) createMessage(res.msg, 'success')
+          if (res.code === 200) createMessage(res.msg, 'success')
         })
         .catch(error => {
           createMessage(
@@ -291,7 +291,8 @@ export default defineComponent({
     /**
      * 添加标签
      */
-    const addTag = (e: KeyboardEvent | MouseEvent) => {
+    const addTag = (args: any) => {
+      const e: KeyboardEvent | MouseEvent = args[0]
       if (
         ((e as KeyboardEvent).code === 'Enter' || // input 回车
           (e as MouseEvent).type === 'click') && // 按钮点击
@@ -314,7 +315,7 @@ export default defineComponent({
                     name
                   })
                 }
-              } else if (res.code === 201) {
+              } else if (res.code === 200) {
                 state.post.tags.push({
                   id,
                   name

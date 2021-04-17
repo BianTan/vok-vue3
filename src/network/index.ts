@@ -56,3 +56,8 @@ export function patch(url: string, data?: object) {
   const params = { ...data, ...commonParam }
   return axios.patch(url, params)
 }
+
+// delate方法
+export function onDelete(url: string) {
+  return axios.delete(url)
+}

@@ -48,6 +48,14 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
+        path: '/search',
+        name: 'Search',
+        component: Term,
+        meta: {
+          title: '搜索'
+        }
+      },
+      {
         path: '/page/:id',
         name: 'Page',
         component: Single,

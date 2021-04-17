@@ -3,7 +3,7 @@
   <div
     class="flex flex-col container mx-auto mt-28 sm:mt-32 px-3 lg:flex-row sm:px-0"
   >
-    <aside class="hidden sm:block w-full mb-10 lg:w-80 lg:mb-0 flex-shrink-0">
+    <aside class="hidden sm:block w-full mb-10 lg:w-72 lg:mb-0 flex-shrink-0">
       <sidebar
         class="relative sm:sticky top-24 left-0"
         :isPost="isPost"

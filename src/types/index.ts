@@ -52,6 +52,7 @@ export interface PageEventsProps {
 export interface TermProps {
   id: string;
   name: string;
+  checked?: boolean;
 }
 /**
  * 后台下拉 options

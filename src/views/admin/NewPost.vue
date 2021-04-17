@@ -216,7 +216,7 @@ export default defineComponent({
       console.log(data)
       post('/post', data)
         .then((res: any) => {
-          if (res.code === 201) {
+          if (res.code === 200) {
             router.push(`/vok-admin/post?id=${res.data[0].id}`)
             createMessage(res.msg, 'success')
           }
@@ -261,7 +261,7 @@ export default defineComponent({
                     name
                   })
                 }
-              } else if (res.code === 201) {
+              } else if (res.code === 200) {
                 state.post.tags.push({
                   id,
                   name

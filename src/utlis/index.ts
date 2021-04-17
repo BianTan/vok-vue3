@@ -176,7 +176,7 @@ export const buildToc = (contentId: string, listId: string) => {
       a.setAttribute('href', '#toc-' + index)
       a.setAttribute('data-id', 'toc-' + index)
       a.setAttribute('title', node.textContent)
-      a.setAttribute('class', 'hover:text-blue-800 transition duration-300')
+      a.setAttribute('class', 'hover:text-blue-800 transition-all')
       a.textContent = node.textContent
       li.appendChild(a)
 
@@ -232,15 +232,13 @@ export const buildToc = (contentId: string, listId: string) => {
   return ele.querySelectorAll('a')
 }
 
-export const setTitleTreeHighlight = (...[args]: any) => {
+export const setTitleTreeHighlight = (titleList: any, titleTree: any) => {
   const scrollTop = window.pageYOffset
-  const titleList = args[0]
-  const titleTree = args[1]
   let topTitle: any
   let idx: number
   titleList.forEach((title: HTMLElement, index: number) => {
-    if (title.offsetTop - 88 > scrollTop) return
-    if (!topTitle || title.offsetTop - 88 >= topTitle.offsetTop) {
+    if (title.offsetTop - 80 > scrollTop) return
+    if (!topTitle || title.offsetTop - 80 >= topTitle.offsetTop) {
       topTitle = title
       idx = index
     }

@@ -81,7 +81,6 @@ import { useStore } from 'vuex'
 import { PostListProps } from '@/types'
 import {
   buildToc,
-  throttle,
   useCommentCount,
   useDay,
   setTitleTreeHighlight
@@ -146,20 +145,8 @@ export default defineComponent({
     const addTitleClickEvent = (e: any) => {
       e.preventDefault()
       const idName = (e.target as HTMLElement).dataset.id
-      if (idName) {
-        const currentTarget = e.currentTarget
-        const target = e.target
-        useGoTitle(idName)
-        if (state.timer) clearTimeout(state.timer)
-        state.timer = setTimeout(() => {
-          currentTarget.querySelectorAll('a').forEach((item: HTMLElement) => {
-            item.classList.remove('text-blue-800')
-          })
-          target.classList.add('text-blue-800')
-        }, 320)
-      }
+      if (idName) useGoTitle(idName)
     }
-    const throttleScroll = throttle(setTitleTreeHighlight, 300)
 
     const init = (title: string) => {
       // 初始化
@@ -169,8 +156,10 @@ export default defineComponent({
       ) // 获取所有标题节点
       const aList = buildToc('post_content', 'title-tree') // 生成标题目录，返回设置好的目录节点
       document.addEventListener('scroll', () =>
-        // 监听滚动事件
-        throttleScroll(titleList, aList)
+        setTitleTreeHighlight(titleList, aList)
+      )
+      window.addEventListener('resize', () =>
+        setTitleTreeHighlight(titleList, aList)
       )
       hljs.highlightAll() // 设置代码高亮
     }
