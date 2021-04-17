@@ -68,6 +68,7 @@ import { defineComponent, toRefs, watch, reactive, ref } from 'vue'
 import useClickOutside from '@/utlis/useClickOutside'
 import TransitionDefault from '../transition/TransitionDefault.vue'
 import router from '@/router'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   components: {
@@ -102,6 +103,7 @@ export default defineComponent({
       }
     ]
 
+    const route = useRoute()
     const mobileMenuRef = ref<null | HTMLElement>(null) // 手机版面 Menu 的 refs
     const outsideIsClick = useClickOutside(mobileMenuRef) // 是否点击了手机版面 Menu 的外面
 
@@ -116,17 +118,17 @@ export default defineComponent({
       if (e.code === 'Enter' && state.search.trim() !== '') {
         router.push({ name: 'Search', query: { s: state.search } })
         state.search = ''
-        state.searchBoxIsShow = false
+        state.isShow = state.searchBoxIsShow = false
       }
     }
 
-    watch(outsideIsClick, () => {
-      // 状态发生改变
-      if (outsideIsClick.value) {
-        // 如果点击了外面
-        state.isShow = state.searchBoxIsShow = false
+    watch(
+      [outsideIsClick, () => route.fullPath],
+      (newValue: any, oldValue: any) => {
+        if (newValue[0] || (newValue[1] !== oldValue[1] && newValue[0]))
+          state.isShow = state.searchBoxIsShow = false
       }
-    })
+    )
     return {
       ...toRefs(state),
       menuList,

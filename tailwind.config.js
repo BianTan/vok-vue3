@@ -4,10 +4,10 @@ module.exports = {
   purge: {
     enabled: process.env.NODE_ENV === 'production',
     content: [
-      './src/components/**/*.{vue,js,ts}',
-      './src/common/**/*.{vue,js,ts}',
-      './src/components/**/**/*.{vue,js,ts}',
-      './src/views/**/*.vue'
+      './src/**/*.{vue,js,ts,css,html}',
+      // './src/common/**/*.{vue,js,ts}',
+      // './src/components/**/**/*.{vue,js,ts}',
+      // './src/views/**/*.vue'
     ],
     options: {
       whitelist: ['html', 'body']
