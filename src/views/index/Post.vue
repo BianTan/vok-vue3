@@ -40,7 +40,7 @@
         v-if="currentPost.post_url.length !== 0"
         :src="currentPost.post_url"
         :alt="currentPost.title"
-        class="mt-8 rounded"
+        class="mt-8 rounded w-full"
       />
       <h1 class="text-xl md:mb-14 md:text-2xl xl:text-3xl my-6 text-gray-800">
         {{ currentPost.title }}

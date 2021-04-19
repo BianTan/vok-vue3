@@ -3,46 +3,7 @@ import store from '../store'
 import { RouteListProps } from '@/types'
 import { titleSuffix } from '@/utlis/config'
 import { createMessage } from '@/common/message'
-
-const routeList: RouteListProps[] = [
-  {
-    parentName: 'Index',
-    list: [
-      {
-        path: '/about',
-        name: 'about',
-        component: 'index/Page',
-        meta: {
-          title: '关于我'
-        }
-      },
-      {
-        path: '/themes',
-        name: 'themes',
-        component: 'index/Page',
-        meta: {
-          title: '辣鸡扁担曾制作的 WordPress 主题'
-        }
-      },
-      {
-        path: '/guestbook',
-        name: 'guestbook',
-        component: 'index/Page',
-        meta: {
-          title: '留言簿'
-        }
-      },
-      {
-        path: '/myfriends',
-        name: 'myfriends',
-        component: 'index/Page',
-        meta: {
-          title: '我的朋友'
-        }
-      }
-    ]
-  }
-]
+import { get } from '@/network'
 
 function addRoutes(routes: RouteListProps[]) {
   routes.forEach((item: any) => {
@@ -58,29 +19,32 @@ function addRoutes(routes: RouteListProps[]) {
   })
 }
 
-let isLoaded = false
-
-router.beforeEach((to, from, next) => {
-  const { user, token } = store.state
+router.beforeEach(async (to, from, next) => {
+  const { user, token, isLoaded } = store.state
   const { requiredLogin } = to.meta
-  document.title = to.meta.title + titleSuffix
   if (!isLoaded) {
-    addRoutes(routeList)
-    isLoaded = true
+    const res = await get('/routes')
+    if(res) addRoutes(res.data)
+    document.title = to.meta.title + titleSuffix
+    store.state.isLoaded = true
     next({ ...to, replace: true })
   } else {
+    document.title = to.meta.title + titleSuffix
     if (!user.isLogin) {  // 未登录
       if(requiredLogin) {  // 需要登录可访问
         if (token) {  // 存在 token
-          store.dispatch('currentUser').then(() => {
+          try {
+            await store.dispatch('currentUser')
             next()
-          }).catch(err => { // token 失效
+          } catch (err) {
             if (err && err.code === 401) {
               localStorage.removeItem('token')  // token 失效
-              next('login')
               createMessage('登录信息已过期，请登录后访问.', 'error')
+            } else {
+              createMessage(`错误：${err.message}`, 'error')
             }
-          })
+            next('login')
+          }
         } else {  // 不存在 token
           next('login')
           createMessage('未登录，请登录后访问.', 'error')

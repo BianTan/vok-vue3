@@ -20,10 +20,7 @@
       :to="`/post/${postData.id}.html`"
       >{{ postData.title }}</router-link
     >
-    <p
-      class="px-8 text-sm text-gray-500 text-justify"
-      v-text="postData.description"
-    ></p>
+    <p class="px-8 text-sm text-gray-500" v-text="postData.description"></p>
     <info-list class="mx-8 mt-2 pb-2">
       <info-item iconName="date">{{ createdDate }}</info-item>
       <info-item iconName="comment">{{ commentCount }}</info-item>

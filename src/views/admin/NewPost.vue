@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col lg:flex-row">
+  <div class="flex flex-col lg:flex-row" v-show="editIsInit">
     <div class="flex-1">
       <card class="inline-block rounded-md overflow-hidden mb-4 w-full">
         <input
@@ -129,7 +129,7 @@ import { OptionsProps } from '@/types'
 import { editApi } from '@/config'
 import { post } from '@/network'
 import { debounce, getPostType } from '@/utlis'
-import { postType } from '@/utlis/config'
+import { getEditOptions, postType } from '@/utlis/config'
 import { createMessage } from '@/common/message'
 import Editor from '@tinymce/tinymce-vue'
 import Card from '@/components/index/Card.vue'
@@ -161,29 +161,12 @@ export default defineComponent({
         description: ''
       },
       addTagInputContent: '',
-      editOption: {
-        min_height: 640,
-        menubar: true,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount',
-          'emoticons'
-        ],
-        toolbar:
-          'undo redo emoticons | formatselect | bold italic backcolor | \
-           alignleft aligncenter alignright alignjustify  | \
-           bullist numlist outdent indent | removeformat | help',
-        language: 'zh_CN',
-        toolbar_sticky: true,
-        typeahead_urls: true,
-        remove_trailing_brs: true,
-        content_css: 'default' // dark document writer
-      },
+      editIsInit: false,
       categories: computed<OptionsProps[]>(
         () => store.getters['admin/getCategoryList']
       )
     })
+    const editOption = getEditOptions(state)
 
     /**
      * 更改文章类型 按钮点击
@@ -213,7 +196,6 @@ export default defineComponent({
         .replace(/\s+/gi, ' ')
         .trim()
         .substr(0, 150)
-      console.log(data)
       post('/post', data)
         .then((res: any) => {
           if (res.code === 200) {
@@ -238,7 +220,8 @@ export default defineComponent({
     /**
      * 添加标签
      */
-    const addTag = (e: KeyboardEvent | MouseEvent) => {
+    const addTag = (args: any) => {
+      const e: KeyboardEvent | MouseEvent = args[0]
       if (
         ((e as KeyboardEvent).code === 'Enter' || // input 回车
           (e as MouseEvent).type === 'click') && // 按钮点击
@@ -275,7 +258,7 @@ export default defineComponent({
         })
       }
     }
-    const debounceAddTag = debounce(addTag, 500, true)
+    const debounceAddTag = debounce(addTag, 200, true)
     /**
      * 删除标签 点击
      */
@@ -301,6 +284,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      editOption,
       editApi,
       getPostType,
       postType,

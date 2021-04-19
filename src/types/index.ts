@@ -114,7 +114,7 @@ export interface RouteProps {
  * 路由 meta
 */
 export interface RouteMetaProps {
-  title: String;
+  [key: string]: any;
 }
 /**
  * 后端传来的动态路由列表

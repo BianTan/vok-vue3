@@ -172,7 +172,7 @@ export const buildToc = (contentId: string, listId: string) => {
         a = document.createElement('a')
       // 标记索引级别
       li.setAttribute('data-level', level.toString())
-      li.setAttribute('class', 'list-decimal py-005')
+      li.setAttribute('class', 'list-decimal leading-6')
       a.setAttribute('href', '#toc-' + index)
       a.setAttribute('data-id', 'toc-' + index)
       a.setAttribute('title', node.textContent)
@@ -187,7 +187,7 @@ export const buildToc = (contentId: string, listId: string) => {
         if (list.hasChildNodes()) {
           // 当前较上一标题为小标题则创建子列表，并插入索引
           const ol = document.createElement('ol')
-          ol.setAttribute('class', 'toc-list list-outside')
+          ol.setAttribute('class', 'toc-list list-outside pl-8')
           ol.appendChild(li)
           list.appendChild(ol)
           // 更新当前的根列表
@@ -234,7 +234,7 @@ export const buildToc = (contentId: string, listId: string) => {
 
 export const setTitleTreeHighlight = (titleList: any, titleTree: any) => {
   const scrollTop = window.pageYOffset
-  let topTitle: any
+  let topTitle: HTMLElement
   let idx: number
   titleList.forEach((title: HTMLElement, index: number) => {
     if (title.offsetTop - 80 > scrollTop) return
@@ -244,7 +244,7 @@ export const setTitleTreeHighlight = (titleList: any, titleTree: any) => {
     }
   })
   titleTree.forEach((title: HTMLElement, index: number) => {
-    if (index === idx) return title.classList.add('text-blue-800')
-    title.classList.remove('text-blue-800')
+    if (index === idx) return title.classList.add('text-blue-800', 'text-base')
+    title.classList.remove('text-blue-800', 'text-base')
   })
 }

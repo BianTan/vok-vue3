@@ -2,6 +2,7 @@
   <div
     class="flex flex-col lg:flex-row"
     v-if="!!post.id && !!categories[0].value"
+    v-show="editIsInit"
   >
     <div class="flex-1">
       <card class="inline-block rounded-md overflow-hidden mb-4 w-full">
@@ -16,7 +17,7 @@
         <editor
           :api-key="editApi"
           :init="editOption"
-          outputFormat="html"
+          output-format="html"
           v-model="post.content"
         />
       </card>
@@ -161,7 +162,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { PostListProps, OptionsProps } from '@/types'
 import { editApi } from '@/config'
 import { get, patch, post } from '@/network'
-import { postStatus, postType } from '@/utlis/config'
+import { getEditOptions, postStatus, postType } from '@/utlis/config'
 import { useDay, getStatus, getPostType, debounce } from '@/utlis'
 import { createMessage } from '@/common/message'
 import Editor from '@tinymce/tinymce-vue'
@@ -184,26 +185,7 @@ export default defineComponent({
 
     const state = reactive({
       post: {} as PostListProps,
-      editOption: {
-        min_height: 640,
-        menubar: true,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount',
-          'emoticons'
-        ],
-        toolbar:
-          'undo redo emoticons | formatselect | bold italic backcolor | \
-           alignleft aligncenter alignright alignjustify | \
-           bullist numlist outdent indent | removeformat | help',
-        language: 'zh_CN',
-        toolbar_sticky: true,
-        typeahead_urls: true,
-        remove_trailing_brs: true,
-        content_css: 'default', // dark document writer
-        body_class: 'overflow-auto'
-      },
+      editIsInit: false,
       categories: computed<OptionsProps[]>(
         () => store.getters['admin/getCategoryList']
       ),
@@ -214,6 +196,7 @@ export default defineComponent({
       isEditPostType: false,
       EditType: 0
     })
+    const editOption = getEditOptions(state)
 
     /**
      * 更改文章状态 按钮点击
@@ -265,8 +248,16 @@ export default defineComponent({
         category: category.id,
         tags: cTags,
         post_url,
-        post_status
+        post_status,
+        description: content
       }
+      data.description = state.post.content
+        .replace(/<[^>]*>/gi, ' ')
+        .replace(/<\/[^>]*>/gi, ' ')
+        .replace(/&nbsp;|&#160;/gi, ' ')
+        .replace(/\s+/gi, ' ')
+        .trim()
+        .substr(0, 150)
       patch(`/post/${state.postId}`, data)
         .then((res: any) => {
           if (res.code === 200) createMessage(res.msg, 'success')
@@ -329,7 +320,7 @@ export default defineComponent({
         })
       }
     }
-    const debounceAddTag = debounce(addTag, 500, true)
+    const debounceAddTag = debounce(addTag, 200, true)
     /**
      * 删除标签 点击
      */
@@ -364,6 +355,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      editOption,
       postStatus,
       postType,
       editApi,
@@ -378,8 +370,7 @@ export default defineComponent({
       debounceAddTag,
       handleDeleteTagBtnClick,
       handleCategoryChange,
-      handleCoverClick,
-      debounce
+      handleCoverClick
     }
   }
 })

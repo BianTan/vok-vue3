@@ -1,21 +1,21 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Index from '@/views/index/Index.vue'
-import Single from '@/views/index/Single.vue'
-import Term from '@/views/index/Term.vue'
-import Post from '@/views/index/Post.vue'
-import notFound from '@/views/404.vue'
+const Index  = () => import('@/views/index/Index.vue')
+const Single = () => import('@/views/index/Single.vue')
+const Term = () => import('@/views/index/Term.vue')
+const Post = () => import('@/views/index/Post.vue')
+const notFound = () => import('@/views/404.vue')
 
-import AdminIndex from '@/views/admin/AdminIndex.vue'
-import AdminHome from '@/views/admin/AdminHome.vue'
-import Edit from '@/views/admin/Edit.vue'
-import Comments from '@/views/admin/Comments.vue'
-import Options from '@/views/admin/Options.vue'
-import AdminPost from '@/views/admin/Post.vue'
-import AdminNewPost from '@/views/admin/NewPost.vue'
+const AdminIndex = () => import('@/views/admin/AdminIndex.vue')
+const AdminHome = () => import('@/views/admin/AdminHome.vue')
+const Edit = () => import('@/views/admin/Edit.vue')
+const Comments = () => import('@/views/admin/Comments.vue')
+const Options = () => import('@/views/admin/Options.vue')
+const AdminPost = () => import('@/views/admin/Post.vue')
+const AdminNewPost = () => import('@/views/admin/NewPost.vue')
 
-import AccountIndex from '@/views/account/AccountIndex.vue'
-import Account from '@/views/account/Account.vue'
-import Login from '@/views/account/Login.vue'
+const AccountIndex = () => import('@/views/account/AccountIndex.vue')
+const Account = () => import('@/views/account/Account.vue')
+const Login = () => import('@/views/account/Login.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {

@@ -63,3 +63,32 @@ export const postStatus = [
     text: '回收站'
   }
 ]
+
+export const getEditOptions = (state: any) => {
+  return {
+    min_height: 640,
+    menubar: true,
+    autosave_interval: '20s',
+    plugins: [
+      'advlist autolink lists link image charmap print preview anchor autosave',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table paste code help wordcount',
+      'emoticons'
+    ],
+    toolbar: [
+      'undo redo | formatselect | bold italic backcolor | removeformat emoticons restoredraft',
+      'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | help'
+    ],
+    language: 'zh_CN',
+    toolbar_sticky: true,
+    typeahead_urls: true,
+    remove_trailing_brs: true,
+    content_css: 'default', // dark document writer
+    body_class: 'overflow-auto',
+    setup: (editor: any) => {
+      editor.on('init', () => {
+        state.editIsInit = true
+      })
+    }
+  }
+}

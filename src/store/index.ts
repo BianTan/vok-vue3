@@ -6,6 +6,7 @@ import adminStore from './admin/'
 
 export default createStore({
   state: {
+    isLoaded: false,
     loadingStatus: 'loading',
     token: localStorage.getItem('token') || '',
     user: {
@@ -25,11 +26,11 @@ export default createStore({
     }
   },
   actions: {
-    currentUser({ state, commit }) {
+    async currentUser({ state, commit }) {
       axios.defaults.headers.common.Authorization = `Bearer ${state.token}`
-      return post('/user/current').then(res => {
-        commit('currentUser', res.data)
-      })
+      const res: any = await post('/user/current')
+      commit('currentUser', res.data)
+      return res
     },
     async login({ commit }, payload) {
       const res = await post('/user/login', payload)
