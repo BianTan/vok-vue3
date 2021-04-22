@@ -58,16 +58,16 @@ export default defineComponent({
     const emitEvents: PageEventsProps = reactive({
       prevClick: () => emit('prevClick'), // 上一页按钮被点击了
       nextClick: () => emit('nextClick'), // 下一页按钮被点击了
-      currentChange: (value: Number) => {
+      currentChange: (value: number) => {
         // 页码发生了改变（传入当前点击的按钮index）
         if (value !== props.currentPage) emit('currentChange', value) // 点击的 index 和传入的 currentPage 不一致才发送信息
       }
     })
     const pageComputed = computed(() => {
       // 获取页数
-      return Math.ceil(props.total / props.pageSize) // 总数除以每页展示的数量
+      return Math.ceil((props.total as number) / (props.pageSize as number)) // 总数除以每页展示的数量
     })
-    const isActivate = (value: Number) => {
+    const isActivate = (value: number) => {
       // 是否是激活状态
       if (value === props.currentPage)
         return 'cursor-default border-blue-800 bg-blue-800 text-white hover:text-white'

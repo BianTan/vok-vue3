@@ -1,3 +1,5 @@
+import { ObjectDirective } from 'vue'
+
 interface BindingProps {
   value: object | undefined;
 }
@@ -38,4 +40,4 @@ export default {
 
     if(_ops && _ops.imgs) _ops.imgs(imgAry)
   }
-}
+} as ObjectDirective

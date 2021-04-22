@@ -63,8 +63,9 @@ export default defineComponent({
     }
 
     watchEffect(() => {
-      const id = parseInt(props.currentId)  // 获取当前id
-      if(props.data && props.data[id]) state.inputValue = props.data[id].text // 设置输入框的 value
+      const data = props.data as DataProps[]
+      const id = parseInt(props.currentId as string)  // 获取当前id
+      if(data && data[id]) state.inputValue = data[id].text // 设置输入框的 value
     })
     return {
       ...toRefs(state),

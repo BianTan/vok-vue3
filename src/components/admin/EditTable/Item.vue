@@ -97,7 +97,7 @@ export default defineComponent({
 
     const handleCheckboxChange = (e: InputEvent) => {
       emit('handleCheckboxChange', {
-        id: props.data.id,
+        id: (props.data as PostListProps).id,
         checked: (e.target as InputHTMLAttributes).checked
       })
     }

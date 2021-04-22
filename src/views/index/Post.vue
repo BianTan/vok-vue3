@@ -9,7 +9,7 @@
           :src="
             currentPost.author.avatar_url
               ? currentPost.author.avatar_url
-              : require('@/assets/img/ava.jpg')
+              : require('@/assets/img/ava.jpg').default
           "
           :alt="currentPost.author.name"
           class="h-12 w-12 rounded-full shadow mr-4"

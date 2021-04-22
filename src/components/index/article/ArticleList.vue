@@ -54,9 +54,9 @@ export default defineComponent({
       },
     })
     const pageComputed = computed(() => { // 获取页数
-      return Math.ceil(props.total / props.pageSize)  // 总数除以每页展示的数量
+      return Math.ceil((props.total as number) / (props.pageSize as number))  // 总数除以每页展示的数量
     })
-    const isActivate = (value: Number) => { // 是否是激活状态
+    const isActivate = (value: number) => { // 是否是激活状态
       if(value === props.currentPage) return 'cursor-default border-blue-800 bg-blue-800 text-white hover:text-white'
       return 'cursor-pointer border-gray-200 bg-white text-gray-800 hover:text-blue-800 hover:border-blue-800'
     }

@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 /**
  * 数组转换对象 key 为 id
 */
-export const arrToObj = <T extends { id?: string | number }>(arr: Array<T>) => {
+export const arrToObj = <T extends { id?: string | number }>(arr: Array<T>): any => {
   return arr.reduce((prev, current) => {
     if (current.id) {
       prev[current.id] = current
@@ -16,7 +16,7 @@ export const arrToObj = <T extends { id?: string | number }>(arr: Array<T>) => {
 /**
  * 对象转换数组
 */
-export const objToArr = <T>(obj: {[key: string]: T}) => {
+export const objToArr = <T>(obj: {[key: string]: T}): any => {
   return Object.keys(obj).map(key => {
     return obj[key]
   })
@@ -38,7 +38,7 @@ export const termTo = (arr: Array<TermProps>): OptionsProps[] => {
 /**
  * 计算评论数量
 */
-export const useCommentCount = (count: number | undefined) => {
+export const useCommentCount = (count: number | undefined): string => {
   if(count && count === 0) {
     return '暂无评论'
   } else {
@@ -49,20 +49,20 @@ export const useCommentCount = (count: number | undefined) => {
 /**
  * 时间格式转换
 */
-export const useDay = (format?: string, date?: string | number | Date | dayjs.Dayjs) => {
+export const useDay = (format?: string, date?: string | number | Date | dayjs.Dayjs): string => {
   return dayjs(date).format(format)
 }
 /**
  * 时间格式转换 中文
 */
-export const useDayzh = (format?: string, date?: string | number | Date | dayjs.Dayjs) => {
+export const useDayzh = (format?: string, date?: string | number | Date | dayjs.Dayjs): string => {
   return dayjs(date).locale('zh-cn').format(format)
 }
 
 /**
  * 获取文章状态
 */
-export const getStatus = (value: string) => {
+export const getStatus = (value: string): string => {
   let res = ''
   switch (value) {
     case 'publish':
@@ -81,7 +81,7 @@ export const getStatus = (value: string) => {
 /**
  * 获取文章类型
 */
-export const getPostType = (value: number) => {
+export const getPostType = (value: number): string => {
   let res = ''
   switch (value) {
     case 0:
@@ -97,7 +97,7 @@ export const getPostType = (value: number) => {
 /**
  * 防抖
 */
-export const debounce = <T extends (...args: any[]) => any>(callback: T, delay = 200, tiggleNow = false) => {
+export const debounce = <T extends (...args: any[]) => any>(callback: T, delay = 200, tiggleNow = false): (...args: Parameters<T>) => ReturnType<T> => {
   let timer: ReturnType<typeof setTimeout> | null = null
   return (...args: Parameters<T>): ReturnType<T> => {
     let result: any;
@@ -122,7 +122,7 @@ export const debounce = <T extends (...args: any[]) => any>(callback: T, delay =
 /**
  * 节流
 */
-export const throttle = <T extends (...args: any[]) => any>(callback: T, delay = 200, tiggleNow = true) => {
+export const throttle = <T extends (...args: any[]) => any>(callback: T, delay = 200, tiggleNow = true): (...args: Parameters<T>) => void => {
   let timer: ReturnType<typeof setTimeout> | null = null
   return (...args: Parameters<T>): void => {
     if(timer) return
@@ -140,7 +140,7 @@ export const throttle = <T extends (...args: any[]) => any>(callback: T, delay =
   }
 }
 
-export const buildToc = (contentId: string, listId: string) => {
+export const buildToc = (contentId: string, listId: string): any => {
   const content = document.getElementById(contentId)
   if (!content) {
     return
@@ -232,7 +232,7 @@ export const buildToc = (contentId: string, listId: string) => {
   return ele.querySelectorAll('a')
 }
 
-export const setTitleTreeHighlight = (titleList: any, titleTree: any) => {
+export const setTitleTreeHighlight = (titleList: NodeListOf<any>, titleTree: any[]): void => {
   const scrollTop = window.pageYOffset
   let topTitle: HTMLElement
   let idx: number

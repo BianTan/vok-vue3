@@ -19,7 +19,7 @@
 import { defineComponent, toRefs, reactive, computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { PageEventsProps } from '@/types'
+import { PageEventsProps, PostsProps } from '@/types'
 import ArticleList from '@/components/index/article/ArticleList.vue'
 import ArticleItem from '@/components/index/article/ArticleItem.vue'
 import SkeletonPosts from '@/components/skeleton/SkeletonPosts.vue'
@@ -43,7 +43,7 @@ export default defineComponent({
     if(name.value === 'Page') {
       page.value = Number(route.params.id)
     }
-    const posts = computed(() => store.getters['index/getPosts'](page.value))
+    const posts = computed<PostsProps>(() => store.getters['index/getPosts'](page.value))
 
     onMounted(() => {
       store.dispatch('index/getPosts', { currentPage: page.value })

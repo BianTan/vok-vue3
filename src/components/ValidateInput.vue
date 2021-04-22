@@ -1,6 +1,11 @@
 <template>
   <div class="flex w-full flex-col relative">
-    <p v-if="inputRef.error" class="text-red-500 text-sm text-right absolute top-0 right-0">{{inputRef.message}}</p>
+    <p
+      v-if="inputRef.error"
+      class="text-red-500 text-sm text-right absolute top-0 right-0"
+    >
+      {{ inputRef.message }}
+    </p>
     <div class="md:flex md:items-start mt-6">
       <div class="h-10 flex items-center">
         <slot></slot>
@@ -11,15 +16,27 @@
           v-bind="$attrs"
           @blur="validateInput"
           @input="updateValue"
-          :class="[{'border-gray-200': !inputRef.error && !isContent}, {'border-red-500': inputRef.error}, {'border-purple-500': !inputRef.error && isContent}]"
-          class="appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" v-model="inputRef.val" />
+          :class="[
+            { 'border-gray-200': !inputRef.error && !isContent },
+            { 'border-red-500': inputRef.error },
+            { 'border-purple-500': !inputRef.error && isContent }
+          ]"
+          class="appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+          v-model="inputRef.val"
+        />
         <textarea
           v-if="tag === 'textarea'"
           v-bind="$attrs"
           @blur="validateInput"
           @input="updateValue"
-          :class="[{'border-gray-200': !inputRef.error && !isContent}, {'border-red-500': inputRef.error}, {'border-purple-500': !inputRef.error && isContent}]"
-          class="appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" v-model="inputRef.val">
+          :class="[
+            { 'border-gray-200': !inputRef.error && !isContent },
+            { 'border-red-500': inputRef.error },
+            { 'border-purple-500': !inputRef.error && isContent }
+          ]"
+          class="appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+          v-model="inputRef.val"
+        >
         </textarea>
       </div>
     </div>
@@ -27,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { RulesProp, TagType } from '@/types'
+import { RuleProp, RulesProp, TagType } from '@/types'
 import { defineComponent, PropType, reactive, ref, onMounted } from 'vue'
 import { emitter } from './VaildateForm.vue'
 
@@ -41,7 +58,7 @@ export default defineComponent({
       default: 'input'
     }
   },
-  setup (props, content) {
+  setup(props, content) {
     const emailReg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9-]+)*$/
     const inputRef = reactive({
       val: props.modelValue || '',
@@ -61,21 +78,23 @@ export default defineComponent({
     }
     const validateInput = () => {
       if (props.rules) {
-        const allPassed = props.rules.every(rulesItem => {
-          let passed = true
-          inputRef.message = rulesItem.message
-          switch (rulesItem.type) {
-            case 'required':
-              passed = (inputRef.val.trim() !== '')
-              break
-            case 'email':
-              passed = emailReg.test(inputRef.val)
-              break
-            default:
-              break
+        const allPassed = (props.rules as RuleProp[]).every(
+          (rulesItem: RuleProp) => {
+            let passed = true
+            inputRef.message = rulesItem.message
+            switch (rulesItem.type) {
+              case 'required':
+                passed = (inputRef.val as string).trim() !== ''
+                break
+              case 'email':
+                passed = emailReg.test(inputRef.val as string)
+                break
+              default:
+                break
+            }
+            return passed
           }
-          return passed
-        })
+        )
         inputRef.error = !allPassed
         return allPassed
       }

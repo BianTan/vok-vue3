@@ -75,12 +75,12 @@ export default defineComponent({
     })
 
     const checkedChange = ({ id, checked }: any) => {
-      state.items.forEach(item => {
+      (state.items as TermProps[]).forEach((item: TermProps) => {
         if (item.id === id) item.checked = checked
       })
     }
     const handleAllCheckboxChange = (e: InputEvent) => {
-      state.items.forEach(item => {
+      (state.items as TermProps[]).forEach((item: TermProps) => {
         item.checked = (e.target as InputHTMLAttributes).checked
       })
     }
@@ -93,8 +93,8 @@ export default defineComponent({
     }
 
     const getCheckedAll = () => {
-      const idArr: string[] = []
-      state.items.forEach(item => {
+      const idArr = [] as any[]
+      (state.items as TermProps[]).forEach((item: TermProps) => {
         if (item.checked) idArr.push(item.id)
       })
       return idArr

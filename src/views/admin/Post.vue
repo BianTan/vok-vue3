@@ -306,7 +306,7 @@ export default defineComponent({
                     name
                   })
                 }
-              } else if (res.code === 200) {
+              } else if (res.code === 201) {
                 state.post.tags.push({
                   id,
                   name

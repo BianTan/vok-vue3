@@ -45,7 +45,7 @@ export default defineComponent({
     onMounted(() => {
       let id = 1
       if (route.path == props.url || route.name === 'adminPost') {
-        id = route.meta.index
+        id = route.meta.index as number
         if (route.query.post_type === 'page' || route.query.page) id = 3
         emitter.emit('adminMenuChange', id)
       }

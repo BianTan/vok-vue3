@@ -11,7 +11,7 @@ interface ResProps {
   list: PostListProps[];
 }
 export default {
-  setPosts({ posts }: IndexStateProps, res: ResProps) {
+  setPosts({ posts }: IndexStateProps, res: ResProps): void {
     const { total, pageSize, currentPage, list } = res
     posts.data = {
       ...posts.data,
@@ -24,7 +24,7 @@ export default {
     }
     posts.loadedPage.push(currentPage)
   },
-  setCurrentPost({ currentPost }: IndexStateProps, { res, id }: CurrentPostProps) {
+  setCurrentPost({ currentPost }: IndexStateProps, { res, id }: CurrentPostProps): void {
     currentPost.data = { ...currentPost.data, ...res }
     currentPost.loadedPost.push(id)
   }

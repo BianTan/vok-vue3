@@ -69,7 +69,7 @@ export default defineComponent({
   props: {
     data: {
       type: Array as PropType<PostListProps[]>,
-      default: []
+      default: (): [] => []
     }
   },
   setup(props) {
@@ -85,21 +85,23 @@ export default defineComponent({
     })
 
     const postCheckedChange = ({ id, checked }: any) => {
-      state.posts.forEach(post => {
+      (state.posts as PostListProps[]).forEach((post: PostListProps) => {
         if (post.id === id) post.checked = checked
       })
     }
     const handleAllCheckboxChange = (e: InputEvent) => {
-      state.posts.forEach(post => {
+      (state.posts as PostListProps[]).forEach((post: PostListProps) => {
         post.checked = (e.target as InputHTMLAttributes).checked
       })
     }
 
     const getCheckedAll = () => {
-      const idArr: string[] = []
-      state.posts.forEach(post => {
-        if (post.checked) idArr.push(post.id)
-      })
+      const idArr = [] as any[]
+      (state.posts as PostListProps[]).forEach(
+        (post: PostListProps) => {
+          if (post.checked) idArr.push(post.id)
+        }
+      )
       return idArr
     }
 

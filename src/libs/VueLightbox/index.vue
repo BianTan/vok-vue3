@@ -70,7 +70,7 @@ export default defineComponent({
   props: {
     data: {
       type: Array as PropType<string[]>,
-      default: []
+      default: (): [] => []
     },
     buttonShowTime: {
       type: Number,
@@ -92,7 +92,7 @@ export default defineComponent({
         clearTimeout(state.timer)
         state.timer = setTimeout(
           () => (state.isButtonShow = false),
-          props.buttonShowTime
+          props.buttonShowTime as number
         )
       }
     }
@@ -114,11 +114,11 @@ export default defineComponent({
     const goPrev = () => {
       state.currentId > 0
         ? state.currentId--
-        : (state.currentId = props.data.length - 1)
+        : (state.currentId = (props.data as string[]).length - 1)
       resetTimer()
     }
     const goNext = () => {
-      state.currentId < props.data.length - 1
+      state.currentId < (props.data as string[]).length - 1
         ? state.currentId++
         : (state.currentId = 0)
       resetTimer()
@@ -151,14 +151,14 @@ export default defineComponent({
       }
       state.isButtonShow = true
     }
-    const throttleShow = throttle(buttonShow, props.buttonShowTime)
+    const throttleShow = throttle(buttonShow, props.buttonShowTime as number)
 
     watch([() => state.isButtonShow, () => state.isShow], newValue => {
       if (newValue[0]) {
         // 这个是 isButtonShow
         state.timer = setTimeout(
           () => (state.isButtonShow = false),
-          props.buttonShowTime
+          props.buttonShowTime as number
         )
       } else if (!newValue[0]) {
         clearTimeout(state.timer)

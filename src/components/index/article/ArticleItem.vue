@@ -81,10 +81,10 @@ export default defineComponent({
   },
   setup(props) {
     const commentCount = computed(() =>
-      useCommentCount(props.postData.comment_count)
+      useCommentCount((props.postData as PostListProps).comment_count)
     )
     const createdDate = computed(() =>
-      useDay('YYYY 年 MM 月 DD 日', props.postData.createdAt)
+      useDay('YYYY 年 MM 月 DD 日', (props.postData as PostListProps).createdAt)
     )
     return {
       commentCount,

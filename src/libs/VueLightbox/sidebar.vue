@@ -22,7 +22,7 @@ export default defineComponent({
   props: {
     list: {
       type: Array as PropType<string[]>,
-      default: []
+      default: (): [] => []
     },
     currentId: {
       type: Number,

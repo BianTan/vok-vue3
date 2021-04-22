@@ -64,7 +64,7 @@ export const postStatus = [
   }
 ]
 
-export const getEditOptions = (state: any) => {
+export const getEditOptions = (state: any): any => {
   return {
     min_height: 640,
     menubar: true,
