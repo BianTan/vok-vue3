@@ -49,7 +49,7 @@
         id="post_content"
         class="text-gray-800"
         v-lightbox="{
-          imgs: getImages,
+          getImgs: getImages,
           openLightbox
         }"
         target="_blank"
