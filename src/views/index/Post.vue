@@ -133,7 +133,7 @@ export default defineComponent({
     )
 
     const getImages = (imgs: string[]) => (state.imgArry = imgs)
-    const openLightbox = (id?: string) =>
+    const openLightbox = (id?: string) => 
       (instance.refs.lightboxRef as any).openLightbox(id)
 
     if (route.params.id) {

@@ -52,8 +52,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, toRefs, watch } from 'vue'
-import { throttle } from './utlis'
+import { computed, defineComponent, PropType, toRefs } from 'vue'
+import { useLightBox } from './common'
 import TransitionDefault from '@/components/transition/TransitionDefault.vue'
 import TransitionGroupDefault from '@/components/transition/TransitionGroupDefault.vue'
 import iconfont from './iconfont.vue'
@@ -78,102 +78,18 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const state = reactive({
-      isShow: false,
-      sidebarIsShow: false,
-      isLoaded: false,
-      isButtonShow: false,
-      currentId: 0,
-      timer: null
-    })
+    
+    const dataInit = computed(() => props.data as string[])
 
-    const resetTimer = () => {
-      if (state.isButtonShow) {
-        clearTimeout(state.timer)
-        state.timer = setTimeout(
-          () => (state.isButtonShow = false),
-          props.buttonShowTime as number
-        )
-      }
-    }
-    const openLightbox = (id = '0') => {
-      state.currentId = parseInt(id)
-      state.isShow = true
-      state.isButtonShow = true
-    }
-    const handleClick = (e: any) => {
-      if (e.target === e.currentTarget)
-        state.sidebarIsShow
-          ? (state.sidebarIsShow = false)
-          : (state.isShow = false)
-    }
-    const onSidebarItemClick = (id: number) => {
-      state.currentId = id
-      resetTimer()
-    }
-    const goPrev = () => {
-      state.currentId > 0
-        ? state.currentId--
-        : (state.currentId = (props.data as string[]).length - 1)
-      resetTimer()
-    }
-    const goNext = () => {
-      state.currentId < (props.data as string[]).length - 1
-        ? state.currentId++
-        : (state.currentId = 0)
-      resetTimer()
-    }
-    const switchSidebarState = () => {
-      state.sidebarIsShow = !state.sidebarIsShow
-      resetTimer()
-    }
-
-    const keydown = (e: any) => {
-      const type = e[0].code
-      switch (type) {
-        case 'ArrowLeft':
-          goPrev()
-          break
-        case 'ArrowRight':
-          goNext()
-          break
-        case 'Escape':
-        case 'Space':
-          e[0].preventDefault()
-          state.isShow = false
-          break
-      }
-    }
-    const throttleKeydoen = throttle(keydown)
-    const buttonShow = () => {
-      if (state.isButtonShow) {
-        resetTimer()
-      }
-      state.isButtonShow = true
-    }
-    const throttleShow = throttle(buttonShow, props.buttonShowTime as number)
-
-    watch([() => state.isButtonShow, () => state.isShow], newValue => {
-      if (newValue[0]) {
-        // 这个是 isButtonShow
-        state.timer = setTimeout(
-          () => (state.isButtonShow = false),
-          props.buttonShowTime as number
-        )
-      } else if (!newValue[0]) {
-        clearTimeout(state.timer)
-      }
-      if (newValue[1]) {
-        // 这个是 isShow
-        document.body.style.overflow = 'hidden'
-        window.addEventListener('keydown', throttleKeydoen)
-        window.addEventListener('mousemove', throttleShow)
-      } else if (!newValue[1]) {
-        document.body.style.overflow = 'auto'
-        window.removeEventListener('keydown', throttleKeydoen)
-        window.removeEventListener('mousemove', throttleShow)
-      }
-    })
+    const {
+      state,
+      openLightbox,
+      handleClick,
+      onSidebarItemClick,
+      goPrev,
+      goNext,
+      switchSidebarState
+    } = useLightBox(props.buttonShowTime as number, dataInit)
 
     return {
       ...toRefs(state),
