@@ -1,32 +1,15 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-const Index  = () => import('@/views/index/Index.vue')
-const Single = () => import('@/views/index/Single.vue')
-const Term = () => import('@/views/index/Term.vue')
-const Post = () => import('@/views/index/Post.vue')
-const notFound = () => import('@/views/404.vue')
-
-const AdminIndex = () => import('@/views/admin/AdminIndex.vue')
-const AdminHome = () => import('@/views/admin/AdminHome.vue')
-const Edit = () => import('@/views/admin/Edit.vue')
-const Comments = () => import('@/views/admin/Comments.vue')
-const Options = () => import('@/views/admin/Options.vue')
-const AdminPost = () => import('@/views/admin/Post.vue')
-const AdminNewPost = () => import('@/views/admin/NewPost.vue')
-
-const AccountIndex = () => import('@/views/account/AccountIndex.vue')
-const Account = () => import('@/views/account/Account.vue')
-const Login = () => import('@/views/account/Login.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Index',
-    component: Index,
+    component: () => import('@/views/index/Index.vue'),
     children: [
       {
         path: '/',
         name: 'Home',
-        component: Single,
+        component: () => import('@/views/index/Single.vue'),
         meta: {
           title: '我是笨蛋小扁担 - 扁担长 板凳宽 | BianTanW | BianDan'
         }
@@ -34,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/tag/:id',
         name: 'Tag',
-        component: Term,
+        component: () => import('@/views/index/Term.vue'),
         meta: {
           title: '标签'
         }
@@ -42,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/category/:id',
         name: 'Category',
-        component: Term,
+        component: () => import('@/views/index/Term.vue'),
         meta: {
           title: '分类'
         }
@@ -50,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/search',
         name: 'Search',
-        component: Term,
+        component: () => import('@/views/index/Term.vue'),
         meta: {
           title: '搜索'
         }
@@ -58,7 +41,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/page/:id',
         name: 'Page',
-        component: Single,
+        component: () => import('@/views/index/Single.vue'),
         meta: {
           title: '我是笨蛋小扁担 - 扁担长 板凳宽 | BianTanW | BianDan'
         }
@@ -66,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/post/:id',
         name: 'Post',
-        component: Post,
+        component: () => import('@/views/index/Post.vue'),
         meta: {
           title: '标题加载中...',
           isPost: true
@@ -77,7 +60,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: () => import('@/views/account/Login.vue'),
     meta: {
       title: '登录'
     }
@@ -85,7 +68,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/vok-admin',
     name: 'adminIndex',
-    component: AdminIndex,
+    component: () => import('@/views/admin/AdminIndex.vue'),
     meta: {
       title: '仪表盘',
       validate: true,
@@ -95,7 +78,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/vok-admin',
         name: 'adminHome',
-        component: AdminHome,
+        component: () => import('@/views/admin/AdminHome.vue'),
         meta: {
           index: 1
         }
@@ -103,7 +86,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/vok-admin/edit',
         name: 'adminEdit',
-        component: Edit,
+        component: () => import('@/views/admin/Edit.vue'),
         meta: {
           index: 2
         }
@@ -111,7 +94,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/vok-admin/comments',
         name: 'adminComments',
-        component: Comments,
+        component: () => import('@/views/admin/Comments.vue'),
         meta: {
           index: 4
         }
@@ -119,7 +102,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/vok-admin/options',
         name: 'options',
-        component: Options,
+        component: () => import('@/views/admin/Options.vue'),
         meta: {
           index: 5
         }
@@ -127,7 +110,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/vok-admin/post',
         name: 'adminPost',
-        component: AdminPost,
+        component: () => import('@/views/admin/Post.vue'),
         meta: {
           index: 2
         }
@@ -135,7 +118,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/vok-admin/new-post',
         name: 'adminNewPost',
-        component: AdminNewPost,
+        component: () => import('@/views/admin/NewPost.vue'),
         meta: {
           index: 2
         }
@@ -145,12 +128,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/account',
     name: 'AccountIndex',
-    component: AccountIndex,
+    component: () => import('@/views/account/AccountIndex.vue'),
     children: [
       {
         path: '/account/:id',
         name: 'Account',
-        component: Account,
+        component: () => import('@/views/account/Account.vue'),
         meta: {
           title: '个人信息'
         }
@@ -160,7 +143,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/404',
     name: 'notFound',
-    component: notFound,
+    component: () => import('@/views/404.vue'),
     meta: {
       title: '404'
     }

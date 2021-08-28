@@ -1,7 +1,8 @@
 ## 技术栈
 
 Vue.js 3 + TypeScript + TailwindCSS 2.0.2 + 俺的设计
-冲鸭 🦷
+冲鸭 🦷  
+在线预览  [blog.evacgn.com](https://blog.evacgn.com)
 
 ## 项目描述
 

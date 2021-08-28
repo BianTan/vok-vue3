@@ -45,7 +45,7 @@
       :src="
         postData.author.avatar_url
           ? postData.author.avatar_url
-          : require('@/assets/img/ava.jpg')
+          : '/img/ava.72c93436.jpg'
       "
       :alt="postData.author.name"
       class="h-16 w-16 object-cover shadow rounded-full hidden sm:block"

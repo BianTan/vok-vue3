@@ -15,7 +15,22 @@ body {
 li {
   @apply list-none;
 }
-@media (min-width: 1920) {
+.router-link-exact-active {
+  color: #1E40Af;
+  position: relative;
+}
+@media (min-width: 1024px) {
+  .router-link-exact-active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #1E40Af;
+  }
+}
+@media (min-width: 1920px) {
   #home-card {
     @apply w-1/4;
   }

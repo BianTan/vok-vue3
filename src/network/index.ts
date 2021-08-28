@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
-import { URL } from '@/config'
+import { URL } from '@/config.ts'
 
 const IS_DEV = process.env.NODE_ENV !== 'production'
 axios.defaults.baseURL = IS_DEV ? '/api' : URL

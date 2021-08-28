@@ -34,7 +34,6 @@ import { defineComponent, ref, watch } from 'vue'
 import { useDay, useDayzh } from '@/utlis'
 import SidebarItem from './SidebarItem.vue'
 import Card from '@/components/index/Card.vue'
-import Info from '@/common/info.vue'
 
 export default defineComponent({
   props: {
@@ -50,8 +49,7 @@ export default defineComponent({
   emits: ['clickItemIndex'],
   components: {
     SidebarItem,
-    Card,
-    Info
+    Card
   },
   setup(props, { emit }) {
     const currentIndex = ref(1)

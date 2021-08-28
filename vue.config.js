@@ -1,8 +1,10 @@
 module.exports = {
+  publicPath: '/',
+  assetsDir: 'assets',
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000/api/v1',
+        target: 'http://blogapi.evacgn.com/api/v1',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

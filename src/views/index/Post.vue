@@ -9,7 +9,7 @@
           :src="
             currentPost.author.avatar_url
               ? currentPost.author.avatar_url
-              : require('@/assets/img/ava.jpg').default
+              : '/img/ava.72c93436.jpg'
           "
           :alt="currentPost.author.name"
           class="h-12 w-12 rounded-full shadow mr-4"
@@ -133,7 +133,7 @@ export default defineComponent({
     )
 
     const getImages = (imgs: string[]) => (state.imgArry = imgs)
-    const openLightbox = (id?: string) => 
+    const openLightbox = (id?: string) =>
       (instance.refs.lightboxRef as any).openLightbox(id)
 
     if (route.params.id) {
